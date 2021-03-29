@@ -21,7 +21,6 @@ class ParticipantFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         // créer le profil admin
-        $faker=Factory::create();
         $participant = new Participant();
         $participant->setUserName("admin");
         $participant->setName("Dupuis");
