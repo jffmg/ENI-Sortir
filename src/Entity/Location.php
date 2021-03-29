@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=LieuRepository::class)
  */
-class Lieu
+class Location
 {
     /**
      * @ORM\Id
@@ -21,12 +21,12 @@ class Lieu
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $rue;
+    private $street;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -40,21 +40,21 @@ class Lieu
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="lieu")
+     * @ORM\OneToMany(targetEntity="Event.php", mappedBy="location")
      */
-    private $sorties;
+    private $events;
 
     /**
-     * @var Ville
-     * @ORM\ManyToOne(targetEntity="App\Entity\Ville", inversedBy="lieux")
+     * @var City
+     * @ORM\ManyToOne(targetEntity="App\Entity\Cities", inversedBy="locations")
      */
-    private $ville;
+    private $city;
 
     /*CONSTRUCTEUR*/
 
     public function __construct()
     {
-        $this->sorties = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
 
@@ -80,33 +80,33 @@ class Lieu
     /**
      * @return mixed
      */
-    public function getNom()
+    public function getName()
     {
-        return $this->nom;
+        return $this->name;
     }
 
     /**
-     * @param mixed $nom
+     * @param mixed $name
      */
-    public function setNom($nom)
+    public function setName($name)
     {
-        $this->nom = $nom;
+        $this->name = $name;
     }
 
     /**
      * @return mixed
      */
-    public function getRue()
+    public function getStreet()
     {
-        return $this->rue;
+        return $this->street;
     }
 
     /**
-     * @param mixed $rue
+     * @param mixed $street
      */
-    public function setRue($rue)
+    public function setRue($street)
     {
-        $this->rue = $rue;
+        $this->street = $street;
     }
 
     /**
@@ -144,33 +144,33 @@ class Lieu
     /**
      * @return ArrayCollection
      */
-    public function getSorties()
+    public function getEvents()
     {
-        return $this->sorties;
+        return $this->events;
     }
 
     /**
-     * @param ArrayCollection $sorties
+     * @param ArrayCollection $events
      */
-    public function setSorties($sorties)
+    public function setSorties($events)
     {
-        $this->sorties = $sorties;
+        $this->events = $events;
     }
 
     /**
-     * @return Ville
+     * @return City
      */
-    public function getVille()
+    public function getCity()
     {
-        return $this->ville;
+        return $this->city;
     }
 
     /**
-     * @param Ville $ville
+     * @param City $city
      */
-    public function setVille($ville)
+    public function setVille($city)
     {
-        $this->ville = $ville;
+        $this->city = $city;
     }
 
 

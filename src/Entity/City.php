@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=VilleRepository::class)
  */
-class Ville
+class City
 {
     /**
      * @ORM\Id
@@ -21,24 +21,24 @@ class Ville
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=5)
      */
-    private $codePostal;
+    private $zipCode;
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="App\Entity\Lieu", mappedBy="ville")
+     * @ORM\OneToMany(targetEntity="Location.php", mappedBy="city")
      */
-    private $lieux;
+    private $locations;
 
     /*CONSTRUCTEUR*/
 
     public function __construct()
     {
-        $this->lieux= new ArrayCollection();
+        $this->locations= new ArrayCollection();
     }
 
 
@@ -64,49 +64,49 @@ class Ville
     /**
      * @return mixed
      */
-    public function getNom()
+    public function getName()
     {
-        return $this->nom;
+        return $this->name;
     }
 
     /**
-     * @param mixed $nom
+     * @param mixed $name
      */
-    public function setNom($nom)
+    public function setName($name)
     {
-        $this->nom = $nom;
+        $this->name = $name;
     }
 
     /**
      * @return mixed
      */
-    public function getCodePostal()
+    public function getZipCode()
     {
-        return $this->codePostal;
+        return $this->zipCode;
     }
 
     /**
-     * @param mixed $codePostal
+     * @param mixed $zipCode
      */
-    public function setCodePostal($codePostal)
+    public function setCodePostal($zipCode)
     {
-        $this->codePostal = $codePostal;
+        $this->zipCode = $zipCode;
     }
 
     /**
      * @return ArrayCollection
      */
-    public function getLieux()
+    public function getLocations()
     {
-        return $this->lieux;
+        return $this->locations;
     }
 
     /**
-     * @param ArrayCollection $lieux
+     * @param ArrayCollection $locations
      */
-    public function setLieux($lieux)
+    public function setLocations($locations)
     {
-        $this->lieux = $lieux;
+        $this->locations = $locations;
     }
 
 

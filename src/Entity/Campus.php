@@ -21,7 +21,7 @@ class Campus
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom;
+    private $name;
 
     /**
      * @var ArrayCollection
@@ -31,16 +31,16 @@ class Campus
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="siteOrganisateur")
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="campusOrganizer")
      */
-    private $sortiesCampus;
+    private $eventsCampus;
 
     /*CONSTRUCTEUR*/
 
     public function __construct()
     {
         $this->participants = new ArrayCollection();
-        $this->sortiesCampus = new ArrayCollection();
+        $this->eventsCampus = new ArrayCollection();
     }
 
 
@@ -66,17 +66,17 @@ class Campus
     /**
      * @return mixed
      */
-    public function getNom()
+    public function getName()
     {
-        return $this->nom;
+        return $this->name;
     }
 
     /**
-     * @param mixed $nom
+     * @param mixed $name
      */
-    public function setNom($nom)
+    public function setName($name)
     {
-        $this->nom = $nom;
+        $this->name = $name;
     }
 
     /**
@@ -98,17 +98,17 @@ class Campus
     /**
      * @return ArrayCollection
      */
-    public function getSortiesCampus()
+    public function getEventsCampus()
     {
-        return $this->sortiesCampus;
+        return $this->eventsCampus;
     }
 
     /**
-     * @param ArrayCollection $sortiesCampus
+     * @param ArrayCollection $eventsCampus
      */
-    public function setSortiesCampus($sortiesCampus)
+    public function setEventsCampus($eventsCampus)
     {
-        $this->sortiesCampus = $sortiesCampus;
+        $this->eventsCampus = $eventsCampus;
     }
 
 
