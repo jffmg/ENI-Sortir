@@ -3,6 +3,11 @@
 	src: url("fonts/Exo2-Regular.ttf");
 }
 
+@font-face {
+	font-family: "Exo 2 Black";
+	src: url("fonts/Exo2-Black.ttf");
+}
+
 * {
 	margin: 0;
 	padding: 0;
@@ -41,13 +46,24 @@ body {
 	margin-right: 5em;
 }
 
+.app-connected-participant {
+	margin-top: 2em;
+}
+
+.app-header_username {
+	font-family: "Exo 2 Black", sans-serif;
+	color : purple;
+}
+
 .app-nav-btn {
 	text-decoration: none;
 	color: black;
+	padding: 1em;
 }
 
 .app-nav-btn:hover {
-	color : darkblue;
+	font-family: "Exo 2 Black", sans-serif;
+	color : purple;
 }
 
 /*MAIN*/
@@ -62,3 +78,12 @@ body {
 	text-align: center;
 	padding: 0.5em;
 }
+
+
+/*ERROR MESSAGES*/
+.app-alert {
+	font-family: "Exo 2 Black", sans-serif;
+	color: #ff0000;
+	padding: 4em;
+}
+
