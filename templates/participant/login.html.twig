@@ -4,18 +4,35 @@
 
 {% block main %}
     <form class="app-form app-login-form" method="post">
+
+        {% if app.user %}
+            <div class="mb-3">
+                Vous êtes connecté en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+            </div>
+        {% endif %}
+
         <label class="form-label" for="username">Identifiant : </label>
-        <input class="form-field" type="text" name="_username" id="username">
+        <input class="form-field" type="text" value="{{ last_username }}" name="_username" id="username" required autofocus>
         <br>
         <br>
 
         <label class="form-label" for="password">Mot de passe : </label>
-        <input class="form-field" type="password" name="_password" id="password">
+        <input class="form-field" type="password" name="_password" id="password" required>
         <br>
         <br>
 
+        <input type="hidden" name="_csrf_token"
+               value="{{ csrf_token('authenticate') }}"
+        >
+
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" name="_remember_me"> Remember me
+            </label>
+        </div>
+
         <button class="app-btn" type="submit">Connexion</button>
+
     </form>
 
 {% endblock %}
-

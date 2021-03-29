@@ -43,7 +43,7 @@ class Participant implements UserInterface
     private $phone;
 
     /**
-     * @ORM\Column(name="mail", type="string", length=255)
+     * @ORM\Column(name="mail", type="string", length=255, unique=true)
      */
     private $mail;
 

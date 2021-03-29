@@ -15,19 +15,4 @@ class MainController extends AbstractController
     {
         return $this->render('main/home.html.twig');
     }
-
-    /**
-     * @Route("/login", name="user_login")
-     */
-    public function login(): Response
-    {
-        return $this->render('/participant/login.html.twig');
-    }
-
-    /**
-     * @Route("/logout", name="user_logout")
-     */
-    public function logout(): Response
-    {
-    }
 }
