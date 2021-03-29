@@ -6,9 +6,13 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         users_in_memory: { memory: null }
+        our_db_provider:
+            entity:
+                class: App\Entity\Participant
+                property: userName
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|img|js)/
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
