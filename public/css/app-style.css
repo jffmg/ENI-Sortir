@@ -3,15 +3,42 @@
 	src: url("fonts/Exo2-Regular.ttf");
 }
 
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
 body {
-	background-color: lightslategrey;
+	background-color: mintcream;
 	font-family: "Exo 2 Medium", sans-serif;
+}
+
+.app-container {
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100vh;
 }
 
 /*HEADER*/
 
+.app-header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
 .app-header-logo_img {
 	width: 10vw;
+	margin-top: 1em;
+	margin-left: 1em;
+}
+
+.app-header-nav {
+	margin-top: 2em;
+	margin-right: 5em;
 }
 
 .app-nav-btn {
@@ -21,4 +48,17 @@ body {
 
 .app-nav-btn:hover {
 	color : darkblue;
+}
+
+/*MAIN*/
+.app-main-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+/*FOOTER*/
+.app-footer-container {
+	text-align: center;
+	padding: 0.5em;
 }
