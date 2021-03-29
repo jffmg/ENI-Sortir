@@ -5,7 +5,7 @@
     </div>
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
         <div class="app-connected-participant">
-            <span>Connecté en tant que {{ app.participant.pseudo }}</span>
+            <span>Connecté en tant que {{ app.user.username }}</span>
         </div>
     {% endif %}
     <div class="app-header-nav">
