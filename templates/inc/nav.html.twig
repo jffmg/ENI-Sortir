@@ -1,0 +1,6 @@
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    <a class="app-nav-btn" href="{{ path('main_home') }}">ACCUEIL</a>
+    <a class="app-nav-btn" href="{{ path('user_logout') }}">DÉCONNEXION</a>
+{% else %}
+    <a class="app-nav-btn" href="{{ path('user_login') }}">CONNEXION</a>
+{% endif %}
