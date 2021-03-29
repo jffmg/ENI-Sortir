@@ -1,3 +1,24 @@
+@font-face {
+	font-family: "Exo 2 Medium";
+	src: url("fonts/Exo2-Regular.ttf");
+}
+
 body {
 	background-color: lightslategrey;
+	font-family: "Exo 2 Medium", sans-serif;
+}
+
+/*HEADER*/
+
+.app-header-logo_img {
+	width: 10vw;
+}
+
+.app-nav-btn {
+	text-decoration: none;
+	color: black;
+}
+
+.app-nav-btn:hover {
+	color : darkblue;
 }
