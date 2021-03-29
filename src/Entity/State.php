@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=EtatRepository::class)
  */
-class Etat
+class State
 {
     /**
      * @ORM\Id
@@ -21,19 +21,19 @@ class Etat
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $libelle;
+    private $label;
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="etat")
+     * @ORM\OneToMany(targetEntity="Event.php", mappedBy="state")
      */
-    private $sorties;
+    private $events;
 
     /*CONSTRUCTEUR*/
 
     public function __construct()
     {
-        $this->sorties = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
 
@@ -59,33 +59,33 @@ class Etat
     /**
      * @return mixed
      */
-    public function getLibelle()
+    public function getLabel()
     {
-        return $this->libelle;
+        return $this->label;
     }
 
     /**
-     * @param mixed $libelle
+     * @param mixed $label
      */
-    public function setLibelle($libelle)
+    public function setLabel($label)
     {
-        $this->libelle = $libelle;
+        $this->label = $label;
     }
 
     /**
      * @return ArrayCollection
      */
-    public function getSorties()
+    public function getEvents()
     {
-        return $this->sorties;
+        return $this->events;
     }
 
     /**
-     * @param ArrayCollection $sorties
+     * @param ArrayCollection $events
      */
-    public function setSorties($sorties)
+    public function setSorties($events)
     {
-        $this->sorties = $sorties;
+        $this->events = $events;
     }
 
 

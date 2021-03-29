@@ -20,7 +20,7 @@ class StateRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Etat[] Returns an array of Etat objects
+    //  * @return State[] Returns an array of State objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class StateRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Etat
+    public function findOneBySomeField($value): ?State
     {
         return $this->createQueryBuilder('e')
             ->andWhere('e.exampleField = :val')

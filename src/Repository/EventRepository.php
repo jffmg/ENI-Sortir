@@ -20,7 +20,7 @@ class EventRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Sortie[] Returns an array of Sortie objects
+    //  * @return Event[] Returns an array of Event objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class EventRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Sortie
+    public function findOneBySomeField($value): ?Event
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.exampleField = :val')

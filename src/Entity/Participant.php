@@ -6,13 +6,14 @@ use App\Repository\ParticipantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
  * @UniqueEntity("mail")
  * @UniqueEntity("motPasse")
  */
-class Participant
+class Participant implements UserInterface
 {
     /**
      * @ORM\Id
@@ -22,19 +23,24 @@ class Participant
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
      */
-    private $nom;
+    private $userName;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $prenom;
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $firstName;
 
     /**
      * @ORM\Column(type="string", length=12, nullable=true)
      */
-    private $telephone;
+    private $phone;
 
     /**
      * @ORM\Column(name="mail", type="string", length=255)
@@ -44,30 +50,30 @@ class Participant
     /**
      * @ORM\Column(name="motPasse", type="string", length=255)
      */
-    private $motPasse;
+    private $password;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $administrateur;
+    private $admin;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $actif;
+    private $active;
 
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="App\Entity\Sortie")
-     * @ORM\JoinTable(name="participantSorties")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Event")
+     * @ORM\JoinTable(name="participantEvents")
      */
-    private $sortiesParticipant;
+    private $eventsParticipant;
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="organisateur")
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="organizer")
      */
-    private $sortiesOrganisateur;
+    private $eventsOrganizer;
 
     /**
      * @var Campus
@@ -79,14 +85,12 @@ class Participant
 
     public function __construct()
     {
-        $this->sortiesParticipant = new ArrayCollection();
-        $this->sortiesOrganisateur = new ArrayCollection();
+        $this->eventsParticipant = new ArrayCollection();
+        $this->eventsOrganizer = new ArrayCollection();
     }
 
 
-
     /*GETTERS & SETTERS*/
-
     /**
      * @return mixed
      */
@@ -98,7 +102,7 @@ class Participant
     /**
      * @param mixed $id
      */
-    public function setId($id)
+    public function setId($id): void
     {
         $this->id = $id;
     }
@@ -106,49 +110,65 @@ class Participant
     /**
      * @return mixed
      */
-    public function getNom()
+    public function getUserName()
     {
-        return $this->nom;
+        return $this->userName;
     }
 
     /**
-     * @param mixed $nom
+     * @param mixed $userName
      */
-    public function setNom($nom)
+    public function setUserName($userName): void
     {
-        $this->nom = $nom;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPrenom()
-    {
-        return $this->prenom;
-    }
-
-    /**
-     * @param mixed $prenom
-     */
-    public function setPrenom($prenom)
-    {
-        $this->prenom = $prenom;
+        $this->userName = $userName;
     }
 
     /**
      * @return mixed
      */
-    public function getTelephone()
+    public function getName()
     {
-        return $this->telephone;
+        return $this->name;
     }
 
     /**
-     * @param mixed $telephone
+     * @param mixed $name
      */
-    public function setTelephone($telephone)
+    public function setName($name): void
     {
-        $this->telephone = $telephone;
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param mixed $firstName
+     */
+    public function setFirstName($firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param mixed $phone
+     */
+    public function setPhone($phone): void
+    {
+        $this->phone = $phone;
     }
 
     /**
@@ -162,7 +182,7 @@ class Participant
     /**
      * @param mixed $mail
      */
-    public function setMail($mail)
+    public function setMail($mail): void
     {
         $this->mail = $mail;
     }
@@ -170,87 +190,87 @@ class Participant
     /**
      * @return mixed
      */
-    public function getMotPasse()
+    public function getPassword()
     {
-        return $this->motPasse;
+        return $this->password;
     }
 
     /**
-     * @param mixed $motPasse
+     * @param mixed $password
      */
-    public function setMotPasse($motPasse)
+    public function setPassword($password): void
     {
-        $this->motPasse = $motPasse;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAdministrateur()
-    {
-        return $this->administrateur;
-    }
-
-    /**
-     * @param mixed $administrateur
-     */
-    public function setAdministrateur($administrateur)
-    {
-        $this->administrateur = $administrateur;
+        $this->password = $password;
     }
 
     /**
      * @return mixed
      */
-    public function getActif()
+    public function getAdmin()
     {
-        return $this->actif;
+        return $this->admin;
     }
 
     /**
-     * @param mixed $actif
+     * @param mixed $admin
      */
-    public function setActif($actif)
+    public function setAdmin($admin): void
     {
-        $this->actif = $actif;
+        $this->admin = $admin;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param mixed $active
+     */
+    public function setActive($active): void
+    {
+        $this->active = $active;
     }
 
     /**
      * @return ArrayCollection
      */
-    public function getSortiesParticipant()
+    public function getEventsParticipant(): ArrayCollection
     {
-        return $this->sortiesParticipant;
+        return $this->eventsParticipant;
     }
 
     /**
-     * @param ArrayCollection $sortiesParticipant
+     * @param ArrayCollection $eventsParticipant
      */
-    public function setSortiesParticipant($sortiesParticipant)
+    public function setEventsParticipant(ArrayCollection $eventsParticipant): void
     {
-        $this->sortiesParticipant = $sortiesParticipant;
+        $this->eventsParticipant = $eventsParticipant;
     }
 
     /**
      * @return ArrayCollection
      */
-    public function getSortiesOrganisateur()
+    public function getEventsOrganizer(): ArrayCollection
     {
-        return $this->sortiesOrganisateur;
+        return $this->eventsOrganizer;
     }
 
     /**
-     * @param ArrayCollection $sortiesOrganisateur
+     * @param ArrayCollection $eventsOrganizer
      */
-    public function setSortiesOrganisateur($sortiesOrganisateur)
+    public function setEventsOrganizer(ArrayCollection $eventsOrganizer): void
     {
-        $this->sortiesOrganisateur = $sortiesOrganisateur;
+        $this->eventsOrganizer = $eventsOrganizer;
     }
 
     /**
      * @return Campus
      */
-    public function getCampus()
+    public function getCampus(): Campus
     {
         return $this->campus;
     }
@@ -258,15 +278,18 @@ class Participant
     /**
      * @param Campus $campus
      */
-    public function setCampus($campus)
+    public function setCampus(Campus $campus): void
     {
         $this->campus = $campus;
     }
 
 
+    public function getRoles()
+    {
+        // TODO: Implement getRoles() method.
+    }
 
-
-
-
-
+    // Unused methods
+    public function getSalt(){}
+    public function eraseCredentials(){}
 }

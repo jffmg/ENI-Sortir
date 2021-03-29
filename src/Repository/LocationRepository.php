@@ -20,7 +20,7 @@ class LocationRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Lieu[] Returns an array of Lieu objects
+    //  * @return Location[] Returns an array of Location objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class LocationRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Lieu
+    public function findOneBySomeField($value): ?Location
     {
         return $this->createQueryBuilder('l')
             ->andWhere('l.exampleField = :val')
