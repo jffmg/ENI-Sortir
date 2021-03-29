@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\LieuRepository;
+use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=LieuRepository::class)
+ * @ORM\Entity(repositoryClass=LocationRepository::class)
  */
 class Location
 {
@@ -40,13 +40,13 @@ class Location
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="Event.php", mappedBy="location")
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="location")
      */
     private $events;
 
     /**
      * @var City
-     * @ORM\ManyToOne(targetEntity="App\Entity\Cities", inversedBy="locations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\City", inversedBy="locations")
      */
     private $city;
 
@@ -104,7 +104,7 @@ class Location
     /**
      * @param mixed $street
      */
-    public function setRue($street)
+    public function setStreet($street)
     {
         $this->street = $street;
     }
@@ -152,7 +152,7 @@ class Location
     /**
      * @param ArrayCollection $events
      */
-    public function setSorties($events)
+    public function setEvents($events)
     {
         $this->events = $events;
     }
@@ -168,7 +168,7 @@ class Location
     /**
      * @param City $city
      */
-    public function setVille($city)
+    public function setCity($city)
     {
         $this->city = $city;
     }

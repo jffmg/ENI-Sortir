@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\EtatRepository;
+use App\Repository\SateRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=EtatRepository::class)
+ * @ORM\Entity(repositoryClass=StateRepository::class)
  */
 class State
 {
@@ -25,7 +25,7 @@ class State
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="Event.php", mappedBy="state")
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="state")
      */
     private $events;
 
@@ -83,7 +83,7 @@ class State
     /**
      * @param ArrayCollection $events
      */
-    public function setSorties($events)
+    public function setEvents($events)
     {
         $this->events = $events;
     }

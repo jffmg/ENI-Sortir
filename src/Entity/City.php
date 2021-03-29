@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\VilleRepository;
+use App\Repository\CityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=VilleRepository::class)
+ * @ORM\Entity(repositoryClass=CityRepository::class)
  */
 class City
 {
@@ -29,8 +29,7 @@ class City
     private $zipCode;
 
     /**
-     * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="Location.php", mappedBy="city")
+     * @ORM\OneToMany(targetEntity="App\Entity\Location", mappedBy="city")
      */
     private $locations;
 

@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\SortieRepository;
+use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=SortieRepository::class)
+ * @ORM\Entity(repositoryClass=EventRepository::class)
  */
 class Event
 {
@@ -63,19 +63,19 @@ class Event
 
     /**
      * @var Campus
-     * @ORM\ManyToOne(targetEntity="App\Entity\Campus", inversedBy="sortiesCampus")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Campus", inversedBy="eventsCampus")
      */
     private $campusOrganizer;
 
     /**
      * @var State
-     * @ORM\ManyToOne(targetEntity="State.php", inversedBy="sorties")
+     * @ORM\ManyToOne(targetEntity="App\Entity\State", inversedBy="events")
      */
     private $state;
 
     /**
      * @var Location
-     * @ORM\ManyToOne(targetEntity="Location.php", inversedBy="events")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="events")
      */
     private $location;
 
