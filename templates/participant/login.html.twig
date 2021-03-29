@@ -3,16 +3,23 @@
 {% block title %}Sortir.com | Connexion{% endblock %}
 
 {% block main %}
-    <form class="app-form app-login-form" method="post">
-        <label class="form-label" for="username">Identifiant : </label>
-        <input class="form-field" type="text" name="_username" id="username">
-        <br>
-        <br>
 
-        <label class="form-label" for="password">Mot de passe : </label>
-        <input class="form-field" type="password" name="_password" id="password">
-        <br>
-        <br>
+    <form class="app-form app-login-form" method="post">
+        {% if error %}
+            <div class="app-alert">Paramètres de connexion
+                invalides</div>
+        {% endif %}
+        <div>
+            <label class="form-label" for="username">Identifiant : </label>
+            <input class="form-field" type="text" name="_username" id="username">
+            <br>
+            <br>
+
+            <label class="form-label" for="password">Mot de passe : </label>
+            <input class="form-field" type="password" name="_password" id="password">
+            <br>
+            <br>
+        </div>
 
         <button class="app-btn" type="submit">Connexion</button>
     </form>
