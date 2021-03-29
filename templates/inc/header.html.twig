@@ -1,8 +1,8 @@
 <div class="app-header-logo">
-    <a href="{{ path('accueil') }}"> <img class="app-header-logo_img" src="{{ asset('images/logo-sortir.png') }}" alt="logo"></a>
+    <a href="{{ path('main_home') }}"> <img class="app-header-logo_img" src="{{ asset('img/logo-sortir.png') }}" alt="logo"></a>
 </div>
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-    <div class="app-participant-connecte">
+    <div class="app-connected-participant">
         <span>Connecté en tant que {{ app.participant.pseudo }}</span>
     </div>
 {% endif %}
