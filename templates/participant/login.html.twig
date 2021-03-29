@@ -9,9 +9,16 @@
             <div class="app-alert">Paramètres de connexion
                 invalides</div>
         {% endif %}
+
+        {% if app.user %}
+            <div class="app-connected-participant">
+                Vous êtes connectés en tant que {{ app.user.username }}, <a href="{{ path('user_logout') }}">Logout</a>
+            </div>
+        {% endif %}
+
         <div>
             <label class="form-label" for="username">Identifiant : </label>
-            <input class="form-field" type="text" name="_username" id="username">
+            <input class="form-field" type="text" value="{{ last_username }}" name="_username" id="username">
             <br>
             <br>
 
