@@ -57,13 +57,27 @@ body {
 	justify-content: center;
 }
 
-.form-field {
+.app-form {
+	display: flex;
+	flex-direction: column;
+	height: inherit;
+	justify-content: center;
+}
+
+.app-form-field {
 	align-self: end;
 }
 
 .app-btn {
 	width: 7em;
 	align-self: flex-end;
+}
+
+.app-update-form-container>div{
+	display: flex;
+	flex-direction: column;
+	height: inherit;
+	justify-content: center;
 }
 
 /*FOOTER*/
@@ -78,6 +92,25 @@ body {
 	font-family: "Exo 2 Black", sans-serif;
 	color: #ff0000;
 	padding: 4em;
+}
+
+/*FLASH MESSAGES*/
+.flash {
+	padding: 1em 4em;
+	margin: 1em;
+	display: block;
+	align-self: center;
+	font-weight: bold;
+	color: #FFF;
+	text-align: center;
+}
+
+.flash-success {
+	background-color: #6b9311;
+}
+
+.flash-error {
+	background-color: #AA3333;
 }
 
 /*MEDIA QUERIES*/
