@@ -7,11 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
- * @UniqueEntity("mail")
- * @UniqueEntity("motPasse")
+ * @UniqueEntity(fields={"mail"}, message="cette adresse mail est déjà utilisée")
+ * @UniqueEntity(fields={"userName"}, message="ce pseudo n'est pas disponible")
  */
 class Participant implements UserInterface
 {
@@ -23,32 +24,47 @@ class Participant implements UserInterface
     private $id;
 
     /**
+     * @Assert\Length(max=255, maxMessage="255 caractères max")
+     * @Assert\NotBlank(message="ce champ est obligatoire")
      * @ORM\Column(type="string", length=255, nullable=false, unique=true)
      */
     private $userName;
 
     /**
+     * @Assert\Length(max=255, maxMessage="255 caractères max")
+    * @Assert\NotBlank(message="ce champ est obligatoire")
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
+     * @Assert\Length(max=255, maxMessage="255 caractères max")
+     * @Assert\NotBlank(message="ce champ est obligatoire")
      * @ORM\Column(type="string", length=255)
      */
     private $firstName;
 
     /**
+     * @Assert\Regex(
+     *     pattern     = "/^[0-9]+$/i",
+     *     htmlPattern = "^[0-9]+$",
+     *     message = "ce numéro n'est pas valide"
+     * )
      * @ORM\Column(type="string", length=12, nullable=true)
      */
     private $phone;
 
     /**
+     * @Assert\Email(message="ceci n'est pas un email valide")
+     * @Assert\Length(max=255, maxMessage="255 caractères max")
+     * @Assert\NotBlank(message="ce champ est obligatoire")
      * @ORM\Column(name="mail", type="string", length=255, unique=true)
      */
     private $mail;
 
     /**
-     * @ORM\Column(name="motPasse", type="string", length=255)
+     * @Assert\NotBlank(message="ce champ est obligatoire")
+     * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
 

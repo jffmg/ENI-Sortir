@@ -1,0 +1,27 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Sortir.com | Profil{% endblock %}
+
+{% block main %}
+
+    {% if app.user %}
+        <div class="app-connected-participant">
+            Vous êtes connectés en tant que {{ app.user.username }}, <a href="{{ path('user_logout') }}">Déconnexion</a>
+        </div>
+    {% endif %}
+
+    <h1> Profil de {{ participant.userName }} du campus de {{ participant.campus.name }}</h1>
+    <p> Nom : {{ participant.name }}</p>
+    <p> Prénom : {{ participant.firstName }}</p>
+    <p> Mail : {{ participant.mail }}</p>
+    <p> Téléphone : {{ participant.phone }}</p>
+
+
+    {% if participant.userName == app.user.username %}
+        <a class="app-btn-update" href="{{ path('participant_update',{id: participant.id}) }}">Modifier</a>
+    {% endif %}
+
+
+
+{% endblock %}
+
