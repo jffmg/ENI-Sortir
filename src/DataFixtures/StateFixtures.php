@@ -19,7 +19,7 @@ class StateFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $state1 = new State();
-        $state1->setLabel("En cours");
+        $state1->setLabel("En création");
         $state1->setShortLabel("EC");
         $this->addReference(self::EC,$state1);
 

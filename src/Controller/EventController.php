@@ -15,19 +15,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class EventController extends AbstractController
 {
     /**
-     * @Route("", name="display_events")
+     * @Route("/list", name="display_events")
      */
     public function displayEvents()
     {
         // Access denied if user not connected
         $this->denyAccessUnlessGranted("ROLE_USER");
 
+        // Get the campus from database
+        $campusRepo = $this->getDoctrine()->getRepository(Campus::class);
+        $campus = $campusRepo->findAll();
+
         // Get the events from database
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
         $events = $eventRepo->findAll();
 
         return $this->render("event/list.html.twig", [
-            "events" => $events
+            "events" => $events,
+            "campus" =>$campus
         ]);
     }
 
