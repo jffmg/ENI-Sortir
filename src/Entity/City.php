@@ -87,7 +87,7 @@ class City
     /**
      * @param mixed $zipCode
      */
-    public function setCodePostal($zipCode)
+    public function setZipCode($zipCode)
     {
         $this->zipCode = $zipCode;
     }

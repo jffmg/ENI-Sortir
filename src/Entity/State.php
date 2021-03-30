@@ -24,6 +24,11 @@ class State
     private $label;
 
     /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $shortLabel;
+
+    /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="state")
      */
@@ -70,6 +75,22 @@ class State
     public function setLabel($label)
     {
         $this->label = $label;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShortLabel()
+    {
+        return $this->shortLabel;
+    }
+
+    /**
+     * @param mixed $shortLabel
+     */
+    public function setShortLabel($shortLabel): void
+    {
+        $this->shortLabel = $shortLabel;
     }
 
     /**
