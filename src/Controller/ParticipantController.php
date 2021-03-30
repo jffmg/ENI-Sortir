@@ -61,7 +61,7 @@ class ParticipantController extends AbstractController
             $em->persist($participant);
             $em->flush();
 
-            $this->addFlash('success', 'Le profil a été modifié');
+            $this->addFlash('success', 'Le profil a bien été modifié.');
             return $this->redirectToRoute('participant_profile', ['id' => $participant->getId()]);
         }
 

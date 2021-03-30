@@ -17,6 +17,15 @@
         {% include('inc/header.html.twig') %}
     </div>
 
+    {# display of flash messages after submitting forms #}
+    {%  for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
     <div class="app-main-container">
         {% block main %}
         {% endblock %}
