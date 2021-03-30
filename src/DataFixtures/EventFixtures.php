@@ -28,14 +28,16 @@ class EventFixtures extends Fixture implements OrderedFixtureInterface
 
                 $campusOrganizer = $this->randomCampusOrganizer();
                 $organizer = $this->randomOrganizer($campusOrganizer);
+                $state = $this->randomState();
                 $location = $this->randomLocation();
 
 
                 $event->setOrganizer($organizer);
                 $event->setCampusOrganizer($campusOrganizer);
+                $event->setState($state);
                 $event->setLocation($location);
 
-                $event->setName($faker->sentence);
+                $event->setName($faker->realText(34, 2));
 
                 $eventDatesArray = $this->logicalDates($faker);
 
@@ -45,7 +47,7 @@ class EventFixtures extends Fixture implements OrderedFixtureInterface
                 $event->setState($eventDatesArray['st']);
 
                 $event->setNbInscriptionsMax($faker->numberBetween(1, 20));
-                $event->setInfosEvent($faker->text(200));
+                $event->setInfosEvent($faker->realText(240, 2));
 
 
                 $this->setReference(self::EVENT . $i, $event);
