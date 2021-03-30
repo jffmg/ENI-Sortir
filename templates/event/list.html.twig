@@ -12,11 +12,19 @@
 
 
 <h1>Filtrer les sorties</h1>
+    <div>
+        <p>Date du jour : {{ "now"| date("d/m/Y") }}</p>
+        <p>Participant : {{ app.user.username }}</p>
+    </div>
+
 
     <form>
         <label class="form-label" for="campus">Campus : </label>
-        <select>
-
+        <select name="campus" id="campus">
+            <option value="0">Tous les campus</option>
+            {% for c in campus %}
+            <option value="{{ c.id }}">{{ c.name }}</option>
+            {% endfor %}
         </select>
 
         <label class="form-label" for="keywords">Le nom de la sortie contient : </label>
@@ -44,12 +52,35 @@
     </form>
 
 
-<ul>
-    {% for event in events %}
-    <li>
-        {{ event.name }}
-    </li>
-    {% endfor %}
-</ul>
+    <table class="app-table">
+        <tr>
+            <th>Nom de la sortie</th>
+            <th>Date de la sortie</th>
+            <th>Clotûre</th>
+            <th>Inscrits/places</th>
+            <th>Etat</th>
+            <th>Inscrit</th>
+            <th>Organisateur</th>
+            <th>Actions</th>
+        </tr>
+
+        {% for event in events %}
+            <tr>
+                <td>{{ event.name }}</td>
+                <td>{{ event.dateTimeStart | date("d/m/Y h:i") }}</td>
+                <td>{{ event.dateEndInscription  | date("d/m/Y") }}</td>
+                <td>{{ event.participants.count }} / {{ event.nbInscriptionsMax }}</td>
+                <td>{{ event.state.label }}</td>
+                <td>
+
+                </td>
+                <td>{{ event.organizer.userName }}</td>
+                <td></td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {# TODO mettre le bon path et faire la class css#}
+    <a class="app-btn-link" href="{{ path('main_home') }}">Créer une sortie</a>
 
 {% endblock %}
