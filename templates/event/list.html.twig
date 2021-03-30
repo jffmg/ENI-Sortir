@@ -1,0 +1,35 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Sortir.com | Profil{% endblock %}
+
+{% block main %}
+
+{% if app.user %}
+<div class="app-connected-participant">
+    Vous êtes connectés en tant que {{ app.user.username }}, <a href="{{ path('user_logout') }}">Déconnexion</a>
+</div>
+{% endif %}
+
+
+<h1>Filtrer les sorties</h1>
+
+<span class="app-filter-label">Campus : </span>
+<select>
+
+</select>
+<br>
+
+<span class="app-filter-label">Le nom de la sortie contient : </span>
+<input type="text">
+<br>
+
+
+<ul>
+    {% for event in events %}
+    <li>
+        {{ event }}
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

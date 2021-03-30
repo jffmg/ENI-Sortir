@@ -5,6 +5,7 @@
     </label>
     <ul class="app-nav-menu">
         <li><a class="app-nav-btn" href="{{ path('main_home') }}">ACCUEIL</a></li>
+        <li><a class="app-nav-btn" href="{{ path('participant_profile', { 'id': app.user.id }) }}">PROFIL</a></li>
         <li><a class="app-nav-btn" href="{{ path('user_logout') }}">DÉCONNEXION</a></li>
     </ul>
 {% else %}

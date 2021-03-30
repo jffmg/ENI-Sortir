@@ -23,7 +23,7 @@ class ParticipantController extends AbstractController
     public function displayProfile($id)
     {
         // Access denied if user not connected
-        //$this->denyAccessUnlessGranted("ROLE_USER");
+        $this->denyAccessUnlessGranted("ROLE_USER");
 
         // Get the participant from database
         $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
@@ -61,7 +61,7 @@ class ParticipantController extends AbstractController
             $em->persist($participant);
             $em->flush();
 
-            $this->addFlash('success', 'Le profil a été modifié');
+            $this->addFlash('success', 'Le profil a bien été modifié.');
             return $this->redirectToRoute('participant_profile', ['id' => $participant->getId()]);
         }
 

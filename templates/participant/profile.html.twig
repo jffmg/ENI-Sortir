@@ -4,12 +4,6 @@
 
 {% block main %}
 
-    {% if app.user %}
-        <div class="app-connected-participant">
-            Vous êtes connectés en tant que {{ app.user.username }}, <a href="{{ path('user_logout') }}">Déconnexion</a>
-        </div>
-    {% endif %}
-
     <h1> Profil de {{ participant.userName }} du campus de {{ participant.campus.name }}</h1>
     <p> Nom : {{ participant.name }}</p>
     <p> Prénom : {{ participant.firstName }}</p>
