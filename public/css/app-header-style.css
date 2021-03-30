@@ -1,0 +1,123 @@
+/*HEADER*/
+
+.app-header-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: mintcream;
+    box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
+    width: 100%;
+    z-index: 3;
+}
+
+.app-header-logo_img {
+    width: 10em;
+    margin-top: 1em;
+    margin-left: 1em;
+}
+
+
+.app-connected-participant {
+    margin-top: 2em;
+    display: none;
+}
+
+.app-header_username {
+    font-family: "Exo 2 Black", sans-serif;
+    color : plum;
+}
+
+
+/*NAV MENU*/
+.app-header-nav {
+    margin-top: 2em;
+}
+
+.app-header-nav ul {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+}
+
+.app-nav-btn {
+    text-decoration: none;
+    color: black;
+    padding: 1em;
+}
+
+.app-nav-btn:hover {
+    /*font-family: "Exo 2 Black", sans-serif;*/
+    color : plum;
+}
+
+.app-header-nav .app-nav-menu {
+    clear: both;
+    max-height: 0;
+    transition: max-height .2s ease-out;
+}
+
+.app-header-nav .app-menu-icon {
+    cursor: pointer;
+    float: right;
+    padding: 28px 20px;
+    user-select: none;
+}
+
+.app-header-nav .app-menu-icon .app-navicon {
+    background: #333;
+    display: block;
+    height: 2px;
+    position: relative;
+    transition: background .2s ease-out;
+    width: 18px;
+}
+
+.app-header-nav .app-menu-icon .app-navicon:before,
+.app-header-nav .app-menu-icon .app-navicon:after {
+    background: #333;
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    transition: all .2s ease-out;
+    width: 100%;
+}
+
+.app-header-nav .app-menu-icon .app-navicon:before {
+    top: 5px;
+}
+
+.app-header-nav .app-menu-icon .app-navicon:after {
+    top: -5px;
+}
+
+/* menu btn */
+
+.app-header-nav .app-menu-btn {
+    display: none;
+}
+
+.app-header-nav .app-menu-btn:checked ~ .app-nav-menu {
+    max-height: 240px;
+}
+
+.app-header-nav .app-menu-btn:checked ~ .app-menu-icon .app-navicon {
+    background: transparent;
+}
+
+.app-header-nav .app-menu-btn:checked ~ .app-menu-icon .app-navicon:before {
+    transform: rotate(-45deg);
+}
+
+.app-header-nav .app-menu-btn:checked ~ .app-menu-icon .app-navicon:after {
+    transform: rotate(45deg);
+}
+
+.app-header-nav .app-menu-btn:checked ~ .app-menu-icon:not(.steps) .app-navicon:before,
+.app-header-nav .app-menu-btn:checked ~ .app-menu-icon:not(.steps) .app-navicon:after {
+    top: 0;
+}

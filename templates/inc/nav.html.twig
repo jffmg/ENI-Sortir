@@ -1,6 +1,18 @@
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-    <a class="app-nav-btn" href="{{ path('main_home') }}">ACCUEIL</a>
-    <a class="app-nav-btn" href="{{ path('user_logout') }}">DÉCONNEXION</a>
+    <input class="app-menu-btn" type="checkbox" id="app-menu-btn"/>
+    <label class="app-menu-icon" for="app-menu-btn">
+        <span class="app-navicon"></span>
+    </label>
+    <ul class="app-nav-menu">
+        <li><a class="app-nav-btn" href="{{ path('main_home') }}">ACCUEIL</a></li>
+        <li><a class="app-nav-btn" href="{{ path('user_logout') }}">DÉCONNEXION</a></li>
+    </ul>
 {% else %}
-    <a class="app-nav-btn" href="{{ path('user_login') }}">CONNEXION</a>
+    <input class="app-menu-btn" type="checkbox" id="app-menu-btn"/>
+    <label class="app-menu-icon" for="app-menu-btn">
+        <span class="app-navicon"></span>
+    </label>
+    <ul class="app-nav-menu">
+        <li><a class="app-nav-btn" href="{{ path('user_login') }}">CONNEXION</a></li>
+    </ul>
 {% endif %}

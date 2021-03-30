@@ -1,3 +1,5 @@
+@import 'app-header-style.css';
+
 @font-face {
 	font-family: "Exo 2 Medium";
 	src: url("fonts/Exo2-Regular.ttf");
@@ -15,62 +17,53 @@
 }
 
 body {
-	background-color: mintcream;
+	background-color: white;
 	font-family: "Exo 2 Medium", sans-serif;
 }
 
 .app-container {
-
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	height: 100vh;
+	height: 99vh;
+	margin: auto;
 }
 
-/*HEADER*/
-
-.app-header {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-}
-
-.app-header-logo_img {
-	width: 10vw;
-	margin-top: 1em;
-	margin-left: 1em;
-}
-
-.app-header-nav {
-	margin-top: 2em;
-	margin-right: 5em;
-}
-
-.app-connected-participant {
-	margin-top: 2em;
-}
-
-.app-header_username {
-	font-family: "Exo 2 Black", sans-serif;
-	color : purple;
-}
-
-.app-nav-btn {
-	text-decoration: none;
-	color: black;
-	padding: 1em;
-}
-
-.app-nav-btn:hover {
-	font-family: "Exo 2 Black", sans-serif;
-	color : purple;
-}
 
 /*MAIN*/
 .app-main-container {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	height: inherit;
+	justify-content: flex-start;
+}
+
+.app-main-title {
+	place-self: center;
+	margin-bottom: 5em;
+}
+
+.app-main-content {
+	margin-left: 5vw;
+	margin-right: 5vw;
+}
+
+/*FORMS*/
+.app-form-container {
+	display: flex;
+	flex-direction: column;
+	height: inherit;
+	justify-content: center;
+}
+
+.form-field {
+	align-self: end;
+}
+
+.app-btn {
+	width: 7em;
+	align-self: flex-end;
 }
 
 /*FOOTER*/
@@ -87,3 +80,94 @@ body {
 	padding: 4em;
 }
 
+/*MEDIA QUERIES*/
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (max-width: 400px) {
+
+	.app-main-container {
+		justify-content: flex-start;
+	}
+
+	.app-main-title {
+		margin-top: 1em;
+	}
+
+	.app-header-container {
+		display: flex;
+		flex-direction: column;
+		background-color: mintcream;
+		box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
+		width: 100%;
+		z-index: 3;
+		align-items: center;
+	}
+
+	.app-header-nav {
+		width: 100vw;
+		margin : 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.app-header-nav ul {
+		display: flex;
+		flex-direction: column;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		overflow: hidden;
+		align-items: center;
+	}
+
+	.app-header-nav .app-menu-icon {
+		cursor: pointer;
+		padding: 28px 20px;
+		user-select: none;
+	}
+
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) /*(max-width: 991px)*/ {
+
+	.app-header-nav {
+		margin-right: 5em;
+	}
+
+	.app-header-nav ul {
+		display: flex;
+		flex-direction: row;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		overflow: hidden;
+	}
+
+	.app-header-nav li {
+		float: left;
+	}
+
+	.app-header-nav .app-nav-menu {
+		clear: none;
+		max-height: none;
+	}
+
+	.app-header-nav .app-menu-icon {
+		display: none;
+	}
+	.app-connected-participant {
+		display: flex;
+	}
+}
+
+/*!* Large devices (desktops, 992px and up)*!
+@media (min-width: 992px) and (max-width: 1199px) {
+
+}
+
+!* Extra large devices (large desktops, 1200px and up)*!
+@media (min-width: 1200px) {
+
+}*/
