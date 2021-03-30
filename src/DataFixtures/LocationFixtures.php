@@ -4,10 +4,11 @@ namespace App\DataFixtures;
 
 use App\Entity\Location;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
-class LocationFixtures extends Fixture
+class LocationFixtures extends Fixture implements OrderedFixtureInterface
 {
 
     public const LOCATION = "location";
@@ -34,4 +35,8 @@ class LocationFixtures extends Fixture
 
     }
 
+    public function getOrder(): int
+    {
+        return 50;
+    }
 }

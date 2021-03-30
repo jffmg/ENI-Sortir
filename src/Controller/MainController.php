@@ -34,4 +34,8 @@ class MainController extends AbstractController
     public function logout(): Response
     {
     }
+
+    public function test() {
+
+    }
 }
