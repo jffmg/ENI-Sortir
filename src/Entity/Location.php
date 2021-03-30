@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=LocationRepository::class)
@@ -19,11 +20,13 @@ class Location
     private $id;
 
     /**
+     * @Assert\Length(max=255, maxMessage="255 caractères maximum")
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
+     * @Assert\Length(max=255, maxMessage="255 caractères maximum")
      * @ORM\Column(type="string", length=255)
      */
     private $street;
@@ -40,13 +43,14 @@ class Location
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="location", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="location")
      */
     private $events;
 
     /**
      * @var City
      * @ORM\ManyToOne(targetEntity="App\Entity\City", inversedBy="locations")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $city;
 

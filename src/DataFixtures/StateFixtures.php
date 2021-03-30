@@ -8,7 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class StateFixtures extends Fixture
 {
-    public const EC="en_cours";
+    public const EC="en_creation";
     public const OU="ouverte";
     public const AN="annulee";
     public const CL="cloturee";

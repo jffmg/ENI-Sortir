@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 
-use App\Entity\Campus;
 use App\Entity\Event;
+use App\Entity\Campus;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;

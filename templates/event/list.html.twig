@@ -1,17 +1,17 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Sortir.com | Profil{% endblock %}
+{% block title %}Sortir.com | Liste des sorties{% endblock %}
 
 {% block main %}
 
-{% if app.user %}
-<div class="app-connected-participant">
-    Vous êtes connectés en tant que {{ app.user.username }}, <a href="{{ path('user_logout') }}">Déconnexion</a>
-</div>
-{% endif %}
+    {% if app.user %}
+        <div class="app-connected-participant">
+            Vous êtes connectés en tant que {{ app.user.username }}, <a href="{{ path('user_logout') }}">Déconnexion</a>
+        </div>
+    {% endif %}
 
 
-<h1>Filtrer les sorties</h1>
+    <h1>Filtrer les sorties</h1>
     <div>
         <p>Date du jour : {{ "now"| date("d/m/Y") }}</p>
         <p>Participant : {{ app.user.username }}</p>
@@ -23,7 +23,7 @@
         <select name="campus" id="campus">
             <option value="0">Tous les campus</option>
             {% for c in campus %}
-            <option value="{{ c.id }}">{{ c.name }}</option>
+                <option value="{{ c.id }}">{{ c.name }}</option>
             {% endfor %}
         </select>
 
@@ -71,11 +71,41 @@
                 <td>{{ event.dateEndInscription  | date("d/m/Y") }}</td>
                 <td>{{ event.participants.count }} / {{ event.nbInscriptionsMax }}</td>
                 <td>{{ event.state.label }}</td>
-                <td>
 
+                {# TODO tester les inscriptions quand il y aura les fixtures correspondantes #}
+                <td>
+                    {% for p in event.participants %}
+                        {% if app.user == p %}
+                            X
+                        {% endif %}
+                    {% endfor %}
                 </td>
                 <td>{{ event.organizer.userName }}</td>
-                <td></td>
+
+                <td>
+
+                    {% if app.user == event.organizer %}
+                     {# TODO Ajouter les fonctionnalités et path modifier / publier #}
+                        {% if event.state.label == "" %}
+                            <a class="app-link" href="{{ path('main_home') }}">Modifier</a>
+                            <a class="app-link" href="{{ path('main_home') }}">Publier</a>
+                        {% else %}
+                            {# TODO Ajouter condition sur date inscription et faire les fonctionnalités / path corrspondantes #}
+                            <a class="app-link" href="{{ path('main_home') }}">Modifier</a>
+                            <a class="app-link" href="{{ path('main_home') }}">Annuler</a>
+                        {% endif %}
+                    {% endif %}
+
+                    {# TODO Ajouter les fonctionnalités et path s'inscrire, se desister #}
+                    {% for p in event.participants %}
+                        {% if app.user == p %}
+                            <a class="app-link" href="{{ path('main_home') }}">Se désister</a>
+                        {% else %}
+                            <a class="app-link" href="{{ path('main_home') }}">S'inscrire</a>
+                        {% endif %}
+                    {% endfor %}
+
+                </td>
             </tr>
         {% endfor %}
     </table>

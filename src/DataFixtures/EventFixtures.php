@@ -20,7 +20,6 @@ class EventFixtures extends Fixture implements OrderedFixtureInterface
 
     public function load(ObjectManager $manager)
     {
-
         for ($y = 0; $y < 5; $y++) {
             for ($i = 0; $i < 5; $i++) {
                 $faker = Factory::create();
