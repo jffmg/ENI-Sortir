@@ -117,11 +117,6 @@ class EventFixtures extends Fixture implements OrderedFixtureInterface
 
         $state = $this->setStateFromDates($startDate, $now, $dateEndInsc, $dateEndEvent);
 
-        /*$eventDatesArray[0] = ['sd' => $startDate];
-        $eventDatesArray[1] = ['cd' => $dateEndInsc];
-        $eventDatesArray[2] = ['dur' => $duration];
-        $eventDatesArray[3] = ['ed' => $dateEndEvent];
-        $eventDatesArray[4] = ['st' => $state];*/
 
         $eventDatesArray = ['sd' => $startDate, 'cd' => $dateEndInsc, 'dur' => $duration, 'ed' => $dateEndEvent, 'st' => $state];
 
