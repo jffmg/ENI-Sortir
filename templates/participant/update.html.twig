@@ -4,11 +4,7 @@
 
 {% block main %}
 
-    {% if app.user %}
-        <div class="app-connected-participant">
-            Vous êtes connectés en tant que {{ app.user.username }}, <a href="{{ path('user_logout') }}">Déconnexion</a>
-        </div>
-    {% endif %}
+
 
         {{ form_start(participantForm) }}
         {{ form_widget(participantForm) }}

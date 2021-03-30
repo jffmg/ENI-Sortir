@@ -3,38 +3,40 @@
 {% block title %}Sortir.com | Connexion{% endblock %}
 
 {% block main %}
-<div class="app-form-container app-login-form-container">
-    <form class="app-form app-login-form" method="post">
-        {% if error %}
-            <div class="app-alert">Paramètres de connexion
-                invalides</div>
-        {% endif %}
-        <div class="app-form-container">
+    <div class="app-form-container app-login-form-container">
+        <form class="app-form app-login-form" method="post">
+            {% if error %}
+                <div class="app-alert">Paramètres de connexion
+                    invalides
+                </div>
+            {% endif %}
+            <div class="app-form-container">
 
-        {% if app.user %}
-            <div class="app-connected-participant">
-                Vous êtes connectés en tant que {{ app.user.username }}, <a href="{{ path('user_logout') }}">Déconnexion</a>
+                {% if app.user %}
+                    <div class="app-connected-participant">
+                        Vous êtes connectés en tant que {{ app.user.username }}, <a href="{{ path('user_logout') }}">Déconnexion</a>
+                    </div>
+                {% endif %}
+
+                <div>
+                    <label class="form-label" for="username">Identifiant : </label>
+                    <input class="form-field" type="text" value="{{ last_username }}" name="_username" id="username">
+                    <br>
+                    <br>
+
+                    <label class="form-label" for="password">Mot de passe : </label>
+                    <input class="form-field" type="password" name="_password" id="password">
+                    <br>
+                    <br>
+
+
+                    <input type="checkbox" id="remember_me" name="_remember_me" checked/>
+                    <label for="remember_me">Se souvenir de moi</label>
+
+                    <button class="app-btn" type="submit">Connexion</button>
+                </div>
             </div>
-        {% endif %}
-
-        <div>
-            <label class="form-label" for="username">Identifiant : </label>
-            <input class="form-field" type="text" value="{{ last_username }}" name="_username" id="username">
-            <br>
-            <br>
-
-            <label class="form-label" for="password">Mot de passe : </label>
-            <input class="form-field" type="password" name="_password" id="password">
-            <br>
-            <br>
-
-
-        <input type="checkbox" id="remember_me" name="_remember_me" checked/>
-        <label for="remember_me">Se souvenir de moi</label>
-
-        <button class="app-btn" type="submit">Connexion</button>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 {% endblock %}
 
