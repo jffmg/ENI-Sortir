@@ -23,7 +23,7 @@ class ParticipantController extends AbstractController
     public function displayProfile($id)
     {
         // Access denied if user not connected
-        //$this->denyAccessUnlessGranted("ROLE_USER");
+        $this->denyAccessUnlessGranted("ROLE_USER");
 
         // Get the participant from database
         $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
