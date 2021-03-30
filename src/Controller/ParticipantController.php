@@ -45,7 +45,7 @@ class ParticipantController extends AbstractController
      */
     public function update($id, EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder)
     {
-        // Acces denied if user not connected
+        // Access denied if user not connected
         $this->denyAccessUnlessGranted("ROLE_USER");
 
         $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
@@ -55,7 +55,7 @@ class ParticipantController extends AbstractController
 
         $participantForm->handleRequest($request);
         if ($participantForm->isSubmitted() && $participantForm->isValid()){
-            // hasher le mot de passe
+            // hash password
             $hashed = $encoder->encodePassword($participant, $participant->getPassword());
             $participant->setPassword($hashed);
             $em->persist($participant);

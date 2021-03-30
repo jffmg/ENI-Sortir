@@ -6,10 +6,15 @@
 
 
 
+    {% if participant.userName == app.user.username %}
         {{ form_start(participantForm) }}
         {{ form_widget(participantForm) }}
         <button type="submit">Modifier !</button>
         {{ form_end(participantForm) }}
+    {% else %}
+        <p>Vous ne pouvez modifier que votre profil ! </p>
+    {% endif %}
+
 
 {% endblock %}
 

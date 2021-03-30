@@ -29,7 +29,7 @@ class ParticipantFixtures extends Fixture implements OrderedFixtureInterface
         $participant->setUserName("admin");
         $participant->setName("Dupuis");
         $participant->setFirstName("Paul");
-        $participant->setMail("participant1@gmail.com");
+        $participant->setMail("admin@test.fr");
         $participant->setAdmin(true);
         $participant->setActive(true);
         $participant->setCampus($this->getReference(CampusFixtures::CAMPUS_NANTES));;

@@ -46,8 +46,8 @@ class Participant implements UserInterface
 
     /**
      * @Assert\Regex(
-     *     pattern     = "/^[0-9]+$/i",
-     *     htmlPattern = "^[0-9]+$",
+     *     pattern     = "/^0[1-9](((?:[\s.-]?)(\d\d)){4})/i",
+     *     htmlPattern = "/0[1-9](((?:[\s.-]?)(\d\d)){4})",
      *     message = "ce numéro n'est pas valide"
      * )
      * @ORM\Column(type="string", length=12, nullable=true)
