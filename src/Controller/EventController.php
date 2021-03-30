@@ -27,9 +27,12 @@ class EventController extends AbstractController
         $campusRepo = $this->getDoctrine()->getRepository(Campus::class);
         $campus = $campusRepo->findAll();
 
+        // Get the data from the form
+        $campusSelected = null;
+
         // Get the events from database
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
-        $events = $eventRepo->findAll();
+        $events = $eventRepo->filterEvents($campusSelected);
 
         return $this->render("event/list.html.twig", [
             "events" => $events,
