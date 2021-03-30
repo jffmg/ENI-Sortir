@@ -80,14 +80,14 @@ class Participant implements UserInterface
 
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="App\Entity\Event")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Event", cascade={"remove"})
      * @ORM\JoinTable(name="participantEvents")
      */
     private $eventsParticipant;
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="organizer")
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="organizer", cascade={"remove"})
      */
     private $eventsOrganizer;
 

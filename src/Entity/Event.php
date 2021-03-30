@@ -50,7 +50,7 @@ class Event
 
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="App\Entity\Participant")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Participant", cascade={"remove"})
      * @ORM\JoinTable(name="eventParticipants")
      */
     private $participants;

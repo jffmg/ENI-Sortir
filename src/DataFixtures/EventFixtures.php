@@ -58,11 +58,12 @@ class EventFixtures extends Fixture implements OrderedFixtureInterface
     private function randomOrganizer($campus){
         try {
             $random = random_int(0, 9);
+            $random2 = random_int(10, 19);
         } catch (\Exception $e) {
         }
         switch ($campus) {
-             case "campus_nantes" : return $this->getReference(ParticipantFixtures::PARTICIPANT_NANTES.$random); break;
-             case "campus_rennes" : return $this->getReference(ParticipantFixtures::PARTICIPANT_RENNES.$random); break;
+             case $this->getReference(CampusFixtures::CAMPUS_NANTES) : return $this->getReference(ParticipantFixtures::PARTICIPANT_NANTES.$random); break;
+             case $this->getReference(CampusFixtures::CAMPUS_RENNES) : return $this->getReference(ParticipantFixtures::PARTICIPANT_RENNES.$random2); break;
              default : return $this->getReference(ParticipantFixtures::PARTICIPANT_ADMIN); break;
          }
 

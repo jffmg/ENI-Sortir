@@ -35,7 +35,4 @@ class MainController extends AbstractController
     {
     }
 
-    public function test() {
-
-    }
 }
