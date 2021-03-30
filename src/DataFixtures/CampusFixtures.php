@@ -4,9 +4,10 @@ namespace App\DataFixtures;
 
 use App\Entity\Campus;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class CampusFixtures extends Fixture
+class CampusFixtures extends Fixture implements OrderedFixtureInterface
 {
     public const CAMPUS_NANTES="campus_nantes";
     public const CAMPUS_RENNES="campus_rennes";
@@ -28,4 +29,8 @@ class CampusFixtures extends Fixture
         $manager->flush();
     }
 
+    public function getOrder(): int
+    {
+        return 20;
+    }
 }

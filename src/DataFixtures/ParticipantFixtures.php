@@ -4,14 +4,18 @@ namespace App\DataFixtures;
 
 use App\Entity\Participant;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class ParticipantFixtures extends Fixture implements DependentFixtureInterface
+class ParticipantFixtures extends Fixture implements OrderedFixtureInterface
 {
     private $encoder;
+
+    public const PARTICIPANT_ADMIN="participant_admin";
+    public const PARTICIPANT_NANTES="participant_nantes";
+    public const PARTICIPANT_RENNES="participant_rennes";
 
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
@@ -30,6 +34,7 @@ class ParticipantFixtures extends Fixture implements DependentFixtureInterface
         $participant->setActive(true);
         $participant->setCampus($this->getReference(CampusFixtures::CAMPUS_NANTES));;
 
+        $this->addReference(self::PARTICIPANT_ADMIN, $participant);
         $password = $this->encoder->encodePassword($participant, 'test');
         $participant->setPassword($password);
 
@@ -49,6 +54,7 @@ class ParticipantFixtures extends Fixture implements DependentFixtureInterface
             $password = $this->encoder->encodePassword($participant, "test");
             $participant->setPassword($password);
 
+            $this->addReference(self::PARTICIPANT_NANTES.$i, $participant);
             $participant->setCampus($this->getReference(CampusFixtures::CAMPUS_NANTES));;
             $manager->persist($participant);
         }
@@ -69,6 +75,7 @@ class ParticipantFixtures extends Fixture implements DependentFixtureInterface
             $password = $this->encoder->encodePassword($participant, "test");
             $participant->setPassword($password);
 
+            $this->addReference(self::PARTICIPANT_RENNES.$i, $participant);
             $participant->setCampus($this->getReference(CampusFixtures::CAMPUS_RENNES));;
 
             $manager->persist($participant);
@@ -77,12 +84,9 @@ class ParticipantFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getDependencies(): array
-    {
-        return array(CampusFixtures::class);
-    }
 
+    public function getOrder(): int
+    {
+        return 30;
+    }
 }
