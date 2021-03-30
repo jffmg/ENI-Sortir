@@ -11,8 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
- * @UniqueEntity(fields={"mail"}, message="cette adresse mail est déjà utilisée")
- * @UniqueEntity(fields={"userName"}, message="ce pseudo n'est pas disponible")
+ * @UniqueEntity(fields={"mail"}, message="Cette adresse email est déjà utilisée")
+ * @UniqueEntity(fields={"userName"}, message="Ce pseudo n'est pas disponible")
  */
 class Participant implements UserInterface
 {
@@ -24,22 +24,22 @@ class Participant implements UserInterface
     private $id;
 
     /**
-     * @Assert\Length(max=255, maxMessage="255 caractères max")
-     * @Assert\NotBlank(message="ce champ est obligatoire")
+     * @Assert\Length(max=255, maxMessage="255 caractères maximum")
+     * @Assert\NotBlank(message="Ce champ est obligatoire")
      * @ORM\Column(type="string", length=255, nullable=false, unique=true)
      */
     private $userName;
 
     /**
-     * @Assert\Length(max=255, maxMessage="255 caractères max")
-    * @Assert\NotBlank(message="ce champ est obligatoire")
+     * @Assert\Length(max=255, maxMessage="255 caractères maximum")
+    * @Assert\NotBlank(message="Ce champ est obligatoire")
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
-     * @Assert\Length(max=255, maxMessage="255 caractères max")
-     * @Assert\NotBlank(message="ce champ est obligatoire")
+     * @Assert\Length(max=255, maxMessage="255 caractères maximum")
+     * @Assert\NotBlank(message="Ce champ est obligatoire")
      * @ORM\Column(type="string", length=255)
      */
     private $firstName;
@@ -48,22 +48,23 @@ class Participant implements UserInterface
      * @Assert\Regex(
      *     pattern     = "/^0[1-9](((?:[\s.-]?)(\d\d)){4})/i",
      *     htmlPattern = "/0[1-9](((?:[\s.-]?)(\d\d)){4})",
-     *     message = "ce numéro n'est pas valide"
+     *     message = "Ce numéro n'est pas valide"
      * )
      * @ORM\Column(type="string", length=12, nullable=true)
      */
     private $phone;
 
     /**
-     * @Assert\Email(message="ceci n'est pas un email valide")
+     * @Assert\Email(message="Ceci n'est pas un email valide")
      * @Assert\Length(max=255, maxMessage="255 caractères max")
-     * @Assert\NotBlank(message="ce champ est obligatoire")
+     * @Assert\NotBlank(message="Ce champ est obligatoire")
      * @ORM\Column(name="mail", type="string", length=255, unique=true)
      */
     private $mail;
 
     /**
-     * @Assert\NotBlank(message="ce champ est obligatoire")
+     * @Assert\Length(max=255, maxMessage="255 caractères maximum")
+     * @Assert\NotBlank(message="Ce champ est obligatoire")
      * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
@@ -80,20 +81,21 @@ class Participant implements UserInterface
 
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="App\Entity\Event", cascade={"remove"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Event")
      * @ORM\JoinTable(name="participantEvents")
      */
     private $eventsParticipant;
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="organizer", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="organizer")
      */
     private $eventsOrganizer;
 
     /**
      * @var Campus
      * @ORM\ManyToOne(targetEntity="App\Entity\Campus", inversedBy="participants")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $campus;
 

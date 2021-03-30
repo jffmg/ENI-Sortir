@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CampusRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CampusRepository::class)
@@ -19,19 +20,20 @@ class Campus
     private $id;
 
     /**
+     * @Assert\Length(max=255, maxMessage="255 caractères maximum")
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="App\Entity\Participant", mappedBy="campus", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Participant", mappedBy="campus")
      */
     private $participants;
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="campusOrganizer", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="campusOrganizer")
      */
     private $eventsCampus;
 

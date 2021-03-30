@@ -12,7 +12,7 @@
 
 
     {% if participant.userName == app.user.username %}
-        <a class="app-btn-link" href="{{ path('participant_update',{id: participant.id}) }}">Modifier</a>
+        <a class="app-btn app-btn-link" href="{{ path('participant_update',{id: participant.id}) }}">Modifier</a>
     {% endif %}
 
 

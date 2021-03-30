@@ -4,17 +4,22 @@
 
 {% block main %}
 
-
-
     {% if participant.userName == app.user.username %}
         {{ form_start(participantForm) }}
+        <div class="app-form-container app-update-form-container">{{ form_row(participantForm.userName) }}</div>
+        <div class="app-form-container app-update-form-container">{{ form_row(participantForm.name) }}</div>
+        <div class="app-form-container app-update-form-container">{{ form_row(participantForm.firstName) }}</div>
+        <div class="app-form-container app-update-form-container">{{ form_row(participantForm.phone) }}</div>
+        <div class="app-form-container app-update-form-container">{{ form_row(participantForm.mail) }}</div>
+        <div class="app-form-container app-update-form-container">{{ form_row(participantForm.password) }}</div>
+
+
         {{ form_widget(participantForm) }}
-        <button type="submit">Modifier !</button>
+        <button class="app-btn" type="submit">Modifier !</button>
         {{ form_end(participantForm) }}
     {% else %}
         <p>Vous ne pouvez modifier que votre profil ! </p>
     {% endif %}
-
+    </div>
 
 {% endblock %}
-
