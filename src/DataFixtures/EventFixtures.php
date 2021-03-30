@@ -20,6 +20,7 @@ class EventFixtures extends Fixture implements OrderedFixtureInterface
 
     public function load(ObjectManager $manager)
     {
+
         for ($y = 0; $y < 5; $y++) {
             for ($i = 0; $i < 5; $i++) {
                 $faker = Factory::create();
@@ -28,16 +29,14 @@ class EventFixtures extends Fixture implements OrderedFixtureInterface
 
                 $campusOrganizer = $this->randomCampusOrganizer();
                 $organizer = $this->randomOrganizer($campusOrganizer);
-                $state = $this->randomState();
                 $location = $this->randomLocation();
 
 
                 $event->setOrganizer($organizer);
                 $event->setCampusOrganizer($campusOrganizer);
-                $event->setState($state);
                 $event->setLocation($location);
 
-                $event->setName($faker->realText(34, 2));
+                $event->setName($faker->colorName);
 
                 $eventDatesArray = $this->logicalDates($faker);
 
@@ -47,7 +46,7 @@ class EventFixtures extends Fixture implements OrderedFixtureInterface
                 $event->setState($eventDatesArray['st']);
 
                 $event->setNbInscriptionsMax($faker->numberBetween(1, 20));
-                $event->setInfosEvent($faker->realText(240, 2));
+                $event->setInfosEvent($faker->userName);
 
 
                 $this->setReference(self::EVENT . $i, $event);
