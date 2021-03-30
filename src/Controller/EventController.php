@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class EventController extends AbstractController
 {
     /**
-     * @Route("", name="display_events",
+     * @Route("", name="display_events")
      */
     public function displayEvents()
     {

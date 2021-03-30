@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EventRepository::class)
@@ -19,6 +20,7 @@ class Event
     private $id;
 
     /**
+     * @Assert\Length(max=255, maxMessage="255 caractères maximum")
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -44,6 +46,7 @@ class Event
     private $nbInscriptionsMax;
 
     /**
+     * @Assert\Length(max=255, maxMessage="255 caractères maximum")
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $infosEvent;
@@ -58,24 +61,28 @@ class Event
     /**
      * @var Participant
      * @ORM\ManyToOne(targetEntity="App\Entity\Participant", inversedBy="eventsOrganizer")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $organizer;
 
     /**
      * @var Campus
      * @ORM\ManyToOne(targetEntity="App\Entity\Campus", inversedBy="eventsCampus")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $campusOrganizer;
 
     /**
      * @var State
      * @ORM\ManyToOne(targetEntity="App\Entity\State", inversedBy="events")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $state;
 
     /**
      * @var Location
      * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="events")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $location;
 

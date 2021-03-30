@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\StateRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=StateRepository::class)
@@ -19,11 +20,13 @@ class State
     private $id;
 
     /**
+     * @Assert\Length(max=255, maxMessage="255 caractères maximum")
      * @ORM\Column(type="string", length=255)
      */
     private $label;
 
     /**
+     * @Assert\Length(max=10, maxMessage="10 caractères maximum")
      * @ORM\Column(type="string", length=10)
      */
     private $shortLabel;
