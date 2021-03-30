@@ -36,12 +36,12 @@ class EventFixtures extends Fixture implements OrderedFixtureInterface
                 $event->setState($state);
                 $event->setLocation($location);
 
-                $event->setName($faker->sentence);
+                $event->setName($faker->realText(50,2));
                 $event->setDateTimeStart($faker->dateTimeThisYear);
                 $event->setDuration($faker->numberBetween(1, 10));
                 $event->setDateEndInscription($faker->dateTimeThisYear);
                 $event->setNbInscriptionsMax($faker->numberBetween(1, 20));
-                $event->setInfosEvent($faker->text(200));
+                $event->setInfosEvent($faker->realText(240,2));
 
 
 

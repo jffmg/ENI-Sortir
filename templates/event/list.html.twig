@@ -85,14 +85,15 @@
                 <td>
 
                     {% if app.user == event.organizer %}
-                    {# TODO Ajouter les fonctionnalités et path modifier / publier #}
-                    {% if event.state.label == "" %}
-                        <a class="app-link" href="{{ path('main_home') }}">Modifier</a>
-                        <a class="app-link" href="{{ path('main_home') }}">Publier</a>
-
-                        {# TODO Ajouter condition sur date inscription et faire les fonctionnalités / path corrspondantes #}
-                        <a class="app-link" href="{{ path('main_home') }}">Modifier</a>
-                        <a class="app-link" href="{{ path('main_home') }}">Annuler</a>
+                     {# TODO Ajouter les fonctionnalités et path modifier / publier #}
+                        {% if event.state.label == "" %}
+                            <a class="app-link" href="{{ path('main_home') }}">Modifier</a>
+                            <a class="app-link" href="{{ path('main_home') }}">Publier</a>
+                        {% else %}
+                            {# TODO Ajouter condition sur date inscription et faire les fonctionnalités / path corrspondantes #}
+                            <a class="app-link" href="{{ path('main_home') }}">Modifier</a>
+                            <a class="app-link" href="{{ path('main_home') }}">Annuler</a>
+                        {% endif %}
                     {% endif %}
 
                     {# TODO Ajouter les fonctionnalités et path s'inscrire, se desister #}
