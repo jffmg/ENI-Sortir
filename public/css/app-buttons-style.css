@@ -1,0 +1,12 @@
+.app-btn {
+    width: 7em;
+    align-self: flex-end;
+}
+
+.app-btn-link {
+    text-decoration: none;
+    color: black;
+    width: 3em;
+    padding-left: 1em;
+    padding-right: 1em;
+}
