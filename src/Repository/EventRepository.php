@@ -41,6 +41,12 @@ class EventRepository extends ServiceEntityRepository
         }*/
 
         // Todo requetes sur les dates
+        $startDate = $searchEvents->getStartDate();
+        $endDate = $searchEvents->getEndDate();
+        $qb->andWhere("e.dateTimeStart > :startDate");
+        $qb->andWhere("e.dateTimeStart < :endDate");
+        $qb->setParameter("startDate", $startDate);
+        $qb->setParameter("endDate", $endDate);
 
         $userIsOrganizer = $searchEvents->isUserIsOrganizer();
         if ($userIsOrganizer)

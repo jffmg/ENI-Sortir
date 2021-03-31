@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Entity\SearchEvents;
 use App\Form\SearchEventsType;
+use Cassandra\Date;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,6 +27,12 @@ class EventController extends AbstractController
 
         // Create the form
         $searchEvents = new SearchEvents();
+        $searchEvents->setStartDate(new \DateTime());
+
+        $endDate = new \DateTime();
+        $endDate->modify('+'. 90 .' days');
+
+        $searchEvents->setEndDate( $endDate);
         $searchEventsForm = $this->createForm(SearchEventsType::class, $searchEvents);
 
         // Get the data from the form
