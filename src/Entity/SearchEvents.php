@@ -2,16 +2,8 @@
 
 namespace App\Entity;
 
-use App\Repository\SearchEventsRepository;
 use Cassandra\Date;
-use DateTime;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use App\Entity\Campus;
 
-/**
- * @ORM\Entity(repositoryClass=SearchEventsRepository::class)
- */
 class SearchEvents
 {
 
@@ -59,17 +51,17 @@ class SearchEvents
 
     /*GETTERS & SETTERS*/
     /**
-     * @return Campus[]
+     * @return Campus
      */
-    public function getCampus(): array
+    public function getCampus()
     {
         return $this->campus;
     }
 
     /**
-     * @param Campus[] $campus
+     * @param Campus $campus
      */
-    public function setCampus(array $campus): void
+    public function setCampus($campus): void
     {
         $this->campus = $campus;
     }
@@ -77,7 +69,7 @@ class SearchEvents
     /**
      * @return string
      */
-    public function getKeywords(): string
+    public function getKeywords()
     {
         return $this->keywords;
     }
@@ -85,7 +77,7 @@ class SearchEvents
     /**
      * @param string $keywords
      */
-    public function setKeywords(string $keywords): void
+    public function setKeywords($keywords): void
     {
         $this->keywords = $keywords;
     }
@@ -93,7 +85,7 @@ class SearchEvents
     /**
      * @return string
      */
-    public function getStartDate(): string
+    public function getStartDate()
     {
         return $this->startDate;
     }
@@ -101,7 +93,7 @@ class SearchEvents
     /**
      * @param string $startDate
      */
-    public function setStartDate(string $startDate): void
+    public function setStartDate($startDate): void
     {
         $this->startDate = $startDate;
     }
@@ -109,7 +101,7 @@ class SearchEvents
     /**
      * @return string
      */
-    public function getEndDate(): string
+    public function getEndDate()
     {
         return $this->endDate;
     }
@@ -117,7 +109,7 @@ class SearchEvents
     /**
      * @param string $endDate
      */
-    public function setEndDate(string $endDate): void
+    public function setEndDate($endDate): void
     {
         $this->endDate = $endDate;
     }
@@ -125,7 +117,7 @@ class SearchEvents
     /**
      * @return bool
      */
-    public function isUserIsOrganizer(): bool
+    public function isUserIsOrganizer()
     {
         return $this->userIsOrganizer;
     }
@@ -133,7 +125,7 @@ class SearchEvents
     /**
      * @param bool $userIsOrganizer
      */
-    public function setUserIsOrganizer(bool $userIsOrganizer): void
+    public function setUserIsOrganizer($userIsOrganizer): void
     {
         $this->userIsOrganizer = $userIsOrganizer;
     }
@@ -141,7 +133,7 @@ class SearchEvents
     /**
      * @return bool
      */
-    public function isUserIsRegistered(): bool
+    public function isUserIsRegistered()
     {
         return $this->userIsRegistered;
     }
@@ -149,7 +141,7 @@ class SearchEvents
     /**
      * @param bool $userIsRegistered
      */
-    public function setUserIsRegistered(bool $userIsRegistered): void
+    public function setUserIsRegistered($userIsRegistered): void
     {
         $this->userIsRegistered = $userIsRegistered;
     }
@@ -157,7 +149,7 @@ class SearchEvents
     /**
      * @return bool
      */
-    public function isUserIsNotRegistered(): bool
+    public function isUserIsNotRegistered()
     {
         return $this->userIsNotRegistered;
     }
@@ -165,7 +157,7 @@ class SearchEvents
     /**
      * @param bool $userIsNotRegistered
      */
-    public function setUserIsNotRegistered(bool $userIsNotRegistered): void
+    public function setUserIsNotRegistered($userIsNotRegistered): void
     {
         $this->userIsNotRegistered = $userIsNotRegistered;
     }
@@ -173,7 +165,7 @@ class SearchEvents
     /**
      * @return bool
      */
-    public function isEndedEvents(): bool
+    public function isEndedEvents()
     {
         return $this->endedEvents;
     }
@@ -181,7 +173,7 @@ class SearchEvents
     /**
      * @param bool $endedEvents
      */
-    public function setEndedEvents(bool $endedEvents): void
+    public function setEndedEvents($endedEvents): void
     {
         $this->endedEvents = $endedEvents;
     }

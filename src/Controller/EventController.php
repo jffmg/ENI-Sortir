@@ -4,11 +4,10 @@ namespace App\Controller;
 
 
 use App\Entity\Event;
-use App\Entity\Campus;
 use App\Entity\SearchEvents;
 use App\Form\SearchEventsType;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -20,29 +19,25 @@ class EventController extends AbstractController
     /**
      * @Route("/list", name="display_events")
      */
-    public function displayEvents()
+    public function displayEvents(Request $request)
     {
         // Access denied if user not connected
         $this->denyAccessUnlessGranted("ROLE_USER");
-
-        // Get the campus from database
-        $campusRepo = $this->getDoctrine()->getRepository(Campus::class);
-        $campus = $campusRepo->findAll();
 
         // Create the form
         $searchEvents = new SearchEvents();
         $searchEventsForm = $this->createForm(SearchEventsType::class, $searchEvents);
 
         // Get the data from the form
-        $campusSelected = null;
+        $searchEventsForm->handleRequest($request);
+        $user = $this->getUser();
 
         // Get the events from database
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
-        $events = $eventRepo->filterEvents($campusSelected);
+        $events = $eventRepo->filterEvents($searchEvents, $user);
 
         return $this->render("event/list.html.twig", [
             "events" => $events,
-            "campus" =>$campus,
             "searchEventsForm" => $searchEventsForm->createView()
         ]);
     }
