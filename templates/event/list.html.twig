@@ -17,19 +17,17 @@
         <p>Participant : {{ app.user.username }}</p>
     </div>
 
-
-    <form>
+    <div class="app-form-search-events">
 
         {{ form_start(searchEventsForm) }}
 
         {{ form_widget(searchEventsForm) }}
+
         <button type="submit">Rechercher</button>
 
         {{ form_end(searchEventsForm) }}
 
-
-    </form>
-
+    </div>
 
     <table class="app-table">
         <tr>

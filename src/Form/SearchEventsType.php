@@ -19,6 +19,7 @@ class SearchEventsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            // TODO selectionner tous les campus ?
             ->add('campus', EntityType::class, [
                 'label' => 'Campus : ',
                 'class' => Campus::class,
@@ -29,28 +30,34 @@ class SearchEventsType extends AbstractType
                 'label_attr'=> ['class'=> 'app-form-label'],
                 'attr' => [
                     'class' => 'app-form-field',
-                ]
+                ],
+                'required' => false,
             ])
             // TODO mettre un calendrier
             ->add('startDate',DateType::class, [
                 'label' => 'Entre : ',
                 'label_attr'=> ['class'=> 'app-form-label'],
+                'required' => false,
             ])
             ->add('endDate',DateType::class, [
                 'label' => 'et : ',
                 'label_attr'=> ['class'=> 'app-form-label'],
+                'required' => false,
             ])
             ->add('userIsOrganizer',CheckboxType::class, [
                 'label' => 'Sorties dont je suis l\'organisateur(trice)',
                 'label_attr'=> ['class'=> 'app-form-label'],
+                'required' => false,
             ])
             ->add('userIsRegistered',CheckboxType::class, [
                 'label' => 'Sorties auxquelles je suis inscrit(e)',
                 'label_attr'=> ['class'=> 'app-form-label'],
+                'required' => false,
             ])
             ->add('userIsNotRegistered',CheckboxType::class, [
                 'label' => 'Sorties auxquelles je ne suis pas inscrit(e) ',
                 'label_attr'=> ['class'=> 'app-form-label'],
+                'required' => false,
             ])
         ;
     }

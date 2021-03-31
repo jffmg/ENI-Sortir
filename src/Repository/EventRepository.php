@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Event;
+use App\Entity\SearchEvents;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,15 +20,16 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
-    public function filterEvents(
-        $campus = null)
+    public function filterEvents(SearchEvents $searchEvents)
     {
-         $qb = $this->createQueryBuilder('e');
+        $qb = $this->createQueryBuilder('e');
 
-        if($campus){
-            $qb->andWhere("e.campus = :campus");
+        $campus = $searchEvents->getCampus();
+        if ($campus)
+        {
+            $qb->andWhere("e.campusOrganizer = :campus");
             $qb->setParameter("campus", $campus);
-            }
+        }
 
         $query = $qb->getQuery();
         $result = $query->getResult();
