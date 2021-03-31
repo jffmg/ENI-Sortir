@@ -50,15 +50,32 @@ body {
 }
 
 /*FORMS*/
-.app-form-container {
+.app-form {
+	max-width: 50%;
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.app-form-container {
+	height: inherit;
+	align-content: center;
+}
+
+.app-update-form-container>div {
+	display: flex;
+	flex-direction: row;
 	height: inherit;
 	justify-content: center;
 }
 
-.form-field {
+.app-form-field {
 	align-self: end;
+}
+
+.app-form-label {
+	align-self: start;
+	max-width: 50%;
 }
 
 .app-btn {
