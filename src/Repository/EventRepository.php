@@ -32,15 +32,23 @@ class EventRepository extends ServiceEntityRepository
             $qb->setParameter("campus", $campus);
         }
 
-        // Todo régler le problème du passage d eparamètre à la requete et verifier si elle fonctionne
-        /*$keywords = $searchEvents->getKeywords();
-        if ($keywords)
-        {
-            $qb->expr()->in("e.name", array("?1"));
-            $qb->setParameter(1, $keywords);
-        }*/
+        $keywords = $searchEvents->getKeywords();
+        if ($keywords) {
+            $keywords = explode(" ", trim($keywords));
 
-        // Todo requetes sur les dates
+            dump($keywords);
+
+            $i = 0;
+            foreach ($keywords as $keyword) {
+                $qb->andWhere($qb->expr()->orX(
+                    $qb->expr()->like('e.name', ":keyword".$i)
+                ));
+                $qb->setParameter(":keyword".$i, "%" . $keyword . "%");
+                $i++;
+            }
+
+        }
+
         $startDate = $searchEvents->getStartDate();
         $endDate = $searchEvents->getEndDate();
         $qb->andWhere("e.dateTimeStart > :startDate");
@@ -67,6 +75,16 @@ class EventRepository extends ServiceEntityRepository
         {
             // TODO enlever les evenements où l'utilisateur n'est pas inscrit
         }
+
+        $endedEvents = $searchEvents->isEndedEvents();
+        if ($endedEvents)
+        {
+            $qb->join('e.state','s', 'WITH', 'e.state = :state');
+            $qb->setParameter("state", "AT");
+            $qb->addSelect('s');
+        }
+
+        $qb->orderBy("e.dateTimeStart");
 
         $query = $qb->getQuery();
         $result = $query->getResult();

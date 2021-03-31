@@ -60,6 +60,11 @@ class SearchEventsType extends AbstractType
                 'label_attr'=> ['class'=> 'app-form-label'],
                 'required' => false,
             ])
+            ->add('endedEvents',CheckboxType::class, [
+                'label' => 'Sorties passées ',
+                'label_attr'=> ['class'=> 'app-form-label'],
+                'required' => false,
+            ])
         ;
     }
 
