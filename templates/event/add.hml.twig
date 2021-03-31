@@ -1,0 +1,35 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Créer une sortie | {{ parent() }}{% endblock %}
+
+{% block main %}
+	<h1 class="app-main-title">Créer une nouvelle sortie</h1>
+
+	<div class="app-form-container">
+		{{ form_start(eventForm) }}
+	<p class="app-add-form-container"><span
+				class="app-profile-label"> {{ form_label(eventForm.name) }}</span> {{ form_widget(eventForm.name) }}</p>
+	<br>
+	<p class="app-add-form-container"><span
+				class="app-profile-label"> {{ form_label(eventForm.dateTimeStart) }}</span> {{ form_widget(eventForm.dateTimeStart) }}
+	</p><br>
+	<p class="app-add-form-container"><span
+				class="app-profile-label"> {{ form_label(eventForm.duration) }}</span> {{ form_widget(eventForm.duration) }}
+	</p><br>
+	<p class="app-add-form-container"><span
+				class="app-profile-label"> {{ form_label(eventForm.nbInscriptionsMax) }}</span> {{ form_widget(eventForm.nbInscriptionsMax) }}
+	</p><br>
+	<p class="app-add-form-container"><span
+				class="app-profile-label"> {{ form_label(eventForm.infosEvent) }}</span> {{ form_widget(eventForm.infosEvent) }}
+	</p><br>
+	<p class="app-add-form-container"><span
+				class="app-profile-label"> {{ form_label(eventForm.dateEndInscription) }}</span> {{ form_widget(eventForm.dateEndInscription) }}
+	</p><br>
+	</div>
+
+	{{ form_widget(eventForm) }}
+	<div class="app-form-btn-container">
+		<button class="app-btn" type="submit">Créer la sortie</button>
+	</div>
+	{{ form_end(eventForm) }}
+{% endblock %}
