@@ -6,7 +6,6 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Entity\SearchEvents;
 use App\Form\SearchEventsType;
-use Cassandra\Date;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
