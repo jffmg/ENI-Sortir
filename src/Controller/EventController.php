@@ -28,13 +28,13 @@ class EventController extends AbstractController
         $searchEvents = new SearchEvents();
         $searchEventsForm = $this->createForm(SearchEventsType::class, $searchEvents);
 
-
         // Get the data from the form
         $searchEventsForm->handleRequest($request);
+        $user = $this->getUser();
 
         // Get the events from database
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
-        $events = $eventRepo->filterEvents($searchEvents);
+        $events = $eventRepo->filterEvents($searchEvents, $user);
 
         return $this->render("event/list.html.twig", [
             "events" => $events,
