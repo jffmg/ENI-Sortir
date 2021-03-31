@@ -73,14 +73,19 @@
                         {% endif %}
                     {% endif %}
 
+                    {# TODO quand des inscriptions seront faites, tester si les liens apparaissent quand il faut #}
                     {# TODO Ajouter les fonctionnalités et path s'inscrire, se desister #}
-                    {% for p in event.participants %}
-                        {% if app.user == p %}
-                            <a class="app-link" href="{{ path('main_home') }}">Se désister</a>
-                        {% else %}
-                            <a class="app-link" href="{{ path('main_home') }}">S'inscrire</a>
-                        {% endif %}
-                    {% endfor %}
+                    {% if event.participants.count > 0 %}
+                        {% for p in event.participants %}
+                            {% if app.user == p %}
+                                <a class="app-link" href="{{ path('main_home') }}">Se désister</a>
+                            {% else %}
+                                <a class="app-link" href="{{ path('main_home') }}">S'inscrire</a>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <a class="app-link" href="{{ path('main_home') }}">S'inscrire</a>
+                    {% endif %}
 
                 </td>
             </tr>

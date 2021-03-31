@@ -27,7 +27,8 @@ class EventRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('e');
 
         $campus = $searchEvents->getCampus();
-        if ($campus) {
+        if ($campus)
+        {
             $qb->andWhere("e.campusOrganizer = :campus");
             $qb->setParameter("campus", $campus);
         }
@@ -38,7 +39,7 @@ class EventRepository extends ServiceEntityRepository
         if ($keywords) {
             $keywords = explode(" ", trim($keywords));
 
-            dump($keywords);
+        dump($qb->getDQL());
 
             $i = 0;
             foreach ($keywords as $keyword) {
@@ -51,31 +52,46 @@ class EventRepository extends ServiceEntityRepository
 
         }
 
-        dump($qb->getDQL());
+        $startDate = $searchEvents->getStartDate();
+        $endDate = $searchEvents->getEndDate();
+        $qb->andWhere("e.dateTimeStart > :startDate");
+        $qb->andWhere("e.dateTimeStart < :endDate");
+        $qb->setParameter("startDate", $startDate);
+        $qb->setParameter("endDate", $endDate);
 
-            // Todo requetes sur les dates
+        $userIsOrganizer = $searchEvents->isUserIsOrganizer();
+        if ($userIsOrganizer)
+        {
+            $qb->andWhere("e.organizer = :user");
+            $qb->setParameter("user", $user);
+        }
 
-            $userIsOrganizer = $searchEvents->isUserIsOrganizer();
-            if ($userIsOrganizer) {
-                $qb->andWhere("e.organizer = :user");
-                $qb->setParameter("user", $user);
-            }
+        // TODO tester les requetes quand on aura des fausses données pour les événements
+        $filterEventsUserIsRegistered = $searchEvents->isUserIsRegistered();
+        if (!$filterEventsUserIsRegistered)
+        {
+            // TODO enlever les evenements où l'utilisateur est inscrit
+        }
 
-            // TODO tester les requetes quand on aura des fausses données pour les événements
-            $filterEventsUserIsRegistered = $searchEvents->isUserIsRegistered();
-            if (!$filterEventsUserIsRegistered) {
-                // TODO enlever les evenements où l'utilisateur est inscrit
-            }
+        $filterEventsUserIsNotRegistered = $searchEvents->isUserIsNotRegistered();
+        if (!$filterEventsUserIsNotRegistered)
+        {
+            // TODO enlever les evenements où l'utilisateur n'est pas inscrit
+        }
 
-            $filterEventsUserIsNotRegistered = $searchEvents->isUserIsNotRegistered();
-            if (!$filterEventsUserIsNotRegistered) {
-                // TODO enlever les evenements où l'utilisateur n'est pas inscrit
-            }
+        $endedEvents = $searchEvents->isEndedEvents();
+        if ($endedEvents)
+        {
+            $qb->join('e.state','s', 'WITH', 'e.state = :state');
+            $qb->setParameter("state", "AT");
+            $qb->addSelect('s');
+        }
 
-            $query = $qb->getQuery();
-            $result = $query->getResult();
-            return $result;
+        $qb->orderBy("e.dateTimeStart");
 
-
+        $query = $qb->getQuery();
+        $result = $query->getResult();
+        return $result;
     }
+
 }
