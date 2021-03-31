@@ -19,36 +19,15 @@
 
 
     <form>
-        <label class="form-label" for="campus">Campus : </label>
-        <select name="campus" id="campus">
-            <option value="0">Tous les campus</option>
-            {% for c in campus %}
-                <option value="{{ c.id }}">{{ c.name }}</option>
-            {% endfor %}
-        </select>
 
-        <label class="form-label" for="keywords">Le nom de la sortie contient : </label>
-        <input class="form-field" type="text" id="keywords">
+        {{ form_start(searchEventsForm) }}
 
-        <label class="form-label" for="startDate">Entre le : </label>
-        <input class="form-field" type="date" id="startDate">
+        {{ form_widget(searchEventsForm) }}
+        <button type="submit">Rechercher</button>
 
-        <label class="form-label" for="endDate">Entre le : </label>
-        <input class="form-field" type="date" id="endDate">
+        {{ form_end(searchEventsForm) }}
 
-        <input type="checkbox" id="userIsOrganizer" name="userIsOrganizer" checked/>
-        <label for="userIsOrganizer">Sorties dont je suis l'organisateur(trice)</label>
 
-        <input type="checkbox" id="userIsRegistered" name="userIsRegistered" checked/>
-        <label for="userIsRegistered">Sorties auxquelles je suis inscrit(e)</label>
-
-        <input type="checkbox" id="userIsNotRegistered" name="userIsNotRegistered" checked/>
-        <label for="userIsNotRegistered">Sorties auxquelles je suis inscrit(e)</label>
-
-        <input type="checkbox" id="endedEvents" name="endedEvents" checked/>
-        <label for="endedEvents">Sorties passées</label>
-
-        <button class="app-btn" type="submit">Rechercher</button>
     </form>
 
 

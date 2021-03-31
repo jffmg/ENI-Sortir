@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Participant;
-use App\Form\ParticipantType;
+use App\Form\SearchEventsType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,7 +51,7 @@ class ParticipantController extends AbstractController
         $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
         $participant = $participantRepo->find($id);
 
-        $participantForm = $this->createForm(ParticipantType::class, $participant);
+        $participantForm = $this->createForm(SearchEventsType::class, $participant);
 
         $participantForm->handleRequest($request);
         if ($participantForm->isSubmitted() && $participantForm->isValid()){

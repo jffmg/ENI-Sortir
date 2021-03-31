@@ -5,6 +5,8 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Entity\Campus;
+use App\Entity\SearchEvents;
+use App\Form\SearchEventsType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,13 +29,21 @@ class EventController extends AbstractController
         $campusRepo = $this->getDoctrine()->getRepository(Campus::class);
         $campus = $campusRepo->findAll();
 
+        // Create the form
+        $searchEvents = new SearchEvents();
+        $searchEventsForm = $this->createForm(SearchEventsType::class, $searchEvents);
+
+        // Get the data from the form
+        $campusSelected = null;
+
         // Get the events from database
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
-        $events = $eventRepo->findAll();
+        $events = $eventRepo->filterEvents($campusSelected);
 
         return $this->render("event/list.html.twig", [
             "events" => $events,
-            "campus" =>$campus
+            "campus" =>$campus,
+            "searchEventsForm" => $searchEventsForm->createView()
         ]);
     }
 
