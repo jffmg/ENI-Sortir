@@ -19,28 +19,28 @@ class ParticipantType extends AbstractType
                 'label' => 'Pseudo : ',
                 'label_attr'=> ['class'=> 'app-form-label'],
                 'attr' => [
-                    'class' => 'app-form-field',
+                    'class' => 'app-form-field app-update-field',
                 ]
             ])
             ->add('name',TextType::class, [
                 'label' => 'Nom : ',
                 'label_attr'=> ['class'=> 'app-form-label'],
                 'attr' => [
-                    'class' => 'app-form-field',
+                    'class' => 'app-form-field app-update-field',
                 ]
             ])
             ->add('firstName',TextType::class, [
                 'label' => 'Prénom : ',
                 'label_attr'=> ['class'=> 'app-form-label'],
                 'attr' => [
-                    'class' => 'app-form-field',
+                    'class' => 'app-form-field app-update-field',
                 ]
             ])
             ->add('phone',TextType::class, [
                 'label' => 'Téléphone : ',
                 'label_attr'=> ['class'=> 'app-form-label'],
                 'attr' => [
-                    'class' => 'app-form-field',
+                    'class' => 'app-form-field app-update-field',
                 ],
                 'required' => false,
             ])
@@ -48,7 +48,7 @@ class ParticipantType extends AbstractType
                 'label' => 'Mail : ',
                 'label_attr'=> ['class'=> 'app-form-label'],
                 'attr' => [
-                    'class' => 'app-form-field',
+                    'class' => 'app-form-field app-update-field',
                 ]
             ])
             ->add('password', RepeatedType::class, [
@@ -56,8 +56,8 @@ class ParticipantType extends AbstractType
                 'invalid_message' => 'Les deux mots de passe doivent être identiques',
                 'options' => ['attr' => ['class' => 'app-password-field']],
                 'required' => true,
-                'first_options'  => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Entrez une deuxième fois votre mot de passe'],
+                'first_options'  => ['label' => 'Mot de passe : '],
+                'second_options' => ['label' => 'Confirmation : '],
             ]);
         ;
     }
