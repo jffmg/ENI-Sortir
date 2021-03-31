@@ -2,12 +2,12 @@
 
 .app-header-container {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
     background-color: mintcream;
-    box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
+    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
     width: 100%;
     z-index: 3;
+    align-items: center;
 }
 
 .app-header-logo_img {
@@ -29,18 +29,24 @@
 
 
 /*NAV MENU*/
+
 .app-header-nav {
-    margin-top: 2em;
+    width: 50vw;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
 
 .app-header-nav ul {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
     margin: 0;
     padding: 0;
     list-style: none;
     overflow: hidden;
+    align-items: center;
 }
 
 .app-nav-btn {
@@ -60,9 +66,9 @@
     transition: max-height .2s ease-out;
 }
 
+
 .app-header-nav .app-menu-icon {
     cursor: pointer;
-    float: right;
     padding: 28px 20px;
     user-select: none;
 }

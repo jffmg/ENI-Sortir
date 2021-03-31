@@ -44,7 +44,6 @@ body {
     flex-direction: column;
     justify-content: space-between;
     height: 99vh;
-    margin: auto;
 }
 
 
@@ -55,10 +54,14 @@ body {
     align-items: center;
     height: inherit;
     justify-content: flex-start;
+    align-content: flex-end;
 }
 
 .app-main-title {
 	place-self: center;
+    margin-top: 1em;
+    margin-bottom: 5vh;
+    text-align: center;
 }
 
 .app-main-content {
@@ -71,18 +74,15 @@ body {
 .app-profile-label {
     font-family: "Exo 2 Black", sans-serif;
     color: plum;
-
 }
-
-.app-update-form-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 22vw;
-}
-
 
 /*FORMS*/
+
+.app-login-form-container {
+    height: 60vh;
+    padding-top: 20vh;
+    }
+
 .app-form {
 	max-width: 50%;
 	display: flex;
@@ -93,8 +93,8 @@ body {
 .app-form-container {
     display: flex;
     flex-direction: column;
-    height: 50vh;
-    justify-content: flex-end;
+    justify-content: space-between;
+    flex: content-box;
 }
 
 .app-form-btn-container {
@@ -109,8 +109,9 @@ body {
 }
 
 .app-update-field {
-    width: 22em;
-    /*width: 15vw;*/
+	width: 22em;
+	/*width: 15vw;*/
+}
 .app-form-label {
 	align-self: start;
 	max-width: 50%;
@@ -126,6 +127,13 @@ body {
     margin-right: 1em;
 }
 
+/*UPDATE FORM*/
+.app-update-form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 55vw;
+}
 
 /*FOOTER*/
 .app-footer-container {
@@ -141,66 +149,29 @@ body {
     padding: 4em;
 }
 
-/*MEDIA QUERIES*/
-
-/*Small devices (landscape phones, 576px and up)*/
-@media (max-width: 400px) {
-
-    .app-main-container {
-        justify-content: flex-start;
-    }
-
-    .app-main-title {
-        margin-top: 1em;
-    }
+/* M devices (tablets, 768px and up)*/
+@media (min-width: 768px){
 
     .app-header-container {
-        display: flex;
-        flex-direction: column;
-        background-color: mintcream;
-        box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
-        width: 100%;
-        z-index: 3;
-        align-items: center;
-    }
-
-    .app-header-nav {
-        width: 100vw;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .app-header-nav ul {
-        display: flex;
-        flex-direction: column;
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        overflow: hidden;
-        align-items: center;
-    }
-
-    .app-header-nav .app-menu-icon {
-        cursor: pointer;
-        padding: 28px 20px;
-        user-select: none;
-    }
-
-    .app-update-form-container {
-        flex-direction: column;
-    }
-
-    .app-form-container {
-        background-color: red;
-        flex: content-box;
-    }
-
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: mintcream;
+    box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
+    width: 100%;
+    z-index: 3;
 }
 
-/*Medium devices (tablets, 768px and up)*/
-@media (min-width: 768px) /*(max-width: 991px)*/ {
+    .app-header-nav ul {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+}
+
 
     .app-header-nav {
         margin-right: 5em;
@@ -215,30 +186,64 @@ body {
         overflow: hidden;
     }
 
-    .app-header-nav li {
-        float: left;
-    }
+
 
     .app-header-nav .app-nav-menu {
-        clear: none;
-        max-height: none;
-    }
+         clear: none;
+         max-height: none;
+        align-self: flex-end;
+     }
 
     .app-header-nav .app-menu-icon {
-        display: none;
+       display: none;
+   }
+
+
+
+    /*PROFILE PAGE*/
+    .app-profile-label {
+        font-family: "Exo 2 Black", sans-serif;
+        color: plum;
+    }
+
+
+    /*UPDATE FORM*/
+    .app-update-form-container {
+        flex-direction: row;
+        width: 55vw;
+    }
+}
+
+ /* L devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+    .app-update-form-container {
+        width: 40vw;
     }
 
     .app-connected-participant {
-        display: flex;
+       display: flex;
+        flex-direction: row;
+        width: 60vw;
+        align-self: center;
+        justify-self: center;
+        padding-left: 1em;
+   }
+
+}
+
+/* XL devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+    .app-update-form-container {
+        width: 35vw;
     }
 }
 
-/*!* Large devices (desktops, 992px and up)*!
-@media (min-width: 992px) and (max-width: 1199px) {
-
+/* XXL devices (large desktops, 1900px and up)*/
+@media (min-width: 1900px) {
+    .app-update-form-container {
+        width: 25vw;
+    }
 }
 
-!* Extra large devices (large desktops, 1200px and up)*!
-@media (min-width: 1200px) {
 
-}*/
+
