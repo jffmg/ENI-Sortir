@@ -33,13 +33,14 @@ class SearchEventsType extends AbstractType
                 ],
                 'required' => false,
             ])
-            // TODO mettre un calendrier
-            ->add('startDate',DateType::class, [
+            ->add('startDate', DateType::class, [
+                'widget' => 'single_text',
                 'label' => 'Entre : ',
                 'label_attr'=> ['class'=> 'app-form-label'],
                 'required' => false,
             ])
             ->add('endDate',DateType::class, [
+                'widget' => 'single_text',
                 'label' => 'et : ',
                 'label_attr'=> ['class'=> 'app-form-label'],
                 'required' => false,

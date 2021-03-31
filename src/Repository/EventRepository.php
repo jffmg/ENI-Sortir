@@ -50,14 +50,14 @@ class EventRepository extends ServiceEntityRepository
         }
 
         // TODO tester les requetes quand on aura des fausses données pour les événements
-        $userIsRegistered = $searchEvents->isUserIsRegistered();
-        if (!$userIsRegistered)
+        $filterEventsUserIsRegistered = $searchEvents->isUserIsRegistered();
+        if (!$filterEventsUserIsRegistered)
         {
             // TODO enlever les evenements où l'utilisateur est inscrit
         }
 
-        $userNotIsRegistered = $searchEvents->isUserIsNotRegistered();
-        if (!$userIsRegistered)
+        $filterEventsUserIsNotRegistered = $searchEvents->isUserIsNotRegistered();
+        if (!$filterEventsUserIsNotRegistered)
         {
             // TODO enlever les evenements où l'utilisateur n'est pas inscrit
         }
