@@ -177,5 +177,4 @@ class Location
         $this->city = $city;
     }
 
-
 }
