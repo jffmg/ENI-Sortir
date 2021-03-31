@@ -1,0 +1,9 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Détail de la sortie {{ event.name }} | {{ parent() }}{% endblock %}
+
+{% block main %}
+	<h1 class="app-main-title">{{ event.name }}</h1>
+	<p>{{ event.infosEvent }}</p>
+{% endblock %}
+

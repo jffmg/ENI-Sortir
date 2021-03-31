@@ -108,7 +108,7 @@ body {
     align-self: end;
 }
 
-.app-update-field {
+.app-update-field, .app-add-field {
 	width: 22em;
 	/*width: 15vw;*/
 }
@@ -127,8 +127,9 @@ body {
     margin-right: 1em;
 }
 
-/*UPDATE FORM*/
-.app-update-form-container {
+/*UPDATE PROFILE FORM,
+ ADD EVENT FORM*/
+.app-update-form-container, .app-add-form-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -207,8 +208,9 @@ body {
     }
 
 
-    /*UPDATE FORM*/
-    .app-update-form-container {
+    /*UPDATE PROFILE FORM,
+	 ADD EVENT FORM*/
+    .app-update-form-container, .app-add-form-container {
         flex-direction: row;
         width: 55vw;
     }
@@ -216,7 +218,7 @@ body {
 
  /* L devices (desktops, 992px and up)*/
 @media (min-width: 992px) {
-    .app-update-form-container {
+    .app-update-form-container, .app-add-form-container {
         width: 40vw;
     }
 
@@ -233,14 +235,14 @@ body {
 
 /* XL devices (large desktops, 1200px and up)*/
 @media (min-width: 1200px) {
-    .app-update-form-container {
+    .app-update-form-container, .app-add-form-container {
         width: 35vw;
     }
 }
 
 /* XXL devices (large desktops, 1900px and up)*/
 @media (min-width: 1900px) {
-    .app-update-form-container {
+    .app-update-form-container, .app-add-form-container {
         width: 25vw;
     }
 }

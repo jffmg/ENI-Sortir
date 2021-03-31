@@ -7,6 +7,7 @@ use App\Entity\Participant;
 use App\Entity\SearchEvents;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Event|null find($id, $lockMode = null, $lockVersion = null)
@@ -39,11 +40,13 @@ class EventRepository extends ServiceEntityRepository
             $qb->setParameter("campus", $campus);
         }
 
+
+
         $keywords = $searchEvents->getKeywords();
         if ($keywords) {
             $keywords = explode(" ", trim($keywords));
 
-            dump($keywords);
+        dump($qb->getDQL());
 
             $i = 0;
             foreach ($keywords as $keyword) {
