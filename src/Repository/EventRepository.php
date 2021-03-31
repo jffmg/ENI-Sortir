@@ -7,6 +7,7 @@ use App\Entity\Participant;
 use App\Entity\SearchEvents;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Event|null find($id, $lockMode = null, $lockVersion = null)
@@ -26,45 +27,55 @@ class EventRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('e');
 
         $campus = $searchEvents->getCampus();
-        if ($campus)
-        {
+        if ($campus) {
             $qb->andWhere("e.campusOrganizer = :campus");
             $qb->setParameter("campus", $campus);
         }
 
-        // Todo régler le problème du passage d eparamètre à la requete et verifier si elle fonctionne
-        /*$keywords = $searchEvents->getKeywords();
-        if ($keywords)
-        {
-            $qb->expr()->in("e.name", array("?1"));
-            $qb->setParameter(1, $keywords);
-        }*/
 
-        // Todo requetes sur les dates
 
-        $userIsOrganizer = $searchEvents->isUserIsOrganizer();
-        if ($userIsOrganizer)
-        {
-            $qb->andWhere("e.organizer = :user");
-            $qb->setParameter("user", $user);
+        $keywords = $searchEvents->getKeywords();
+        if ($keywords) {
+            $keywords = explode(" ", trim($keywords));
+
+            dump($keywords);
+
+            $i = 0;
+            foreach ($keywords as $keyword) {
+                $qb->andWhere($qb->expr()->orX(
+                    $qb->expr()->like('e.name', ":keyword".$i)
+                ));
+                $qb->setParameter(":keyword".$i, "%" . $keyword . "%");
+                $i++;
+            }
+
         }
 
-        // TODO tester les requetes quand on aura des fausses données pour les événements
-        $filterEventsUserIsRegistered = $searchEvents->isUserIsRegistered();
-        if (!$filterEventsUserIsRegistered)
-        {
-            // TODO enlever les evenements où l'utilisateur est inscrit
-        }
+        dump($qb->getDQL());
 
-        $filterEventsUserIsNotRegistered = $searchEvents->isUserIsNotRegistered();
-        if (!$filterEventsUserIsNotRegistered)
-        {
-            // TODO enlever les evenements où l'utilisateur n'est pas inscrit
-        }
+            // Todo requetes sur les dates
 
-        $query = $qb->getQuery();
-        $result = $query->getResult();
-        return $result;
+            $userIsOrganizer = $searchEvents->isUserIsOrganizer();
+            if ($userIsOrganizer) {
+                $qb->andWhere("e.organizer = :user");
+                $qb->setParameter("user", $user);
+            }
+
+            // TODO tester les requetes quand on aura des fausses données pour les événements
+            $filterEventsUserIsRegistered = $searchEvents->isUserIsRegistered();
+            if (!$filterEventsUserIsRegistered) {
+                // TODO enlever les evenements où l'utilisateur est inscrit
+            }
+
+            $filterEventsUserIsNotRegistered = $searchEvents->isUserIsNotRegistered();
+            if (!$filterEventsUserIsNotRegistered) {
+                // TODO enlever les evenements où l'utilisateur n'est pas inscrit
+            }
+
+            $query = $qb->getQuery();
+            $result = $query->getResult();
+            return $result;
+
+
     }
-
 }
