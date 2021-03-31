@@ -58,7 +58,7 @@ body {
 }
 
 .app-main-title {
-    place-self: center;
+	place-self: center;
 }
 
 .app-main-content {
@@ -83,6 +83,13 @@ body {
 
 
 /*FORMS*/
+.app-form {
+	max-width: 50%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
 .app-form-container {
     display: flex;
     flex-direction: column;
@@ -104,6 +111,14 @@ body {
 .app-update-field {
     width: 22em;
     /*width: 15vw;*/
+.app-form-label {
+	align-self: start;
+	max-width: 50%;
+}
+
+.app-btn {
+	width: 7em;
+	align-self: flex-end;
 }
 
 
