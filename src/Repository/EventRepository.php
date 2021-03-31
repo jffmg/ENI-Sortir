@@ -104,5 +104,5 @@ class EventRepository extends ServiceEntityRepository
         $result = $query->getResult();
         return $result;
     }
-// TODO selection des evenements selon etat + en creation si organizer = user...
+
 }
