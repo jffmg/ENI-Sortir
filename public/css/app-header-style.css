@@ -55,6 +55,8 @@
     text-decoration: none;
     color: black;
     padding: 1em;
+    margin: 0.5em;
+    /*background-color: #5eb5e0;*/
 }
 
 .app-nav-btn:hover {

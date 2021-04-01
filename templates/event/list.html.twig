@@ -92,7 +92,7 @@
                         {% endif %}
                     {% endfor %}
                 </td>
-                <td class="app-table-cell" data-label="Organisateur">{{ event.organizer.userName }}</td>
+                <td>{{ event.organizer.userName }}</td>
 
                 <td class="app-table-cell" data-label="Actions">
                     {% if event.state != stateEC %}
@@ -106,6 +106,7 @@
                             <a class="app-link" href="{{ path('main_home') }}">Publier</a>
                         {% elseif event.state == stateOU and event.state == stateCL  %}
                             {# TODO Ajouter condition sur date inscription et faire les fonctionnalités / path corrspondantes #}
+                            <a class="app-link" href="{{ path('main_home') }}">Modifier</a>
                             <a class="app-link" href="{{ path('main_home') }}">Annuler</a>
                         {% endif %}
                     {% endif %}
@@ -122,6 +123,7 @@
                     {% elseif event.state == stateOU %}
                         <a class="app-link" href="{{ path('main_home') }}">S'inscrire</a>
                     {% endif %}
+
                 </td>
 
             </tr>
