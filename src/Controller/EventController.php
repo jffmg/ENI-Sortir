@@ -28,6 +28,7 @@ class EventController extends AbstractController
         $searchEvents = new SearchEvents();
         $searchEvents->setStartDate(new \DateTime());
 
+        $now = new \DateTime();
         $endDate = new \DateTime();
         $endDate->modify('+'. 90 .' days');
 
@@ -38,12 +39,20 @@ class EventController extends AbstractController
         $searchEventsForm->handleRequest($request);
         $user = $this->getUser();
 
-        // Get the events from database
+        // Get the date from database
+        $stateRepo = $this->getDoctrine()->getRepository(State::class);
+        $stateEC = $stateRepo->findOneBy(['shortLabel' => 'EC']);
+        $stateOU = $stateRepo->findOneBy(['shortLabel' => 'OU']);
+        $stateCL = $stateRepo->findOneBy(['shortLabel' => 'CL']);
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
         $events = $eventRepo->filterEvents($searchEvents, $user);
 
         return $this->render("event/list.html.twig", [
             "events" => $events,
+            "stateEC" => $stateEC,
+            "stateOU" => $stateOU,
+            "stateCL" => $stateCL,
+            "now" => $now,
             "searchEventsForm" => $searchEventsForm->createView()
         ]);
     }

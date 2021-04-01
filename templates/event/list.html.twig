@@ -57,7 +57,6 @@
         </div>
     </div>
 
-    {# TODO mettre le bon path et faire la class css #}
     {# Second button for when the list is long - so user don't have to scroll down #}
     <div class="app-form-btn-container app-btn-link-container">
         <button class="app-btn-list"><a class="app-btn-link" href="{{ path('main_home') }}">Créer une sortie</a>
@@ -100,30 +99,32 @@
                 <td class="app-table-cell" data-label="Organisateur">{{ event.organizer.userName }}</td>
 
                 <td class="app-table-cell" data-label="Actions">
+                    {% if event.state != stateEC %}
+                        <a class="app-link" href="{{ path('event_detail', {id: event.id}) }}">Afficher</a>
+                    {% endif %}
 
                     {% if app.user == event.organizer %}
                         {# TODO Ajouter les fonctionnalités et path modifier / publier #}
-                        {% if event.state.label == "" %}
+                        {% if event.state == stateEC %}
                             <a class="app-link" href="{{ path('main_home') }}">Modifier</a>
                             <a class="app-link" href="{{ path('main_home') }}">Publier</a>
-                        {% else %}
+                        {% elseif event.state == stateOU and event.state == stateCL  %}
                             {# TODO Ajouter condition sur date inscription et faire les fonctionnalités / path corrspondantes #}
                             <a class="app-link" href="{{ path('main_home') }}">Modifier</a>
                             <a class="app-link" href="{{ path('main_home') }}">Annuler</a>
                         {% endif %}
                     {% endif %}
 
-                    {# TODO quand des inscriptions seront faites, tester si les liens apparaissent quand il faut #}
                     {# TODO Ajouter les fonctionnalités et path s'inscrire, se desister #}
                     {% if event.participants.count > 0 %}
                         {% for p in event.participants %}
-                            {% if app.user == p %}
+                            {% if app.user == p and now < event.dateTimeStart and event.state == stateOU or event.state == stateCL %}
                                 <a class="app-link" href="{{ path('main_home') }}">Se désister</a>
-                            {% else %}
+                            {% elseif event.state == stateOU and now < event.dateEndInscription %}
                                 <a class="app-link" href="{{ path('main_home') }}">S'inscrire</a>
                             {% endif %}
                         {% endfor %}
-                    {% else %}
+                    {% elseif event.state == stateOU and now < event.dateEndInscription %}
                         <a class="app-link" href="{{ path('main_home') }}">S'inscrire</a>
                     {% endif %}
 
@@ -133,7 +134,6 @@
         </tbody>
     </table>
 
-    {# TODO mettre le bon path et faire la class css #}
     <div class="app-form-btn-container app-btn-link-container">
         <button class="app-btn-list"><a class="app-btn-link" href="{{ path('main_home') }}">Créer une sortie</a>
         </button>
