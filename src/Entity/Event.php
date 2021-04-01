@@ -292,5 +292,17 @@ class Event
         $this->participants = $participants;
     }
 
+    public function addParticipant(Participant $participant)
+    {
+        if ($this->participants->contains($participant)) {
+            return;
+        }
+        $this->participants[] = $participant;
+    }
+
+    public function removeParticipant(Participant $participant)
+    {
+        $this->participants->removeElement($participant);
+    }
 
 }
