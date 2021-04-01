@@ -88,6 +88,7 @@ class EventRepository extends ServiceEntityRepository
             $qb2 = $this->createQueryBuilder('e2');
             $qb2->join('e2.participants', 'ep2', 'WITH', 'ep2.id = :userId2');
             $qb2->andWhere('e.id = e2.id');
+            $qb2->addSelect('e');
 
             $qb->andWhere($qb->expr()->not($qb->expr()->exists($qb2)));
             $qb->setParameter("userId2", $user);
