@@ -35,12 +35,12 @@ class SearchEvents
     /**
      * @var boolean
      */
-    public $userIsRegistered = true;
+    public $userIsRegistered = false;
 
     /**
      * @var boolean
      */
-    public $userIsNotRegistered = true;
+    public $userIsNotRegistered = false;
 
     /**
      * @var boolean

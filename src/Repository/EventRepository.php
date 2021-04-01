@@ -25,6 +25,13 @@ class EventRepository extends ServiceEntityRepository
     public function filterEvents(SearchEvents $searchEvents, Participant $user)
     {
         $qb = $this->createQueryBuilder('e');
+        $qb->join('e.state', 'state', 'WITH', "state.shortLabel != 'AH'");
+        $qb->andWhere($qb->expr()->orX(
+            "state.shortLabel != 'EC'",
+            "e.organizer = :user0"
+        ));
+        $qb->setParameter("user0", $user);
+        $qb->addSelect('state');
 
         $campus = $searchEvents->getCampus();
         if ($campus)
@@ -59,6 +66,7 @@ class EventRepository extends ServiceEntityRepository
         $qb->setParameter("startDate", $startDate);
         $qb->setParameter("endDate", $endDate);
 
+        // If checked => show only the events when user is the organizer, if not checked show all
         $userIsOrganizer = $searchEvents->isUserIsOrganizer();
         if ($userIsOrganizer)
         {
@@ -66,17 +74,23 @@ class EventRepository extends ServiceEntityRepository
             $qb->setParameter("user", $user);
         }
 
-        // TODO tester les requetes quand on aura des fausses données pour les événements
-        $filterEventsUserIsRegistered = $searchEvents->isUserIsRegistered();
-        if (!$filterEventsUserIsRegistered)
-        {
-            // TODO enlever les evenements où l'utilisateur est inscrit
+        $isRegistered = $searchEvents->isUserIsRegistered();
+        $isNotRegistered = $searchEvents->isUserIsNotRegistered();
+
+        if ($isRegistered && !$isNotRegistered) {
+            $qb->join('e.participants', 'ep', 'WITH', 'ep.id = :userId1');
+            $qb->setParameter("userId1", $user);
+            $qb->addSelect('ep');
         }
 
-        $filterEventsUserIsNotRegistered = $searchEvents->isUserIsNotRegistered();
-        if (!$filterEventsUserIsNotRegistered)
-        {
-            // TODO enlever les evenements où l'utilisateur n'est pas inscrit
+        if (!$isRegistered && $isNotRegistered) {
+
+            $qb2 = $this->createQueryBuilder('e2');
+            $qb2->join('e2.participants', 'ep2', 'WITH', 'ep2.id = :userId2');
+            $qb2->andWhere('e.id = e2.id');
+
+            $qb->andWhere($qb->expr()->not($qb->expr()->exists($qb2)));
+            $qb->setParameter("userId2", $user);
         }
 
         $endedEvents = $searchEvents->isEndedEvents();
