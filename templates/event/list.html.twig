@@ -55,10 +55,9 @@
 
     </div>
 
-    {# TODO mettre le bon path et faire la class css #}
     {# Second button for when the list is long - so user don't have to scroll down #}
     <div class="app-form-btn-container app-btn-link-container">
-        <button class="app-btn-list"><a class="app-btn-link" href="{{ path('main_home') }}">Créer une sortie</a></button>
+        <button class="app-btn-list"><a class="app-btn-link" href="{{ path('event_add') }}">Créer une sortie</a></button>
     </div>
 
     <table class="app-table">
@@ -92,7 +91,8 @@
                         {% endif %}
                     {% endfor %}
                 </td>
-                <td>{{ event.organizer.userName }}</td>
+
+                <td class="app-table-cell" data-label="Organizer">{{ event.organizer.userName }}</td>
 
                 <td class="app-table-cell" data-label="Actions">
                     {% if event.state != stateEC %}
