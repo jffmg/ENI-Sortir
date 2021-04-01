@@ -18,47 +18,50 @@
     </div>
 
     <div class="app-form-search-events app-form-container app-framed">
-
+        <div class="app-form-search-events-fields">
         {{ form_start(searchEventsForm) }}
 
-        {# {{ form_widget(searchEventsForm) }} #}
-        <p class="app-update-form-container"><span
-                    class="app-profile-label"> {{ form_label(searchEventsForm.campus) }}</span> {{ form_widget(searchEventsForm.campus) }}
-        </p><br>
-        <p class="app-update-form-container"><span
-                    class="app-profile-label"> {{ form_label(searchEventsForm.keywords) }}</span> {{ form_widget(searchEventsForm.keywords) }}
-        </p><br>
-        <p class="app-update-form-container"><span
-                    class="app-profile-label"> {{ form_label(searchEventsForm.startDate) }}</span> {{ form_widget(searchEventsForm.startDate) }}
-        </p><br>
-        <p class="app-update-form-container"><span
-                    class="app-profile-label"> {{ form_label(searchEventsForm.endDate) }}</span> {{ form_widget(searchEventsForm.endDate) }}
-        </p><br>
-        <p class="app-update-form-container"><span
-                    class="app-profile-label"> {{ form_label(searchEventsForm.userIsOrganizer) }}</span> {{ form_widget(searchEventsForm.userIsOrganizer) }}
-        </p><br>
-        <p class="app-update-form-container"><span
-                    class="app-profile-label"> {{ form_label(searchEventsForm.userIsRegistered) }}</span> {{ form_widget(searchEventsForm.userIsRegistered) }}
-        </p><br>
-        <p class="app-update-form-container"><span
-                    class="app-profile-label"> {{ form_label(searchEventsForm.userIsNotRegistered) }}</span> {{ form_widget(searchEventsForm.userIsNotRegistered) }}
-        </p><br>
-        <p class="app-update-form-container"><span
-                    class="app-profile-label"> {{ form_label(searchEventsForm.endedEvents) }}</span> {{ form_widget(searchEventsForm.endedEvents) }}
-        </p><br>
-
-
-        <div class="app-form-btn-container">
-            <button class="app-btn" type="submit">Rechercher</button>
+            {# {{ form_widget(searchEventsForm) }} #}
+            <p class="app-search-form-container"><span
+                        class="app-profile-label"> {{ form_label(searchEventsForm.campus) }}</span> {{ form_widget(searchEventsForm.campus) }}
+            </p><br>
+            <p class="app-search-form-container"><span
+                        class="app-profile-label"> {{ form_label(searchEventsForm.keywords) }}</span> {{ form_widget(searchEventsForm.keywords) }}
+            </p><br>
+            <p class="app-search-form-container"><span
+                        class="app-profile-label"> {{ form_label(searchEventsForm.startDate) }}</span> {{ form_widget(searchEventsForm.startDate) }}
+            </p><br>
+            <p class="app-search-form-container"><span
+                        class="app-profile-label"> {{ form_label(searchEventsForm.endDate) }}</span> {{ form_widget(searchEventsForm.endDate) }}
+            </p><br>
         </div>
-        {{ form_end(searchEventsForm) }}
+        <div class="app-form-search-events-checkboxes">
+            <p class="app-search-form-container"><span
+                        class="app-profile-label"> {{ form_label(searchEventsForm.userIsOrganizer) }}</span> <span>{{ form_widget(searchEventsForm.userIsOrganizer) }}</span>
+            </p><br>
+            <p class="app-search-form-container"><span
+                        class="app-profile-label"> {{ form_label(searchEventsForm.userIsRegistered) }}</span> <span>{{ form_widget(searchEventsForm.userIsRegistered) }}</span>
+            </p><br>
+            <p class="app-search-form-container"><span
+                        class="app-profile-label"> {{ form_label(searchEventsForm.userIsNotRegistered) }}</span> <span>{{ form_widget(searchEventsForm.userIsNotRegistered) }}</span>
+            </p><br>
+            <p class="app-search-form-container"><span
+                        class="app-profile-label"> {{ form_label(searchEventsForm.endedEvents) }}</span> <span>{{ form_widget(searchEventsForm.endedEvents) }}</span>
+            </p><br>
 
+        </div>
+        <div class="app-form-btn-container">
+            <button class="app-btn app-search-btn" type="submit">Rechercher</button>
+
+        {{ form_end(searchEventsForm) }}
+        </div>
     </div>
 
     {# TODO mettre le bon path et faire la class css #}
     {# Second button for when the list is long - so user don't have to scroll down #}
     <div class="app-form-btn-container app-btn-link-container">
-        <button class="app-btn-list"><a class="app-btn-link" href="{{ path('main_home') }}">Créer une sortie</a></button>
+        <button class="app-btn-list"><a class="app-btn-link" href="{{ path('main_home') }}">Créer une sortie</a>
+        </button>
     </div>
 
     <table class="app-table">
@@ -79,9 +82,11 @@
         {% for event in events %}
             <tr class="app-table-body-row app-table-row">
                 <td class="app-table-cell" data-label="Nom de la sortie">{{ event.name }}</td>
-                <td class="app-table-cell" data-label="Date de la sortie">{{ event.dateTimeStart | date("d/m/Y h:i") }}</td>
+                <td class="app-table-cell"
+                    data-label="Date de la sortie">{{ event.dateTimeStart | date("d/m/Y h:i") }}</td>
                 <td class="app-table-cell" data-label="Clotûre">{{ event.dateEndInscription  | date("d/m/Y") }}</td>
-                <td class="app-table-cell" data-label="Inscrits/places">{{ event.participants.count }} / {{ event.nbInscriptionsMax }}</td>
+                <td class="app-table-cell" data-label="Inscrits/places">{{ event.participants.count }}
+                    / {{ event.nbInscriptionsMax }}</td>
                 <td class="app-table-cell" data-label="Etat">{{ event.state.label }}</td>
 
                 {# TODO tester les inscriptions quand il y aura les fixtures correspondantes #}
@@ -130,6 +135,7 @@
 
     {# TODO mettre le bon path et faire la class css #}
     <div class="app-form-btn-container app-btn-link-container">
-        <button class="app-btn-list"><a class="app-btn-link" href="{{ path('main_home') }}">Créer une sortie</a></button>
+        <button class="app-btn-list"><a class="app-btn-link" href="{{ path('main_home') }}">Créer une sortie</a>
+        </button>
     </div>
 {% endblock %}

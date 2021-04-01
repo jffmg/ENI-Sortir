@@ -27,14 +27,14 @@ body {
 
 }
 
-#participant_password>div {
+#participant_password > div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin: 0.5em;
 }
 
-#participant_password>div>input {
+#participant_password > div > input {
     width: 15em;
 
 }
@@ -59,7 +59,7 @@ body {
 }
 
 .app-main-title {
-	place-self: center;
+    place-self: center;
     margin-top: 1em;
     margin-bottom: 3vh;
     text-align: center;
@@ -107,8 +107,20 @@ body {
     font-weight: bold;
 }
 
-.app-table-cell>a {
+.app-table-cell > a {
     display: block;
+}
+
+.app-form-search-events {
+    width: 90vw;
+    align-items: center;
+}
+
+.app-form-search-events-checkboxes>p {
+    display: flex;
+    flex-direction: row;
+    width: inherit;
+    justify-content: space-between;
 }
 
 /*PROFILE PAGE*/
@@ -122,13 +134,13 @@ body {
 .app-login-form-container {
     height: 60vh;
     padding-top: 20vh;
-    }
+}
 
 .app-form {
-	max-width: 50%;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
+    max-width: 50%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .app-form-container {
@@ -140,25 +152,24 @@ body {
 }
 
 
-
-
-
 .app-form-field {
-    align-self: end;
+    align-self: center;
+    margin: 0.5em;
 }
 
 .app-update-field, .app-add-field {
-	width: 22em;
-	/*width: 15vw;*/
+    width: 22em;
+    /*width: 15vw;*/
 }
+
 .app-form-label {
-	align-self: start;
-	max-width: 50%;
+    align-self: start;
+    max-width: 50%;
 }
 
 .app-btn {
-	width: 7em;
-	align-self: flex-end;
+    width: 7em;
+    align-self: flex-end;
 }
 
 
@@ -168,11 +179,17 @@ body {
 
 /*UPDATE PROFILE FORM,
  ADD EVENT FORM*/
-.app-update-form-container, .app-add-form-container {
+.app-update-form-container, .app-add-form-container, .app-search-form-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 60vw;
+    align-items: center;
+}
+
+.app-search-form-container {
+    margin-left: 1em;
+    margin-right: 1em;
 }
 
 /*FOOTER*/
@@ -190,27 +207,27 @@ body {
 }
 
 /* M devices (tablets, 768px and up)*/
-@media (min-width: 768px){
+@media (min-width: 768px) {
 
     .app-header-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    background-color: mintcream;
-    box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
-    width: 100%;
-    z-index: 3;
-}
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background-color: mintcream;
+        box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
+        width: 100%;
+        z-index: 3;
+    }
 
     .app-header-nav ul {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    overflow: hidden;
-}
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        overflow: hidden;
+    }
 
 
     .app-header-nav {
@@ -227,17 +244,15 @@ body {
     }
 
 
-
     .app-header-nav .app-nav-menu {
-         clear: none;
-         max-height: none;
+        clear: none;
+        max-height: none;
         align-self: flex-end;
-     }
+    }
 
     .app-header-nav .app-menu-icon {
-       display: none;
-   }
-
+        display: none;
+    }
 
 
     /*PROFILE PAGE*/
@@ -249,7 +264,7 @@ body {
 
     /*UPDATE PROFILE FORM,
 	 ADD EVENT FORM*/
-    .app-update-form-container, .app-add-form-container {
+    .app-update-form-container, .app-add-form-container, .app-search-form-container {
         flex-direction: row;
         width: 55vw;
     }
@@ -258,47 +273,111 @@ body {
         box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
         width: 80vw;
     }
-}
 
- /* L devices (desktops, 992px and up)*/
+
+    .app-form-search-events-checkboxes>p {
+        width: 55vw;
+    }
+
+    .app-form-field {
+        margin-right: 0;
+    }
+
+    .app-form-search-events {
+        width: 60vw;
+    }
+
+    }
+
+/* L devices (desktops, 992px and up)*/
 @media (min-width: 992px) {
-    .app-update-form-container, .app-add-form-container {
+    .app-update-form-container, .app-add-form-container, .app-search-form-container {
         width: 45vw;
     }
 
+    .app-update-form-container {
+        padding-left: 1em;
+        padding-right: 1em;
+    }
+
+    .app-form-search-events {
+        display: flex;
+        flex-direction: row;
+        width: 85vw;
+        align-items: center;
+    }
+
     .app-connected-participant {
-       display: flex;
+        display: flex;
         flex-direction: row;
         width: 60vw;
         align-self: center;
         justify-self: center;
         padding-left: 1em;
-   }
+    }
 
     /*LIST PAGE*/
-
     .app-table thead {
         visibility: visible;
     }
 
-     .app-table-row {
-         display: table-row;
-         margin-bottom: 3em;
-         width: 100%;
-     }
+    .app-table-row {
+        display: table-row;
+        margin-bottom: 3em;
+        width: 100%;
+    }
 
-     .app-table-cell {
-         box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
-         height: 2em;
-         display: table-cell;
-         text-align: right;
+    .app-table-cell {
+        box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
+        height: 2em;
+        padding: 0.5em;
+        display: table-cell;
+        text-align: center;
 
-     }
+    }
 
-     .app-table-cell:before {
-         display: none;
-         content: none;
-     }
+    .app-table-cell:before {
+        display: none;
+        content: none;
+    }
+
+    .app-search-btn {
+        align-self: center;
+        height: 5em;
+        width: auto;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+    }
+
+    .app-form-search-events-fields {
+        width: 60vw;
+    }
+
+    /*.app-form-search-events-fields>p {
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        width: 20vw;
+    }*/
+
+    .app-form-search-events-checkboxes>p {
+        display: flex;
+        flex-direction: row;
+        width: 30vw;
+    }
+
+    .app-form-search-events {
+        width: 95vw;
+    }
+
+    .app-form-btn-container {
+        width: auto;
+    }
+
+    .app-btn-link-container{
+        align-self: flex-end;
+    }
+
 
 
 }
@@ -319,15 +398,42 @@ body {
         text-align: center;
     }
 
-    .app-table-cell>a {
+    .app-table-cell > a {
         display: block;
     }
+
+    .app-form-search-events-checkboxes>p {
+        width: 35vw;
+    }
+
+    .app-form-search-events-fields {
+        width: 40vw;
+    }
+    .app-form-search-events-fields .app-search-form-container {
+        width: 40vw;
+    }
+
 }
 
 /* XXL devices (large desktops, 1900px and up)*/
 @media (min-width: 1900px) {
     .app-update-form-container, .app-add-form-container {
         width: 25vw;
+    }
+
+    .app-form-search-events {
+        width: 50vw;
+    }
+
+    .app-form-search-events-checkboxes>p {
+        width: 20vw;
+    }
+
+    .app-form-search-events-fields {
+        width: 20vw;
+    }
+    .app-form-search-events-fields .app-search-form-container {
+        width: 20vw;
     }
 }
 
