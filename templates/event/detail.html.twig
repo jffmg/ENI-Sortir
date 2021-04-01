@@ -34,11 +34,11 @@
 			</p><br>
 
 			<p class="app-detail-item-container"><span
-						class="app-profile-label"> Ville :   </span> {{ event.location.city.name }}
+						class="app-profile-label"> Lieu :   </span> {{ event.location.name }}
 			</p><br>
 
 			<p class="app-detail-item-container"><span
-						class="app-profile-label"> Lieu :   </span> {{ event.location.name }}
+						class="app-profile-label"> Ville :   </span> {{ event.location.city.name }}
 			</p><br>
 
 			<p class="app-detail-item-container"><span
@@ -67,29 +67,24 @@
 
 	</div>
 
-	<div class="app-event-part-list">
-		<h2> Liste des inscrits : </h2>
-		<table class="app-table">
-			<thead>
-			<tr class="app-table-head-row app-table-row">
-				<th class="app-table-head-title app-table-cell">Pseudo</th>
-				<th class="app-table-head-title app-table-cell">Nom</th>
+	<h2> Liste des inscrits : </h2>
+	<table class="app-table app-table-participants">
+		<thead>
+		<tr class="app-table-head-row app-table-row">
+			<th class="app-table-head-title app-table-cell">Pseudo</th>
+			<th class="app-table-head-title app-table-cell">Nom</th>
+		</tr>
+		</thead>
+
+		<tbody>
+		{% for p in event.participants %}
+			<tr class="app-table-body-row app-table-row">
+				<td class="app-table-cell" data-label="Pseudo">{{ p.userName }}</td>
+				<td class="app-table-cell" data-label="Nom">{{ p.name }} {{ p.firstName }}</td>
 			</tr>
-			</thead>
-
-			<tbody>
-			{% for p in event.participants %}
-				<tr class="app-table-body-row app-table-row">
-					<td class="app-table-cell" data-label="Nom de la sortie">{{ p.userName }}</td>
-					<td class="app-table-cell" data-label="Nom de la sortie">{{ p.name }} {{ p.firstName }}</td>
-				</tr>
-			{% endfor %}
-			</tbody>
-		</table>
-	</div>
-
-
-
+		{% endfor %}
+		</tbody>
+	</table>
 
 {% endblock %}
 

@@ -222,6 +222,10 @@ body {
     width: 100%;
 }
 
+.app-table-participants{
+    width: 90vw;
+}
+
 /*FOOTER*/
 .app-footer-container {
     text-align: center;
@@ -317,6 +321,9 @@ body {
         width: 60vw;
     }
 
+
+    /*DETAILS PAGE*/
+
     .app-detail-item-container {
         flex-direction: row;
         width: 45vw;
@@ -332,6 +339,10 @@ body {
 
     .app-detail-infO{
         width: 65%;
+    }
+
+    .app-table-participants{
+        width: 40vw;
     }
 
 }
