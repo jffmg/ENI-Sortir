@@ -49,7 +49,6 @@
                 <td>{{ event.participants.count }} / {{ event.nbInscriptionsMax }}</td>
                 <td>{{ event.state.label }}</td>
 
-                {# TODO tester les inscriptions quand il y aura les fixtures correspondantes #}
                 <td>
                     {% for p in event.participants %}
                         {% if app.user == p %}
@@ -60,7 +59,7 @@
                 <td>{{ event.organizer.userName }}</td>
 
                 <td>
-
+                    <a class="app-link" href="{{ path('event_detail',{id: event.id}) }}">Afficher</a></td>
                     {% if app.user == event.organizer %}
                      {# TODO Ajouter les fonctionnalités et path modifier / publier #}
                         {% if event.state.label == "" %}
@@ -73,7 +72,6 @@
                         {% endif %}
                     {% endif %}
 
-                    {# TODO quand des inscriptions seront faites, tester si les liens apparaissent quand il faut #}
                     {# TODO Ajouter les fonctionnalités et path s'inscrire, se desister #}
                     {% if event.participants.count > 0 %}
                         {% for p in event.participants %}
@@ -92,7 +90,6 @@
         {% endfor %}
     </table>
 
-    {# TODO mettre le bon path et faire la class css#}
-    <a class="app-btn-link" href="{{ path('main_home') }}">Créer une sortie</a>
+    <a class="app-btn-link" href="{{ path('event_add') }}">Créer une sortie</a>
 
 {% endblock %}

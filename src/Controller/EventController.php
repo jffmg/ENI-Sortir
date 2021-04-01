@@ -14,13 +14,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 
-/**
- * @Route("/event")
- */
 class EventController extends AbstractController
 {
     /**
-     * @Route("/list", name="display_events")
+     * @Route("/", name="main_home")
      */
     public function displayEvents(Request $request)
     {
@@ -53,7 +50,7 @@ class EventController extends AbstractController
     // functionality 2002: "Créer une sortie"
 
     /**
-     * @Route("/add", name="event_add")
+     * @Route("/event/add", name="event_add")
      * @param EntityManagerInterface $em
      */
     public function add(EntityManagerInterface $em, Request $request)
@@ -95,7 +92,7 @@ class EventController extends AbstractController
     }
 
     /**
-     * @Route("/detail/{id}", name="event_detail")
+     * @Route("/event/detail/{id}", name="event_detail")
      */
     public function detail($id)
     {
