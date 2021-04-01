@@ -10,7 +10,7 @@
                     invalides
                 </div>
             {% endif %}
-            <div class="app-form-container">
+            <div class="app-form-container app-framed">
 
                 {# {% if app.user %}
                     <div class="app-connected-participant">
@@ -18,12 +18,12 @@
                     </div>
                 {% endif %} #}
 
-                <label class="app-form-label" for="username">Identifiant : </label>
+              <span class="app-profile-label"><label class="app-form-label" for="username">Identifiant : </label></span>
                 <input class="app-form-field" type="text" value="{{ last_username }}" name="_username" id="username">
                 <br>
                 <br>
 
-                <label class="app-form-label" for="password">Mot de passe : </label>
+                <span class="app-profile-label"><label class="app-form-label" for="password">Mot de passe : </label></span>
                 <input class="app-form-field" type="password" name="_password" id="password">
                 <br>
 
