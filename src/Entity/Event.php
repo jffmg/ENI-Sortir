@@ -83,6 +83,7 @@ class Event
      * @var Location
      * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid
      */
     private $location;
 

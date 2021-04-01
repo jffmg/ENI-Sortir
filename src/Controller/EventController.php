@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Entity\City;
 use App\Entity\Event;
 use App\Entity\SearchEvents;
 use App\Entity\State;
@@ -62,21 +63,27 @@ class EventController extends AbstractController
      */
     public function add(EntityManagerInterface $em, Request $request)
     {
-        // blocking access to non-connected users
+        // block access to non-connected users
         $this->denyAccessUnlessGranted("ROLE_USER");
         // creating a new instance of Event
         $event = new Event();
 
-        // creating a new instance of EventForm
+        // create a new instance of EventForm
         $eventForm = $this->createForm(EventType::class, $event);
+
+        // we have to display the cities from those saved in base
+        // get the cities from database
+        $cityRepo = $this->getDoctrine()->getRepository(City::class);
+        $cities = $cityRepo->findAll();
 
         $eventForm->handleRequest($request);
 
         if ($eventForm->isSubmitted() && $eventForm->isValid()) {
-            // status is "En création" by default at this stage
-            $state = new State();
-            $state->setLabel('En création');
-            $event->setState($state);
+//            // status is "En création" by default at this stage
+            //todo assign default status
+//            $state = new State();
+//            $state->setLabel('En création');
+//            $event->setState($state);
 
             // organizer is the Participant creating the event
             /** @var \App\Entity\User */
@@ -94,7 +101,8 @@ class EventController extends AbstractController
 
         // displaying form
         return $this->render('event/add.hml.twig', [
-            "eventForm" => $eventForm->createView()
+            "eventForm" => $eventForm->createView(),
+            "cities" => $cities
         ]);
     }
 
