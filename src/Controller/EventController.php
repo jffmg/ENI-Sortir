@@ -28,6 +28,7 @@ class EventController extends AbstractController
         $searchEvents = new SearchEvents();
         $searchEvents->setStartDate(new \DateTime());
 
+        $now = new \DateTime();
         $endDate = new \DateTime();
         $endDate->modify('+'. 90 .' days');
 
@@ -51,6 +52,7 @@ class EventController extends AbstractController
             "stateEC" => $stateEC,
             "stateOU" => $stateOU,
             "stateCL" => $stateCL,
+            "now" => $now,
             "searchEventsForm" => $searchEventsForm->createView()
         ]);
     }

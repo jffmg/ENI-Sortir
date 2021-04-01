@@ -114,13 +114,13 @@
                     {# TODO Ajouter les fonctionnalités et path s'inscrire, se desister #}
                     {% if event.participants.count > 0 %}
                         {% for p in event.participants %}
-                            {% if app.user == p and event.state == stateOU or event.state == stateCL %}
+                            {% if app.user == p and now < event.dateTimeStart and event.state == stateOU or event.state == stateCL %}
                                 <a class="app-link" href="{{ path('main_home') }}">Se désister</a>
-                            {% elseif event.state == stateOU %}
+                            {% elseif event.state == stateOU and now < event.dateEndInscription %}
                                 <a class="app-link" href="{{ path('main_home') }}">S'inscrire</a>
                             {% endif %}
                         {% endfor %}
-                    {% elseif event.state == stateOU %}
+                    {% elseif event.state == stateOU and now < event.dateEndInscription %}
                         <a class="app-link" href="{{ path('main_home') }}">S'inscrire</a>
                     {% endif %}
 
