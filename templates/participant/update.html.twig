@@ -6,31 +6,26 @@
 
     <h1 class="app-main-title"> Modification du profil de {{ participant.userName }}</h1>
 
-    <div class="app-form-container">
+    <div class="app-form-container app-framed">
     {% if participant.userName == app.user.username %}
         {{ form_start(participantForm) }}
-        {#<div class="app-update-form-container">{{ form_row(participantForm.userName) }}</div><br>
-        <div class="app-update-form-container">{{ form_row(participantForm.name) }}</div><br>
-        <div class="app-update-form-container">{{ form_row(participantForm.firstName) }}</div><br>
-        <div class="app-update-form-container">{{ form_row(participantForm.phone) }}</div><br>
-        <div class="app-update-form-container">{{ form_row(participantForm.mail) }}</div><br>
-        <div class="app-update-form-container">{{ form_row(participantForm.password) }}</div><br>#}
 
         <p class="app-update-form-container"><span class="app-profile-label"> {{ form_label(participantForm.userName) }}</span> {{ form_widget(participantForm.userName) }}</p><br>
         <p class="app-update-form-container"><span class="app-profile-label"> {{ form_label(participantForm.name) }}</span> {{ form_widget(participantForm.name) }}</p><br>
         <p class="app-update-form-container"><span class="app-profile-label"> {{ form_label(participantForm.firstName) }}</span> {{ form_widget(participantForm.firstName) }}</p><br>
         <p class="app-update-form-container"><span class="app-profile-label"> {{ form_label(participantForm.phone) }}</span> {{ form_widget(participantForm.phone) }}</p><br>
         <p class="app-update-form-container"><span class="app-profile-label"> {{ form_label(participantForm.mail) }}</span> {{ form_widget(participantForm.mail) }}</p><br>
-        <p>
+
             <fieldset class="app-fieldset app-update-fieldset">
            <legend> <span class="app-profile-label app-update-password"> {{ form_label(participantForm.password) }}</span></legend> {{ form_widget(participantForm.password) }}
     </fieldset>
         </p><br>
-        </div>
+
 
         {{ form_widget(participantForm) }}
         <div class="app-form-btn-container">
         <button class="app-btn" type="submit">Modifier</button>
+        </div>
         </div>
         {{ form_end(participantForm) }}
     {% else %}

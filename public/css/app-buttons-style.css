@@ -1,3 +1,18 @@
+.app-form-btn-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: inherit;
+}
+
+.app-btn-link-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 85vw;
+    margin: 1em;
+}
+
 .app-btn {
     width: 7em;
     align-self: flex-end;
@@ -10,3 +25,8 @@
     padding-left: 1em;
     padding-right: 1em;
 }
+
+.app-btn-list {
+    width: 10em;
+    align-self: flex-end;
+   }
