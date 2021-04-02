@@ -10,6 +10,7 @@ use App\Entity\SearchEvents;
 use App\Entity\State;
 use App\Form\EventType;
 use App\Form\SearchEventsType;
+use App\Service\MyServices;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,10 +22,13 @@ class EventController extends AbstractController
     /**
      * @Route("/", name="main_home")
      */
-    public function displayEvents(Request $request)
+    public function displayEvents(Request $request, EntityManagerInterface $em, MyServices $service)
     {
         // Access denied if user not connected
         $this->denyAccessUnlessGranted("ROLE_USER");
+
+        // Update the events state
+        $service->updateState($this, $em);
 
         // Create the form
         $searchEvents = new SearchEvents();
@@ -44,9 +48,10 @@ class EventController extends AbstractController
 
         // Get the date from database
         $stateRepo = $this->getDoctrine()->getRepository(State::class);
-        $stateEC = $stateRepo->findOneBy(['shortLabel' => 'EC']);
-        $stateOU = $stateRepo->findOneBy(['shortLabel' => 'OU']);
-        $stateCL = $stateRepo->findOneBy(['shortLabel' => 'CL']);
+        $states = $stateRepo->findAll();
+        $stateEC = $service->getStateByShortLabel($states, 'EC');
+        $stateOU = $service->getStateByShortLabel($states, 'OU');
+        $stateCL = $service->getStateByShortLabel($states, 'CL');
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
         $events = $eventRepo->filterEvents($searchEvents, $user);
 
