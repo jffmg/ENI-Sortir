@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\City;
 use App\Entity\Event;
+use App\Entity\Participant;
 use App\Entity\SearchEvents;
 use App\Entity\State;
 use App\Form\EventType;
@@ -33,8 +34,9 @@ class EventController extends AbstractController
         $endDate = new \DateTime();
         $endDate->modify('+'. 90 .' days');
 
-        $searchEvents->setEndDate( $endDate);
+        $searchEvents->setEndDate($endDate);
         $searchEventsForm = $this->createForm(SearchEventsType::class, $searchEvents);
+
 
         // Get the data from the form
         $searchEventsForm->handleRequest($request);
@@ -47,6 +49,7 @@ class EventController extends AbstractController
         $stateCL = $stateRepo->findOneBy(['shortLabel' => 'CL']);
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
         $events = $eventRepo->filterEvents($searchEvents, $user);
+
 
         return $this->render("event/list.html.twig", [
             "events" => $events,
@@ -128,5 +131,61 @@ class EventController extends AbstractController
         return $this->render("event/detail.html.twig", [
             "event" => $event
         ]);
+    }
+
+    /**
+     * @Route("/event/subscribe/{eventId}{userId}", name="event_subscribe")
+     */
+    public function subscribe(EntityManagerInterface $em, $eventId, $userId)
+    {
+
+        $event = $em->getRepository(Event::class)
+            ->findOneBy(['id' => $eventId]);
+        $participant = $em->getRepository(Participant::class)
+            ->findOneBy(['id' => $userId]);
+        $event->addParticipant($participant);
+
+        $em->persist($event);
+        $em->flush();
+
+        /*dd($event);*/
+
+        return $this->redirectToRoute("main_home");
+
+    }
+
+    /**
+     * @Route("/event/unsubscribe/{eventId}{userId}", name="event_unsubscribe")
+     */
+    public function unsubscribe(EntityManagerInterface $em, $eventId, $userId)
+    {
+
+
+        $event = $em->getRepository(Event::class)
+            ->findOneBy(['id' => $eventId]);
+
+        if (empty($event)) {
+            throw $this->createNotFoundException("Cette sortie n'existe pas");
+        }
+
+        $participant = $em->getRepository(Participant::class)
+            ->findOneBy(['id' => $userId]);
+
+        if (empty($participant)) {
+            throw $this->createNotFoundException("Ce participant n'existe pas");
+        }
+
+        $event->removeParticipant($participant);
+
+        dump($event);
+
+        $em->persist($event);
+        $em->flush();
+
+        /*dd($event);*/
+
+        return $this->redirectToRoute("main_home");
+        /*return new Response(null, 204);*/
+
     }
 }

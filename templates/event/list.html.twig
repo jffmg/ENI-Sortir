@@ -122,17 +122,17 @@
                     {% if event.participants.count > 0 %}
                         {% for p in event.participants %}
                             {% if app.user == p and now < event.dateTimeStart and event.state == stateOU %}
-                                <a class="app-link" href="{{ path('main_home') }}">Se désister</a>
+                                <a class="app-link" id="unsubscribe" href="{{ path('event_unsubscribe',{'eventId': event.id, 'userId': app.user.id}) }}">Se désister</a>
                                 {% set isNotRegistered = false %}
                             {% elseif app.user == p and now < event.dateTimeStart and event.state == stateCL %}
-                                <a class="app-link" href="{{ path('main_home') }}">Se désister</a>
+                                <a class="app-link" id="unsubscribe" href="{{ path('event_unsubscribe',{'eventId': event.id, 'userId': app.user.id}) }}">Se désister</a>
                                 {% set isNotRegistered = false %}
                             {% endif %}
                         {% endfor %}
                     {% endif %}
 
                     {% if isNotRegistered and event.state == stateOU and now < event.dateEndInscription %}
-                        <a class="app-link" href="{{ path('main_home') }}">S'inscrire</a>
+                        <a class="app-link" id="subscribe" href="{{ path('event_subscribe', {'eventId': event.id, 'userId': app.user.id}) }}">S'inscrire</a>
                     {% endif %}
 
                 </td>
