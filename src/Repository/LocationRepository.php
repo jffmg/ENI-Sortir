@@ -22,19 +22,18 @@ class LocationRepository extends ServiceEntityRepository
     // /**
     //  * @return Location[] Returns an array of Location objects
     //  */
-    /*
-    public function findByExampleField($value)
+
+    public function findByCityId($value)
     {
         return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
+            ->join('l.city', 'c')
+            ->andWhere('c.id = :val')
             ->setParameter('val', $value)
             ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Location

@@ -15,6 +15,7 @@ use App\Service\MyServices;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -74,6 +75,7 @@ class EventController extends AbstractController
      */
     public function add(EntityManagerInterface $em, Request $request)
     {
+        dump('je passe dans add');
         // block access to non-connected users
         $this->denyAccessUnlessGranted("ROLE_USER");
         // creating a new instance of Event
@@ -90,11 +92,10 @@ class EventController extends AbstractController
         $eventForm->handleRequest($request);
 
         if ($eventForm->isSubmitted() && $eventForm->isValid()) {
-//            // status is "En création" by default at this stage
-            //todo assign default status
-//            $state = new State();
-//            $state->setLabel('En création');
-//            $event->setState($state);
+            // status is "En création" by default at this stage
+            $stateRepo = $this->getDoctrine()->getRepository()(State::class);
+            $state = $stateRepo->findOneBy(['shortLabel'=>'EC']);
+            $event->setState($state);
 
             // organizer is the Participant creating the event
             /** @var \App\Entity\User */
@@ -110,12 +111,37 @@ class EventController extends AbstractController
             ]);
         }
 
-        // displaying form
+        // display form
         return $this->render('event/add.hml.twig', [
             "eventForm" => $eventForm->createView(),
             "cities" => $cities
         ]);
     }
+
+    /**
+     * @Route("/event/add/ajax{inputCity}", methods={"GET"})
+     */
+    public function fetchLocationsByCity(Request $request, $inputCity)
+    {
+//// get city name from select
+//        if (isset($_GET["event-city"])) {
+//        $cityName = $_GET["event-city"];
+//        } else {
+//            $cityName = "";
+//        }
+
+        // get locations associated to city selected by user
+        $locationRepo = $this->getDoctrine()->getRepository(\App\Entity\Location::class);
+        $locations = $locationRepo->findByCityId($inputCity);
+        dump('je passe dans fetch');
+        dump($inputCity);
+        dump($locations);
+
+//        // serialize $locations to return them
+        return new Response(null, 204);
+
+    }
+
 
     /**
      * @Route("/event/detail/{id}", name="event_detail")
