@@ -96,7 +96,9 @@
                         {% endif %}
                     {% endfor %}
                 </td>
-                <td class="app-table-cell" data-label="Organisateur">{{ event.organizer.userName }}</td>
+                <td class="app-table-cell" data-label="Organisateur">
+                    <a href="{{ path('participant_profile', { 'id': event.organizer.id }) }}">{{ event.organizer.userName }}</a>
+                </td>
 
                 <td class="app-table-cell" data-label="Actions">
                     {% if event.state != stateEC %}

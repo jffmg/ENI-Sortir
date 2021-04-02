@@ -208,17 +208,4 @@ class EventController extends AbstractController
         /*return new Response(null, 204);*/
 
     }
-
-
-
-    /**
-     * @param int $variable
-     * @param string $appUserRole
-     *
-     * @return bool
-     */
-    public function inArray(int $variable, string $appUserRole): bool
-    {
-        return in_array($variable, json_decode($appUserRole));
-    }
 }
