@@ -79,7 +79,9 @@
 		<tbody>
 		{% for p in event.participants %}
 			<tr class="app-table-body-row app-table-row">
-				<td class="app-table-cell" data-label="Pseudo">{{ p.userName }}</td>
+				<td class="app-table-cell" data-label="Pseudo">
+					<a href="{{ path('participant_profile', { 'id': p.id }) }}">{{ p.userName }}</a>
+				</td>
 				<td class="app-table-cell" data-label="Nom">{{ p.name }} {{ p.firstName }}</td>
 			</tr>
 		{% endfor %}
