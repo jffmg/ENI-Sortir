@@ -7,10 +7,14 @@ use App\Form\ParticipantType;
 use App\Form\SearchEventsType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @Route("/participant")
@@ -44,7 +48,7 @@ class ParticipantController extends AbstractController
      * @Route("/update/{id}", name="participant_update",
      *     requirements={"id": "\d*"})
      */
-    public function update($id, EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder)
+    public function update($id, EntityManagerInterface $em, Request $request, UserPasswordEncoderInterface $encoder, SluggerInterface $slugger)
     {
         // Access denied if user not connected
         $this->denyAccessUnlessGranted("ROLE_USER");
@@ -52,13 +56,42 @@ class ParticipantController extends AbstractController
         $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
         $participant = $participantRepo->find($id);
 
+//        $participant->setPictureFile(
+//            new File($this->getParameter('pictures_directory').'/'.$participant->getPicture())
+//        );
+
         $participantForm = $this->createForm(ParticipantType::class, $participant);
 
         $participantForm->handleRequest($request);
+
         if ($participantForm->isSubmitted() && $participantForm->isValid()){
+
             // hash password
             $hashed = $encoder->encodePassword($participant, $participant->getPassword());
             $participant->setPassword($hashed);
+
+            /** @var UploadedFile $pictureFile */
+            /*$participant->$participantForm->get('picture')->getData();
+            if($pictureFile) {
+                $originalFileName = pathinfo($pictureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFileName = $slugger->slug($originalFileName);
+                $newFileName = $safeFileName.'-'.uniqid().'.'.$pictureFile->guessExtension();
+                try {
+                    $pictureFile->move(
+                        $this->getParameter('pictures_directory'),
+                        $newFileName
+                    );
+                } catch (FileException $e) {
+                    // todo handle exception if something happens during file upload
+                }
+                $participant->setPicture(
+                    new File($newFileName)
+                );
+            }*/
+
+
+
+
             $em->persist($participant);
             $em->flush();
 
