@@ -14,10 +14,12 @@ use App\Form\SearchEventsType;
 use App\Service\MyServices;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 
 class EventController extends AbstractController
@@ -118,21 +120,29 @@ class EventController extends AbstractController
     }
 
     /**
-     * @Route("/event/add/ajax{inputCity}", methods={"GET"})
+     * @Route("/event/add/ajax/{inputCity}", methods={"GET"})
      */
     public function fetchLocationsByCity(Request $request, $inputCity): Response
     {
-
-
-        dump($inputCity);
         // get locations associated to city selected by user
         $locationRepo = $this->getDoctrine()->getRepository(\App\Entity\Location::class);
         $locations = $locationRepo->findByCityId($inputCity);
-dump($locations);
-//        // serialize $locations to return them
 
+        // Create the array with the locations / separated from DB (if not separated, we had some circular issues)
+        $result = array();
+        foreach ($locations as $location) {
 
-        return new Response(null);
+            $loc = new \stdClass();
+            $loc->id = $location->getId();
+            $loc->name = $location->getName();
+
+            $result[] = $loc;
+        }
+
+        // serialize $locations to return them
+        $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
+
+        return new Response($serializer->serialize($result, 'json'));
     }
 
     /**
