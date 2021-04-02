@@ -20,6 +20,7 @@ class MyServices extends AbstractController
         $stateOU = $this->getStateByShortLabel($states, 'OU');
         $stateCL = $this->getStateByShortLabel($states, 'CL');
         $stateAEC = $this->getStateByShortLabel($states, 'AEC');
+        $stateAT = $this->getStateByShortLabel($states, 'AT');
         $stateAH = $this->getStateByShortLabel($states, 'AH');
 
         $eventRepo = $eventController->getDoctrine()->getRepository(Event::class);
@@ -27,21 +28,49 @@ class MyServices extends AbstractController
 
         $now = new \DateTime();
 
-        // Archive all events ended 1 month ago
-        $dateArchive = $now;
-        $dateArchive->modify('-'. 30 .' days');
         foreach($events as $event) {
+            $state = $event->getState();
+
+            $dateArchive = clone ($now);
+            $dateArchive->modify('-'. 30 .' days');
+
+            $duration = $event->getDuration();
             $dateEvent = $event->getDateTimeStart();
-            if ( $event->getState() != $stateAH and $dateEvent < $dateArchive) {
-                dump('update');
+            $dateEndEvent = clone($dateEvent);
+            $dateEndEvent->modify('+' . $duration . ' hours');
+            //$dateEndEvent->add(new \Dateinterval('PT'.$duration.'H'));
+
+            // Archive all events ended 1 month ago
+            if ( $state != $stateAH and $dateEvent < $dateArchive)
+            {
                 $event->setState($stateAH);
                 $em->persist($event);
+            }
+
+            // Update status to AEC
+            if ($state == $stateOU or $state == $stateCL) {
+                if ($dateEvent < $now and $dateEndEvent > $now) {
+                    $event->setState($stateAEC);
+                    $em->persist($event);
+                }
+            }
+
+            // Update status to AT
+            if ($state == $stateOU or $state == $stateCL or $state == $stateAEC) {
+                if($dateEndEvent < $now and $dateEvent > $dateArchive)
+                {
+                    dump('doit updater à AT');
+                    $event->setState($stateAT);
+                    $em->persist($event);
+                }
             }
         }
 
         // update the database
         $em->flush();
     }
+
+
 
     public function getStateByShortLabel(Array $states, string $label) {
         $result = null;
