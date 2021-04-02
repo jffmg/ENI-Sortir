@@ -14,6 +14,7 @@ use App\Form\SearchEventsType;
 use App\Service\MyServices;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -67,7 +68,6 @@ class EventController extends AbstractController
             "searchEventsForm" => $searchEventsForm->createView()
         ]);
     }
-    // functionality 2002: "Créer une sortie"
 
     /**
      * @Route("/event/add", name="event_add")
@@ -75,7 +75,6 @@ class EventController extends AbstractController
      */
     public function add(EntityManagerInterface $em, Request $request)
     {
-        dump('je passe dans add');
         // block access to non-connected users
         $this->denyAccessUnlessGranted("ROLE_USER");
         // creating a new instance of Event
@@ -121,27 +120,20 @@ class EventController extends AbstractController
     /**
      * @Route("/event/add/ajax{inputCity}", methods={"GET"})
      */
-    public function fetchLocationsByCity(Request $request, $inputCity)
+    public function fetchLocationsByCity(Request $request, $inputCity): Response
     {
-//// get city name from select
-//        if (isset($_GET["event-city"])) {
-//        $cityName = $_GET["event-city"];
-//        } else {
-//            $cityName = "";
-//        }
 
+
+        dump($inputCity);
         // get locations associated to city selected by user
         $locationRepo = $this->getDoctrine()->getRepository(\App\Entity\Location::class);
         $locations = $locationRepo->findByCityId($inputCity);
-        dump('je passe dans fetch');
-        dump($inputCity);
-        dump($locations);
-
+dump($locations);
 //        // serialize $locations to return them
-        return new Response(null, 204);
 
+
+        return new Response(null);
     }
-
 
     /**
      * @Route("/event/detail/{id}", name="event_detail")
