@@ -106,14 +106,15 @@
                     {% endif %}
 
                     {% if app.user == event.organizer %}
-                        {# TODO Ajouter les fonctionnalités et path modifier / publier #}
+                        {# TODO Ajouter les fonctionnalités et path modifier / publier / annuler #}
                         {% if event.state == stateEC %}
                             <a class="app-link" href="{{ path('main_home') }}">Modifier</a>
                             <a class="app-link" href="{{ path('main_home') }}">Publier</a>
-                        {% elseif event.state == stateOU and event.state == stateCL  %}
+                            <a class="app-link" href="{{ path('event_delete',{'id': event.id}) }}">Annuler</a>
+                        {% elseif event.state == stateOU or event.state == stateCL  %}
                             {# TODO Ajouter condition sur date inscription et faire les fonctionnalités / path corrspondantes #}
                             <a class="app-link" href="{{ path('main_home') }}">Modifier</a>
-                            <a class="app-link" href="{{ path('main_home') }}">Annuler</a>
+                            <a class="app-link" href="{{ path('event_cancel',{'id': event.id}) }}">Annuler</a>
                         {% endif %}
                     {% endif %}
 
