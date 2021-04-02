@@ -24,7 +24,22 @@ body {
 
 .app-fieldset {
     padding: 1em;
+}
 
+.app-textArea {
+    resize: none;
+}
+
+.app-textArea-label {
+    margin-right: 0.5em;
+}
+
+.app-textArea-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 2em;
 }
 
 #participant_password > div {
@@ -177,6 +192,18 @@ body {
     margin-right: 1em;
 }
 
+/*CANCEL FORM*/
+.app-cancel-form-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.app-cancel-location-container {
+    display: flex;
+    flex-direction: column;
+}
+
 /*UPDATE PROFILE FORM,
  ADD EVENT FORM*/
 .app-update-form-container, .app-add-form-container, .app-search-form-container {
@@ -288,6 +315,15 @@ body {
         display: none;
     }
 
+    /*CANCEL FORM*/
+    .app-cancel-container{
+        width: 70vw;
+    }
+
+    .app-cancel-location-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
 
     /*PROFILE PAGE*/
     .app-profile-label {
@@ -435,6 +471,11 @@ body {
     .app-btn-link-container{
         align-self: flex-end;
     }
+
+    /*CANCEL FORM*/
+    .app-cancel-container{
+        width: 55vw;
+    }
 }
 
 /* XL devices (large desktops, 1200px and up)*/
@@ -468,6 +509,11 @@ body {
         width: 40vw;
     }
 
+    /*CANCEL FORM*/
+    .app-cancel-container{
+        width: 45vw;
+    }
+
 }
 
 /* XXL devices (large desktops, 1900px and up)*/
@@ -489,6 +535,11 @@ body {
     }
     .app-form-search-events-fields .app-search-form-container {
         width: 20vw;
+    }
+
+    /*CANCEL FORM*/
+    .app-cancel-container{
+        width: 30vw;
     }
 }
 

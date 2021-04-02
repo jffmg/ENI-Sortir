@@ -8,6 +8,7 @@ use App\Entity\Event;
 use App\Entity\Participant;
 use App\Entity\SearchEvents;
 use App\Entity\State;
+use App\Form\CancelType;
 use App\Form\EventType;
 use App\Form\SearchEventsType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,7 +33,7 @@ class EventController extends AbstractController
 
         $now = new \DateTime();
         $endDate = new \DateTime();
-        $endDate->modify('+'. 90 .' days');
+        $endDate->modify('+' . 90 . ' days');
 
         $searchEvents->setEndDate($endDate);
         $searchEventsForm = $this->createForm(SearchEventsType::class, $searchEvents);
@@ -208,4 +209,55 @@ class EventController extends AbstractController
         /*return new Response(null, 204);*/
 
     }
+
+    /**
+     * @Route("/event/delete/{id}", name="event_delete")
+     */
+    public function delete(EntityManagerInterface $em, $id)
+    {
+        /*CREATE REAL FUNCTION TO DELETE FROM DATABASE*/
+        $var = 'DELETED';
+        dd($var);
+    }
+
+    /**
+     * @Route("/event/cancel/{id}", name="event_cancel")
+     */
+    public function cancel(Request $request, EntityManagerInterface $em, $id)
+    {
+        // Access denied if user not connected
+        $this->denyAccessUnlessGranted("ROLE_USER");
+
+        // Get the participant from database
+        $eventRepo = $this->getDoctrine()->getRepository(Event::class);
+        $event = $eventRepo->find($id);
+
+        // error if not valid id
+        if (empty($event)) {
+            throw $this->createNotFoundException("Cette sortie n'existe pas");
+        }
+
+        $cancelForm = $this->createForm(CancelType::class);
+
+        $cancelForm->handleRequest($request);
+
+
+        if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
+            $cancelReason = $_POST["app-cancel-reason"];
+            $event->setInfosEvent($cancelReason);
+            $state = $em->getRepository(State::class)
+                ->findOneBy(['shortLabel' => 'AN']);
+            $event->setState($state);
+            $em->persist($event);
+            $em->flush();
+
+            return $this->redirectToRoute("main_home");
+        }
+
+
+        return $this->render("event/cancel.html.twig", ["cancelForm" => $cancelForm->createView(),
+            "event" => $event
+        ]);
+    }
+
 }
