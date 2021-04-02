@@ -299,6 +299,7 @@ class Event
             return;
         }
         $this->participants[] = $participant;
+
     }
 
     public function removeParticipant(Participant $participant)

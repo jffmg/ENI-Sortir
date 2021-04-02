@@ -141,9 +141,22 @@ class EventController extends AbstractController
 
         $event = $em->getRepository(Event::class)
             ->findOneBy(['id' => $eventId]);
+        if (empty($event)) {
+            throw $this->createNotFoundException("Cette sortie n'existe pas");
+        }
         $participant = $em->getRepository(Participant::class)
             ->findOneBy(['id' => $userId]);
+        if (empty($participant)) {
+            throw $this->createNotFoundException("Ce participant n'existe pas");
+        }
+
         $event->addParticipant($participant);
+
+        if (count($event->getParticipants()) == $event->getNbInscriptionsMax()) {
+            $state = $em->getRepository(State::class)
+                ->findOneBy(['shortLabel' => 'CL']);
+            $event->setState($state);
+        }
 
         $em->persist($event);
         $em->flush();
@@ -177,7 +190,14 @@ class EventController extends AbstractController
 
         $event->removeParticipant($participant);
 
-        dump($event);
+        $now = new \DateTime();
+
+        if (count($event->getParticipants()) < $event->getNbInscriptionsMax() && $event->getDateEndInscription() > $now) {
+            $state = $em->getRepository(State::class)
+                ->findOneBy(['shortLabel' => 'OU']);
+            $event->setState($state);
+        }
+
 
         $em->persist($event);
         $em->flush();
