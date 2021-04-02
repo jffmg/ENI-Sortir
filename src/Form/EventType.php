@@ -4,9 +4,7 @@ namespace App\Form;
 
 use App\Entity\Event;
 use App\Entity\Location;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -64,7 +62,7 @@ class EventType extends AbstractType
                     'class' => 'app-form-field app-add-field',
                 ]
             ])
-//            ->add('location', EntityType::class, [
+//            ->add('location', LocationType::class, [
 //                'label' => 'Lieu : ',
 //                'class' => Location::class,
 //                'label_attr'=> ['class'=> 'app-form-label'],

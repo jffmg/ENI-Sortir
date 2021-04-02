@@ -78,6 +78,19 @@ class EventFixtures extends Fixture implements OrderedFixtureInterface
         $duration = $this->durationCreator();
         $event->setDuration($duration);
 
+        //set participants
+        $participants = array();
+        array_push($participants, $organizer);
+
+        for ($i = 0; $i < 5; $i++) {
+            $participant = $this->randomOrganizer($campusOrganizer);
+            if (in_array($participant, $participants)) {
+            } else {
+                array_push($participants, $participant);
+            }
+            $event->setParticipants($participants);
+        }
+
         //set dates and state
         if ($stateParam == "EC") {
             $activityStartDate = $faker->dateTimeBetween('+30 days', '+60 days');

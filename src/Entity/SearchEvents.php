@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use Cassandra\Date;
+use Symfony\Component\Validator\Constraints\Date;
 
 class SearchEvents
 {

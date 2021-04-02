@@ -3,7 +3,88 @@
 {% block title %}Détail de la sortie {{ event.name }} | {{ parent() }}{% endblock %}
 
 {% block main %}
-	<h1 class="app-main-title">{{ event.name }}</h1>
-	<p>{{ event.infosEvent }}</p>
+	<h1 class="app-main-title">Détails de la sortie</h1>
+
+	<div class="app-framed app-detail-container">
+		<div class="app-detail-fields">
+			<p class="app-detail-item-container"><span
+						class="app-profile-label"> Nom : </span> {{ event.name }}
+			</p><br>
+
+			<p class="app-detail-item-container"><span
+						class="app-profile-label"> Date et heure : </span> {{ event.dateTimeStart | date("d/m/Y h:i") }}
+			</p><br>
+
+			<p class="app-detail-item-container"><span
+						class="app-profile-label"> Date limite d'inscription : </span> {{ event.dateEndInscription | date("d/m/Y") }}
+			</p><br>
+
+			<p class="app-detail-item-container"><span
+						class="app-profile-label"> Nombre de places :  </span> {{ event.nbInscriptionsMax }}
+			</p><br>
+
+			<p class="app-detail-item-container"><span
+						class="app-profile-label"> Durée :  </span> {{ event.duration }} minutes
+			</p><br>
+		</div>
+
+		<div class="app-detail-fields">
+			<p class="app-detail-item-container"><span
+						class="app-profile-label"> Campus :  </span> {{ event.campusOrganizer.name }}
+			</p><br>
+
+			<p class="app-detail-item-container"><span
+						class="app-profile-label"> Lieu :   </span> {{ event.location.name }}
+			</p><br>
+
+			<p class="app-detail-item-container"><span
+						class="app-profile-label"> Ville :   </span> {{ event.location.city.name }}
+			</p><br>
+
+			<p class="app-detail-item-container"><span
+						class="app-profile-label"> Rue :   </span> {{ event.location.street }}
+			</p><br>
+
+			<p class="app-detail-item-container"><span
+						class="app-profile-label"> Code Postal :   </span> {{ event.location.city.zipCode }}
+			</p><br>
+
+			<p class="app-detail-item-container"><span
+						class="app-profile-label"> Latitude :   </span> {{ event.location.latitude }}
+			</p><br>
+
+			<p class="app-detail-item-container"><span
+						class="app-profile-label"> Longitude :   </span> {{ event.location.longitude }}
+			</p><br>
+		</div>
+
+		<div class="app-detail-fields">
+			<p class="app-detail-item-container app-detail-info-container">
+				<span class="app-profile-label app-detail-info-label"> Description et infos : </span>
+				<span class="app-detail-info">{{ event.infosEvent }}</span>
+			</p>
+		</div>
+
+	</div>
+
+	<h2> Liste des inscrits : </h2>
+	<table class="app-table app-table-participants">
+		<thead>
+		<tr class="app-table-head-row app-table-row">
+			<th class="app-table-head-title app-table-cell">Pseudo</th>
+			<th class="app-table-head-title app-table-cell">Nom</th>
+		</tr>
+		</thead>
+
+		<tbody>
+		{% for p in event.participants %}
+			<tr class="app-table-body-row app-table-row">
+				<td class="app-table-cell" data-label="Pseudo">{{ p.userName }}</td>
+				<td class="app-table-cell" data-label="Nom">{{ p.name }} {{ p.firstName }}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
 {% endblock %}
 

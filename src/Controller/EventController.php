@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Entity\City;
 use App\Entity\Event;
 use App\Entity\Participant;
 use App\Entity\SearchEvents;
@@ -10,7 +11,6 @@ use App\Entity\State;
 use App\Form\EventType;
 use App\Form\SearchEventsType;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,7 +32,7 @@ class EventController extends AbstractController
 
         $now = new \DateTime();
         $endDate = new \DateTime();
-        $endDate->modify('+' . 90 . ' days');
+        $endDate->modify('+'. 90 .' days');
 
         $searchEvents->setEndDate($endDate);
         $searchEventsForm = $this->createForm(SearchEventsType::class, $searchEvents);
@@ -68,21 +68,27 @@ class EventController extends AbstractController
      */
     public function add(EntityManagerInterface $em, Request $request)
     {
-        // blocking access to non-connected users
+        // block access to non-connected users
         $this->denyAccessUnlessGranted("ROLE_USER");
         // creating a new instance of Event
         $event = new Event();
 
-        // creating a new instance of EventForm
+        // create a new instance of EventForm
         $eventForm = $this->createForm(EventType::class, $event);
+
+        // we have to display the cities from those saved in base
+        // get the cities from database
+        $cityRepo = $this->getDoctrine()->getRepository(City::class);
+        $cities = $cityRepo->findAll();
 
         $eventForm->handleRequest($request);
 
         if ($eventForm->isSubmitted() && $eventForm->isValid()) {
-            // status is "En création" by default at this stage
-            $state = new State();
-            $state->setLabel('En création');
-            $event->setState($state);
+//            // status is "En création" by default at this stage
+            //todo assign default status
+//            $state = new State();
+//            $state->setLabel('En création');
+//            $event->setState($state);
 
             // organizer is the Participant creating the event
             /** @var \App\Entity\User */
@@ -100,7 +106,8 @@ class EventController extends AbstractController
 
         // displaying form
         return $this->render('event/add.hml.twig', [
-            "eventForm" => $eventForm->createView()
+            "eventForm" => $eventForm->createView(),
+            "cities" => $cities
         ]);
     }
 
@@ -183,4 +190,15 @@ class EventController extends AbstractController
     }
 
 
+
+    /**
+     * @param int $variable
+     * @param string $appUserRole
+     *
+     * @return bool
+     */
+    public function inArray(int $variable, string $appUserRole): bool
+    {
+        return in_array($variable, json_decode($appUserRole));
+    }
 }

@@ -7,29 +7,67 @@
 
 	<div class="app-form-container">
 		{{ form_start(eventForm) }}
-	<p class="app-add-form-container"><span
-				class="app-profile-label"> {{ form_label(eventForm.name) }}</span> {{ form_widget(eventForm.name) }}</p>
-	<br>
-	<p class="app-add-form-container"><span
-				class="app-profile-label"> {{ form_label(eventForm.dateTimeStart) }}</span> {{ form_widget(eventForm.dateTimeStart) }}
-	</p><br>
-	<p class="app-add-form-container"><span
-				class="app-profile-label"> {{ form_label(eventForm.duration) }}</span> {{ form_widget(eventForm.duration) }}
-	</p><br>
-	<p class="app-add-form-container"><span
-				class="app-profile-label"> {{ form_label(eventForm.nbInscriptionsMax) }}</span> {{ form_widget(eventForm.nbInscriptionsMax) }}
-	</p><br>
-	<p class="app-add-form-container"><span
-				class="app-profile-label"> {{ form_label(eventForm.infosEvent) }}</span> {{ form_widget(eventForm.infosEvent) }}
-	</p><br>
-	<p class="app-add-form-container"><span
-				class="app-profile-label"> {{ form_label(eventForm.dateEndInscription) }}</span> {{ form_widget(eventForm.dateEndInscription) }}
-	</p><br>
+		<p class="app-add-form-container"><span
+					class="app-profile-label"> {{ form_label(eventForm.name) }}</span> {{ form_widget(eventForm.name) }}
+		</p>
+		<br>
+		<p class="app-add-form-container"><span
+					class="app-profile-label"> {{ form_label(eventForm.dateTimeStart) }}</span> {{ form_widget(eventForm.dateTimeStart) }}
+		</p><br>
+		<p class="app-add-form-container"><span
+					class="app-profile-label"> {{ form_label(eventForm.duration) }}</span> {{ form_widget(eventForm.duration) }}
+		</p><br>
+		<p class="app-add-form-container"><span
+					class="app-profile-label"> {{ form_label(eventForm.nbInscriptionsMax) }}</span> {{ form_widget(eventForm.nbInscriptionsMax) }}
+		</p><br>
+		<p class="app-add-form-container"><span
+					class="app-profile-label"> {{ form_label(eventForm.infosEvent) }}</span> {{ form_widget(eventForm.infosEvent) }}
+		</p><br>
+
+		<p><span class="app-profile-label">Campus</span><span class="app-form-field">{{ app.user.campus.name }}</span>
+		</p><br>
+		<p class="app-add-form-container"><label for="event-city" class="app-profile-label">Ville</label>
+			<select id="event-city">
+				{% for c in cities %}
+					<option value="{{ c.name }}">{{ c.name }}</option>
+				{% endfor %}
+			</select>
+		</p><br>
+
+		<p class="app-add-form-container"><label for="event-location" class="app-profile-label">Lieu</label>
+			<select id="event-location"></select>
+		</p><br>
+		<p class="app-add-form-container"><label for="event-street" class="app-profile-label">Rue</label></p><span id="event-street" class="app-form-field"></span><br>
+		<p class="app-add-form-container"><label for="event-zipcode" class="app-profile-label">Code postal</label><span id="event-zipcode" class="app-form-field"></span></p><br>
+		<p class="app-add-form-container"><label for="event-latitude" class="app-profile-label">Latitude</label><span id="event-latitude" class="app-form-field"></span></p><br>
+		<p class="app-add-form-container"><label for="event-longitude" class="app-profile-label">Longitude</label><span id="event-longitude" class="app-form-field"></span></p><br>
+
+		{# <p class="app-add-form-container"><span #}
+		{# class="app-profile-label"> {{ form_label(eventForm.location.city.name) }}</span> {{ form_widget(eventForm.location.city.name) }} #}
+		{# </p><br> #}
+		{# <p class="app-add-form-container"><span #}
+		{# class="app-profile-label"> {{ form_label(eventForm.location.name) }}</span> {{ form_widget(eventForm.location.name) }} #}
+		{# </p><br> #}
+		{# <p class="app-add-form-container"><span #}
+		{# class="app-profile-label"> {{ form_label(eventForm.location.street) }}</span> {{ form_widget(eventForm.location.street) }} #}
+		{# </p><br> #}
+		{# <p class="app-add-form-container"><span #}
+		{# class="app-profile-label"> {{ form_label(eventForm.location.city.zipCode) }}</span> {{ form_widget(eventForm.location.city.zipCode) }} #}
+		{# </p><br> #}
+		{# <p class="app-add-form-container"><span #}
+		{# class="app-profile-label"> {{ form_label(eventForm.location.latitude) }}</span> {{ form_widget(eventForm.location.latitude) }} #}
+		{# </p><br> #}
+		{# <p class="app-add-form-container"><span #}
+		{# class="app-profile-label"> {{ form_label(eventForm.location.longitude) }}</span> {{ form_widget(eventForm.location.longitude) }} #}
+		{# </p><br> #}
+
 	</div>
 
 	{{ form_widget(eventForm) }}
 	<div class="app-form-btn-container">
 		<button class="app-btn" type="submit">Créer la sortie</button>
+		<button class="app-btn">Publier la sortie</button>
+		<button class="app-btn" type="button">Annuler</button>
 	</div>
 	{{ form_end(eventForm) }}
 {% endblock %}

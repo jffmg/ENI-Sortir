@@ -12,12 +12,6 @@
             {% endif %}
             <div class="app-form-container app-framed">
 
-                {# {% if app.user %}
-                    <div class="app-connected-participant">
-                        Vous êtes connectés en tant que {{ app.user.username }}, <a href="{{ path('user_logout') }}">Déconnexion</a>
-                    </div>
-                {% endif %} #}
-
               <span class="app-profile-label"><label class="app-form-label" for="username">Identifiant : </label></span>
                 <input class="app-form-field" type="text" value="{{ last_username }}" name="_username" id="username">
                 <br>
