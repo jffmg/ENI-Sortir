@@ -193,7 +193,7 @@ body {
 }
 
 /*CANCEL FORM*/
-.app-cancel-form-container {
+.app-cancel-form-container, .app-separate-btns {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
