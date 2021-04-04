@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\City;
 use App\Entity\Event;
+use App\Entity\Location;
 use App\Entity\Participant;
 use App\Entity\SearchEvents;
 use App\Entity\State;
@@ -95,7 +96,7 @@ class EventController extends AbstractController
         if ($eventForm->isSubmitted() && $eventForm->isValid()) {
             // status is "En création" by default at this stage
             $stateRepo = $this->getDoctrine()->getRepository()(State::class);
-            $state = $stateRepo->findOneBy(['shortLabel'=>'EC']);
+            $state = $stateRepo->findOneBy(['shortLabel' => 'EC']);
             $event->setState($state);
 
             // organizer is the Participant creating the event
@@ -128,6 +129,10 @@ class EventController extends AbstractController
         $locationRepo = $this->getDoctrine()->getRepository(\App\Entity\Location::class);
         $locations = $locationRepo->findByCityId($inputCity);
 
+        // get zipcode of city selected by user
+        $cityRepo = $this->getDoctrine()->getRepository(\App\Entity\City::class);
+        $city = $cityRepo->find($inputCity);
+
         // Create the array with the locations / separated from DB (if not separated, we had some circular issues)
         $result = array();
         foreach ($locations as $location) {
@@ -135,6 +140,8 @@ class EventController extends AbstractController
             $loc = new \stdClass();
             $loc->id = $location->getId();
             $loc->name = $location->getName();
+            // we'll need the zipcode too for display
+            $loc->zipcode = $city->getZipCode();
 
             $result[] = $loc;
         }
@@ -143,6 +150,27 @@ class EventController extends AbstractController
         $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
 
         return new Response($serializer->serialize($result, 'json'));
+    }
+
+    /**
+     * @Route("/event/add/ajax/location/{inputLocation}", methods={"GET"})
+     */
+    public function fetchInfosByLocation(Request $request, $inputLocation): Response
+    {
+        // get infos associated to location selected by user
+        $locationRepo = $this->getDoctrine()->getRepository(Location::class);
+        $location = $locationRepo->find($inputLocation);
+
+        $loc = new \stdClass();
+        $loc->id = $location->getId();
+        $loc->name = $location->getName();
+        $loc->street = $location->getStreet();
+        $loc->latitude = $location->getLatitude();
+        $loc->longitude = $location->getLongitude();
+
+        $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
+
+        return new Response($serializer->serialize($loc, 'json'));
     }
 
     /**
