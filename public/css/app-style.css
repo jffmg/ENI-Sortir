@@ -146,6 +146,7 @@ body {
     height: 2em;
     text-align: center;
     width: 30vw;
+    overflow-wrap: break-word;
 }
 
 /*.app-table-cell:before {
@@ -474,7 +475,8 @@ body {
 
     .app-fixed-header tbody {
          display: block;
-         overflow: auto;
+         overflow-y: scroll;
+         overflow-x: hidden;
          height: 8vw;
          width: 100%;
          scrollbar-width: 0.5em;
@@ -495,6 +497,16 @@ body {
 
     th.app-table-cell-scrollbar {
         width: 0.5em;
+    }
+
+    /*List Page - scroll bar*/
+    .app-fixed-header-list th, .app-fixed-header-list td {
+        min-width: 10vw;
+        max-width: 10vw;
+    }
+
+    .app-fixed-header-list tbody {
+        height: 20vw;
     }
 }
 
