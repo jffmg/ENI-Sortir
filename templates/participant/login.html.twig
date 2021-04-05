@@ -3,13 +3,9 @@
 {% block title %}Sortir.com | Connexion{% endblock %}
 
 {% block main %}
+
     <div class="app-form-container app-login-form-container">
         <form class="app-form app-login-form" method="post">
-            {% if error %}
-                <div class="app-alert">Paramètres de connexion
-                    invalides
-                </div>
-            {% endif %}
             <div class="app-form-container app-framed">
 
               <span class="app-profile-label"><label class="app-form-label" for="username">Identifiant : </label></span>
@@ -19,18 +15,36 @@
 
                 <span class="app-profile-label"><label class="app-form-label" for="password">Mot de passe : </label></span>
                 <input class="app-form-field" type="password" name="_password" id="password">
+                <a onclick="showPasswordPopUp()">Mot de passe oublié</a>
                 <br>
-
 
                 <div class="app-remember-me">
                     <input type="checkbox" id="remember_me" name="_remember_me" checked/>
                     <label for="remember_me">Se souvenir de moi</label>
                 </div>
                 <br>
-
                 <button class="app-btn" type="submit">Connexion</button>
             </div>
         </form>
     </div>
+
+    {% if error %}
+        <div class="app-alert">Paramètres de connexion invalides
+        </div>
+    {% endif %}
+
+    <div id="reset-password" class="app-reset-password">
+        Email: <input id="reset-password-email"></input>
+        <div class="app-container-btn-pop-up">
+            <button class="app-btn-pop-up" id="reset-password-btn-ok" onclick="resetPassword()">Envoyer</button>
+            <button class="app-btn-pop-up" id="reset-password-btn-cancel" onclick="hidePasswordPopUp()">Annuler</button>
+        </div>
+    </div>
+    <div id="email-sent" class="app-alert-success ">
+    </div>
+
 {% endblock %}
 
+{% block scripts %}
+    <script src="{{ asset('js/passwordPopUp.js') }}"></script>
+{% endblock %}

@@ -104,6 +104,7 @@ body {
     height: inherit;
     justify-content: flex-start;
     align-content: flex-end;
+    z-index: 50;
     /*overflow: scroll;*/
 }
 
@@ -308,17 +309,53 @@ body {
     height:3em;
     position: fixed;
     bottom: 0;
+    z-index: 100;
 }
 
 .app-footer-margin {
     height: 5em;
 }
 
-/*ERROR MESSAGES*/
+/*ALERT MESSAGES*/
 .app-alert {
     font-family: "Exo 2 Black", sans-serif;
     color: #ff0000;
-    padding: 4em;
+    padding: 1em;
+    background-color: mistyrose;
+}
+
+.app-alert-success {
+    font-family: "Exo 2 Black", sans-serif;
+    color: darkslategray;
+    padding: 1em;
+    background-color: mintcream;
+    display: none;
+}
+
+.app-reset-password {
+    display: none;
+    border: 1px solid darkslategray;
+    padding: 3em;
+    z-index: 200;
+    position: fixed;
+    top: 30vh;
+    height: 10em;
+    width: 20em;
+    border-radius: 15px;
+    background-color: mintcream;
+    box-shadow: 1px 1px 4px 0 rgb(0 0 0 / 10%);
+}
+
+.app-container-btn-pop-up{
+    margin-top: 2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.app-btn-pop-up {
+    padding-right: 1em;
+    padding-left: 1em;
 }
 
 /* M devices (tablets, 768px and up)*/
