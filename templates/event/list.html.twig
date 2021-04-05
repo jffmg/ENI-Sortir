@@ -11,13 +11,14 @@
     {% endif %} #}
 
 
-    <h1 class="app-main-title">Filtrer les sorties</h1>
-    <div class="app-framed">
+    <h1 class="app-main-title app-small-screen-display-none">Filtrer les sorties</h1>
+    <h1 class="app-main-title app-medium-screen-display-none">Mes sorties</h1>
+    <div class="app-framed app-small-screen-display-none">
         <p>Date du jour : {{ "now"| date("d/m/Y") }}</p>
         <p>Participant : <span class="app-profile-label">{{ app.user.username }}</span></p>
     </div>
 
-    <div class="app-form-search-events app-form-container app-framed">
+    <div class="app-form-search-events app-form-container app-framed app-small-screen-display-none">
         <div class="app-form-search-events-fields">
             {{ form_start(searchEventsForm) }}
 
@@ -62,49 +63,53 @@
     </div>
 
     {# Second button for when the list is long - so user don't have to scroll down #}
-    <div class="app-form-btn-container app-btn-link-container">
+    <div class="app-form-btn-container app-btn-link-container app-small-screen-display-none">
         <button class="app-btn-list"><a class="app-btn-link" href="{{ path('event_add') }}">Créer une sortie</a>
         </button>
     </div>
 
-    <table class="app-table">
+    <table class="app-table app-fixed-header app-fixed-header-list ">
         <thead>
         <tr class="app-table-head-row app-table-row">
             <th class="app-table-head-title app-table-cell">Nom de la sortie</th>
             <th class="app-table-head-title app-table-cell">Date de la sortie</th>
-            <th class="app-table-head-title app-table-cell">Clotûre</th>
-            <th class="app-table-head-title app-table-cell">Inscrits/places</th>
-            <th class="app-table-head-title app-table-cell">Etat</th>
-            <th class="app-table-head-title app-table-cell">Inscrit</th>
-            <th class="app-table-head-title app-table-cell">Organisateur</th>
-            <th class="app-table-head-title app-table-cell">Actions</th>
+            <th class="app-table-head-title app-table-cell app-small-screen-display-none">Clotûre</th>
+            <th class="app-table-head-title app-table-cell app-small-screen-display-none">Inscrits/places</th>
+            <th class="app-table-head-title app-table-cell app-small-screen-display-none">Etat</th>
+            <th class="app-table-head-title app-table-cell app-small-screen-display-none">Inscrit</th>
+            <th class="app-table-head-title app-table-cell app-small-screen-display-none">Organisateur</th>
+            <th class="app-table-head-title app-table-cell app-small-screen-display-none">Actions</th>
+            <th class="app-table-head-title app-table-cell app-medium-screen-display-none">Lieu</th>
         </tr>
         </thead>
 
         <tbody>
         {% for event in events %}
             <tr class="app-table-body-row app-table-row">
-                <td class="app-table-cell" data-label="Nom de la sortie">{{ event.name }}</td>
-                <td class="app-table-cell"
-                    data-label="Date de la sortie">{{ event.dateTimeStart | date("d/m/Y h:i") }}</td>
-                <td class="app-table-cell" data-label="Clotûre">{{ event.dateEndInscription  | date("d/m/Y") }}</td>
-                <td class="app-table-cell" data-label="Inscrits/places">{{ event.participants.count }}
+                <td class="app-table-cell app-small-screen-display-none">{{ event.name }}</td>
+                <td  href="{{ path('event_detail', {id: event.id}) }}" class="app-table-cell app-medium-screen-display-none">
+                    <a class="app-link" href="{{ path('event_detail', {id: event.id}) }}">{{ event.name }}</a>
+                </td>
+
+                <td class="app-table-cell">{{ event.dateTimeStart | date("d/m/Y h:i") }}</td>
+                <td class="app-table-cell app-small-screen-display-none">{{ event.dateEndInscription  | date("d/m/Y") }}</td>
+                <td class="app-table-cell app-small-screen-display-none">{{ event.participants.count }}
                     / {{ event.nbInscriptionsMax }}</td>
-                <td class="app-table-cell" data-label="Etat">{{ event.state.label }}</td>
+                <td class="app-table-cell app-small-screen-display-none">{{ event.state.label }}</td>
 
                 {# Show an X if user is regsiterd to the event #}
-                <td class="app-table-cell" data-label="Inscrits">
+                <td class="app-table-cell app-small-screen-display-none">
                     {% for p in event.participants %}
                         {% if app.user == p %}
                             X
                         {% endif %}
                     {% endfor %}
                 </td>
-                <td class="app-table-cell" data-label="Organisateur">
+                <td class="app-table-cell app-small-screen-display-none">
                     <a href="{{ path('participant_profile', { 'id': event.organizer.id }) }}">{{ event.organizer.userName }}</a>
                 </td>
 
-                <td class="app-table-cell" data-label="Actions">
+                <td class="app-table-cell app-small-screen-display-none">
                     {% if event.state != stateEC %}
                         <a class="app-link" href="{{ path('event_detail', {id: event.id}) }}">Afficher</a>
                     {% endif %}
@@ -150,12 +155,17 @@
                     {% endif %}
 
                 </td>
+
+                <td class="app-table-cell app-medium-screen-display-none">
+                    <a>{{ event.location.name }}</a>
+                </td>
+
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <div class="app-form-btn-container app-btn-link-container">
+    <div class="app-form-btn-container app-btn-link-container app-small-screen-display-none">
         <button class="app-btn-list"><a class="app-btn-link" href="{{ path('event_add') }}">Créer une sortie</a>
         </button>
     </div>

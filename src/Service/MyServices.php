@@ -2,19 +2,20 @@
 
 namespace App\Service;
 
-use App\Controller\EventController;
 use App\Entity\Event;
 use App\Entity\State;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MyServices extends AbstractController
 {
-    public function updateState(EventController $eventController, EntityManagerInterface $em){
+
+    public function updateState(EntityManagerInterface $em, LoggerInterface $logger){
         dump('Call the updateState function');
 
         // Get the date from database
-        $stateRepo = $eventController->getDoctrine()->getRepository(State::class);
+        $stateRepo = $this->getDoctrine()->getRepository(State::class);
         $states = $stateRepo->findAll();
 
         $stateOU = $this->getStateByShortLabel($states, 'OU');
@@ -23,7 +24,7 @@ class MyServices extends AbstractController
         $stateAT = $this->getStateByShortLabel($states, 'AT');
         $stateAH = $this->getStateByShortLabel($states, 'AH');
 
-        $eventRepo = $eventController->getDoctrine()->getRepository(Event::class);
+        $eventRepo = $this->getDoctrine()->getRepository(Event::class);
         $events = $eventRepo->findAll();
 
         $now = new \DateTime();
@@ -43,6 +44,7 @@ class MyServices extends AbstractController
             // Archive all events ended 1 month ago
             if ( $state != $stateAH and $dateEvent < $dateArchive)
             {
+                $logger->info('Event - ID - ' . $event->getId() . ' state is updated to AH');
                 $event->setState($stateAH);
                 $em->persist($event);
             }
@@ -50,6 +52,7 @@ class MyServices extends AbstractController
             // Update status to AEC
             if ($state == $stateOU or $state == $stateCL) {
                 if ($dateEvent < $now and $dateEndEvent > $now) {
+                    $logger->info('Event - ID - ' . $event->getId() . ' state is updated to AEC');
                     $event->setState($stateAEC);
                     $em->persist($event);
                 }
@@ -57,6 +60,7 @@ class MyServices extends AbstractController
 
             // Update status to AT
             if ($state == $stateOU or $state == $stateCL or $state == $stateAEC) {
+                $logger->info('Event - ID - ' . $event->getId() . ' state is updated to AT');
                 if($dateEndEvent < $now and $dateEvent > $dateArchive)
                 {
                     $event->setState($stateAT);

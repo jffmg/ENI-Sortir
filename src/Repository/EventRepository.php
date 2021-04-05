@@ -7,7 +7,7 @@ use App\Entity\Participant;
 use App\Entity\SearchEvents;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use function Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Event|null find($id, $lockMode = null, $lockVersion = null)
@@ -46,7 +46,7 @@ class EventRepository extends ServiceEntityRepository
         if ($keywords) {
             $keywords = explode(" ", trim($keywords));
 
-        dump($qb->getDQL());
+        //dump($qb->getDQL());
 
             $i = 0;
             foreach ($keywords as $keyword) {
@@ -88,7 +88,6 @@ class EventRepository extends ServiceEntityRepository
             $qb2 = $this->createQueryBuilder('e2');
             $qb2->join('e2.participants', 'ep2', 'WITH', 'ep2.id = :userId2');
             $qb2->andWhere('e.id = e2.id');
-            $qb2->addSelect('e');
 
             $qb->andWhere($qb->expr()->not($qb->expr()->exists($qb2)));
             $qb->setParameter("userId2", $user);
