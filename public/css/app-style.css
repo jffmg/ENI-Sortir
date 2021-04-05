@@ -52,6 +52,14 @@ body {
     text-decoration: none;
 }
 
+.app-red-text {
+    color: red;
+}
+
+.app-green-text {
+    color: green;
+}
+
 .app-pink-label {
     font-family: "Exo 2 Black", sans-serif;
     color: plum;

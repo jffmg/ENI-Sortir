@@ -6,6 +6,7 @@ use App\Entity\Campus;
 use App\Entity\Participant;
 use App\Form\AdminParticipantType;
 use App\Form\FileUploadType;
+use App\Form\ParticipantsManagerType;
 use App\Form\ParticipantType;
 use App\Service\CSVUploader;
 use Doctrine\ORM\EntityManagerInterface;
@@ -37,9 +38,9 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/manager", name="manager")
+     * @Route("/portal", name="portal")
      */
-    public function manager(): Response
+    public function portal(): Response
     {
         $this->denyAccessUnlessGranted("ROLE_ADMIN");
 
@@ -145,5 +146,60 @@ class AdminController extends AbstractController
             "adminParticipantForm" => $adminParticipantForm->createView(), 'campuses' => $campuses, 'adminCSVForm' => $adminCSVForm->createView()]);
     }
 
+    /**
+     * @Route("/manager", name="manager", methods={"GET", "POST", "HEAD"})
+     */
+    public function manager(Request $request): Response
+    {
+        $this->denyAccessUnlessGranted("ROLE_ADMIN");
+
+        $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
+        $participants = $participantRepo->findAll();
+
+        $selectionArray = [];
+        $selectionToActivate = [];
+        $selectionToDeactivate = [];
+        $selectionToDelete = [];
+
+        if (isset($_POST['selection'])) {
+            $selectionArray = $_POST['selection'];
+            dump($selectionArray);
+            /*foreach($selectionArray as $selection) {
+                if
+            }*/
+
+            if (isset($_POST['modify'])) {
+               $participantsToModify = $participantRepo->findMultipleByIds($selectionArray);
+               /*dump($participantsToModify);*/
+               foreach ($participantsToModify as $p) {
+                   if ($p->getActive() == 1) {
+                       $selectionToDeactivate[] = $p->getId();
+                   } else {
+                       $selectionToActivate[] = $p->getId();
+                   }
+                }
+               if (count($selectionToDeactivate) > 0) {
+                   $participantRepo->deactivateSelection($selectionToDeactivate);
+               }
+                if (count($selectionToActivate) > 0) {
+                    $participantRepo->activateSelection($selectionToActivate);
+                }
+                return $this->redirectToRoute('admin_manager');
+            }
+
+            if(isset($_POST['delete'])) {
+                $participantsToModify = $participantRepo->findMultipleByIds($selectionArray);
+                foreach ($participantsToModify as $p) {
+                    $selectionToDelete[] = $p->getId();
+                }
+                $participantRepo->deleteSelection($selectionToDelete);
+                return $this->redirectToRoute('admin_manager');
+            }
+        }
+
+        return $this->render('/admin/manager.html.twig', ['participants' => $participants/*, 'participantManagerForm' => $participantManagerForm->createView()*/]);
+    }
+
 
 }
+

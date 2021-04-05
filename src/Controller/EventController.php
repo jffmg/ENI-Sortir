@@ -284,6 +284,7 @@ class EventController extends AbstractController
      */
     public function delete(EntityManagerInterface $em, $id)
     {
+        // todo IMPLEMENTER LA FONCTION POUR SUPPRIMER L'EVENT DE LA DB
         /*CREATE REAL FUNCTION TO DELETE FROM DATABASE*/
         $var = 'DELETED';
         dd($var);
