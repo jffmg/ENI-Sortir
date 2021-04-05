@@ -2,7 +2,11 @@
 
 namespace App\Controller;
 
+use App\Service\MyServices;
+use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -25,6 +29,34 @@ class MainController extends AbstractController
      */
     public function logout(): Response
     {
+    }
+
+    /**
+     * @Route("/batch", name="batch")
+     */
+    public function executeBatch(Request $request, EntityManagerInterface $em, LoggerInterface $logger, MyServices $service)
+    {
+        $this->denyAccessUnlessGranted("ROLE_ADMIN");
+
+        $logger->info('STARTING BATCH');
+        set_time_limit(0);
+
+        $interval = 10;
+        $count = 0;
+        while ($count < 20) {
+            $now = time();
+
+            $logger->info('TIME:'.$now);
+
+            $service->updateState($em,$logger);
+
+            sleep($interval);
+            $count++;
+        }
+
+        $logger->info('BATCH FINISHED');
+
+        return new Response("Batch exécuté");
     }
 
 }

@@ -14,6 +14,7 @@ use App\Form\EventType;
 use App\Form\SearchEventsType;
 use App\Service\MyServices;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,13 +30,13 @@ class EventController extends AbstractController
     /**
      * @Route("/", name="main_home")
      */
-    public function displayEvents(Request $request, EntityManagerInterface $em, MyServices $service)
+    public function displayEvents(Request $request, EntityManagerInterface $em, MyServices $service, LoggerInterface $logger)
     {
         // Access denied if user not connected
         $this->denyAccessUnlessGranted("ROLE_USER");
 
-        // Update the events state
-        $service->updateState($this, $em);
+        // Update the events state - Now is done by admin and running every minute
+        //$service->updateState($em,$logger);
 
         // Create the form
         $searchEvents = new SearchEvents();
@@ -46,12 +47,17 @@ class EventController extends AbstractController
         $endDate->modify('+' . 90 . ' days');
 
         $searchEvents->setEndDate($endDate);
+
+        $user = $this->getUser();
+        $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
+        $participant = $participantRepo->find($user);
+        $searchEvents->setCampus($participant->getCampus());
+
         $searchEventsForm = $this->createForm(SearchEventsType::class, $searchEvents);
 
 
         // Get the data from the form
         $searchEventsForm->handleRequest($request);
-        $user = $this->getUser();
 
         // Get the date from database
         $stateRepo = $this->getDoctrine()->getRepository(State::class);

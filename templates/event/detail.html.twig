@@ -68,23 +68,24 @@
 	</div>
 
 	<h2> Liste des inscrits : </h2>
-	<table class="app-table app-table-participants">
+	<table class="app-table app-table-participants app-fixed-header">
 		<thead>
 		<tr class="app-table-head-row app-table-row">
 			<th class="app-table-head-title app-table-cell">Pseudo</th>
 			<th class="app-table-head-title app-table-cell">Nom</th>
+			<th class="app-table-head-title app-table-cell-scrollbar app-small-screen-display-none"></th>
 		</tr>
 		</thead>
 
 		<tbody>
-		{% for p in event.participants %}
-			<tr class="app-table-body-row app-table-row">
-				<td class="app-table-cell" data-label="Pseudo">
-					<a href="{{ path('participant_profile', { 'id': p.id }) }}">{{ p.userName }}</a>
-				</td>
-				<td class="app-table-cell" data-label="Nom">{{ p.name }} {{ p.firstName }}</td>
-			</tr>
-		{% endfor %}
+			{% for p in event.participants %}
+				<tr class="app-table-body-row app-table-row">
+					<td class="app-table-cell" data-label="Pseudo">
+						<a href="{{ path('participant_profile', { 'id': p.id }) }}">{{ p.userName }}</a>
+					</td>
+					<td class="app-table-cell" data-label="Nom">{{ p.name }} {{ p.firstName }}</td>
+				</tr>
+			{% endfor %}
 		</tbody>
 	</table>
 

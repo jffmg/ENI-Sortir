@@ -22,9 +22,9 @@ body {
     font-family: "Exo 2 Medium", sans-serif;
 }
 
-::-webkit-scrollbar {
+/*::-webkit-scrollbar {
     display: none;
-}
+}*/
 
 .app-fieldset {
     padding: 1em;
@@ -92,7 +92,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 99vh;
+    /*height: 99vh;*/
 }
 
 
@@ -104,7 +104,7 @@ body {
     height: inherit;
     justify-content: flex-start;
     align-content: flex-end;
-    overflow: scroll;
+    /*overflow: scroll;*/
 }
 
 .app-main-title {
@@ -135,26 +135,23 @@ body {
 
 .app-table thead {
     /*display: none;*/
-    visibility: collapse;
 }
 
-.app-table-row {
+/*.app-table-row {
     display: block;
-    margin-bottom: 3em;
-}
+}*/
 
 .app-table-cell {
     box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
     height: 2em;
-    display: block;
-    text-align: right;
+    text-align: center;
+    width: 30vw;
 }
 
-.app-table-cell:before {
+/*.app-table-cell:before {
     content: attr(data-label);
-    float: left;
     font-weight: bold;
-}
+}*/
 
 .app-table-cell > a {
     display: block;
@@ -305,8 +302,16 @@ body {
 .app-footer-container {
     text-align: center;
     padding: 0.5em;
+    background:mintcream;
+    width:100%;
+    height:3em;
+    position: fixed;
+    bottom: 0;
 }
 
+.app-footer-margin {
+    height: 5em;
+}
 
 /*ERROR MESSAGES*/
 .app-alert {
@@ -397,7 +402,29 @@ body {
         box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
         width: 80vw;
     }
+    .app-table thead {
+        visibility: visible;
+    }
 
+    .app-table-row {
+        display: table-row;
+        margin-bottom: 3em;
+        width: 100%;
+    }
+
+    .app-table-cell {
+        box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
+        height: 2em;
+        padding: 0.5em;
+        display: table-cell;
+        text-align: center;
+        width: inherit;
+    }
+
+    .app-table-cell:before {
+        display: none;
+        content: none;
+    }
 
     .app-form-search-events-checkboxes>p {
         width: 55vw;
@@ -420,7 +447,7 @@ body {
     }
 
     .app-detail-fields {
-        width: 40vw;
+        width: 41vw;
     }
 
     .app-detail-info-label{
@@ -435,6 +462,40 @@ body {
         width: 40vw;
     }
 
+    /*Table Scroll bar */
+    .app-fixed-header {
+        table-layout: fixed;
+        border-collapse: collapse;
+    }
+
+    .app-fixed-header thead tr {
+        display: inherit;
+    }
+
+    .app-fixed-header tbody {
+         display: block;
+         overflow: auto;
+         height: 8vw;
+         width: 100%;
+         scrollbar-width: 0.5em;
+     }
+
+    .app-fixed-header tbody::-webkit-scrollbar {
+        width: 0.5em;
+        background-color: mintcream;
+    }
+
+    .app-fixed-header tbody::-webkit-scrollbar-thumb {
+         background: darkgrey;
+     }
+
+    .app-fixed-header th, .app-fixed-header td {
+        width: 20vw;
+    }
+
+    th.app-table-cell-scrollbar {
+        width: 0.5em;
+    }
 }
 
 /* L devices (desktops, 992px and up)*/
@@ -465,29 +526,6 @@ body {
     }
 
     /*LIST PAGE*/
-    .app-table thead {
-        visibility: visible;
-    }
-
-    .app-table-row {
-        display: table-row;
-        margin-bottom: 3em;
-        width: 100%;
-    }
-
-    .app-table-cell {
-        box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
-        height: 2em;
-        padding: 0.5em;
-        display: table-cell;
-        text-align: center;
-
-    }
-
-    .app-table-cell:before {
-        display: none;
-        content: none;
-    }
 
     .app-search-btn {
         align-self: center;
@@ -608,6 +646,21 @@ body {
     /*.app-profile-picture {
         width: 15vw;
     }*/
+}
+
+/* S devices (mobiles, Less than 768px)*/
+@media (max-width: 768px) {
+    .app-small-screen-display-none{
+        display: none;
+    }
+}
+
+/* display none if not on mobile */
+@media (min-width: 768px) {
+
+    .app-medium-screen-display-none {
+        display: none;
+    }
 }
 
 
