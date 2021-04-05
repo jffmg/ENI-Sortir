@@ -7,8 +7,12 @@
     <h1 class="app-main-title">Ajouter des participants</h1>
 
     <div class="app-form-container app-framed">
-        <h2 class="app-main-title">Inmporter plusieurs profils</h2>
-        <button>importer un fichier .csv</button>
+        <h2 class="app-main-title">Importer plusieurs profils</h2>
+        <h5>(au format .csv)</h5>
+        {{ form_start(adminCSVForm) }}
+        {{ form_widget(adminCSVForm) }}
+        <button class="app-btn" type="submit">Envoyer</button>
+        {{ form_end(adminCSVForm) }}
     </div>
 
     <div class="app-form-container app-framed">

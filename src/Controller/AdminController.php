@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Campus;
 use App\Entity\Participant;
 use App\Form\AdminParticipantType;
+use App\Form\FileUploadType;
 use App\Form\ParticipantType;
+use App\Service\CSVUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,7 +49,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/add", name="addParticipants")
      */
-    public function addParticipants(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder, MailerInterface $mailer): Response
+    public function addParticipants(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder, MailerInterface $mailer, CSVUploader $file_uploader): Response
     {
         $this->denyAccessUnlessGranted("ROLE_ADMIN");
 
@@ -56,8 +58,48 @@ class AdminController extends AbstractController
 
         $participant = new Participant();
 
+        $adminCSVForm = $this->createForm(FileUploadType::class);
+        $adminCSVForm->handleRequest($request);
+
+        if ($adminCSVForm->isSubmitted() && $adminCSVForm->isValid()) {
+            $file = $adminCSVForm['upload_file']->getData();
+            if ($file) {
+                $file_name = $file_uploader->upload($file);
+                if ($file_name !== null) {
+                    $directory = $file_uploader->getTargetDirectory();
+                    $full_path = $directory . '/' . $file_name;
+                    if (($handle = fopen($full_path, 'r')) !== false) {
+                        $usersArray = [];
+                        fgetcsv($handle, 1000, ",");
+                        while (($data = fgetcsv($handle, 1000, ',')) !== false) {
+                            $user = new Participant();
+                            $campus = $campusRepo->findOneBy(['id' => intval($data[0])]);
+                            $user->setCampus($campus);
+                            $user->setUserName($data[1]);
+                            $user->setName($data[2]);
+                            $user->setFirstName($data[3]);
+                            $user->setMail($data[4]);
+                            $user->setAdmin($data[6]);
+                            $user->setActive($data[7]);
+                            $user->setUpdatedAt(new \DateTime());
+                            $hashed = $encoder->encodePassword($participant, $data[5]);
+                            $user->setPassword($hashed);
+                            $em->persist($user);
+                            $em->flush();
+                            $usersArray[] = $user;
+                        }
+                        fclose($handle);
+                        $this->addFlash('success', 'Données insérées.');
+                    }
+                } else {
+                    // ... handle exception if something happens during file upload
+                    $this->addFlash('error', 'Echec à l\'insertion de données.');
+                }
+            }
+        }
+
+
         $adminParticipantForm = $this->createForm(AdminParticipantType::class, $participant);
-        dump($participant);
         if ($participant->getAdmin() == null) {
             $adminParticipantForm->get('admin')->setData('Non');
         }
@@ -86,13 +128,12 @@ class AdminController extends AbstractController
                 ->text('Bonjour ' . $adminParticipantForm->get('firstName')->getData() . '
                 Votre compte Sortir.fr a été créé.
                 Voici vos informations de connexion : 
-                Login : '.$adminParticipantForm->get('userName')->getData().'
-                Mot de passe : '.$adminParticipantForm->get('password')->getData().'
+                Login : ' . $adminParticipantForm->get('userName')->getData() . '
+                Mot de passe : ' . $adminParticipantForm->get('password')->getData() . '
                 Pour plus de sécurité, nous préconisons de modifier votre mot de passe dès la première connexion. 
                 Cordialement, 
                 L\'equipe de Sortir.fr')
-                ->to($adminParticipantForm->get('mail')->getData())
-            ;
+                ->to($adminParticipantForm->get('mail')->getData());
             $mailer->send($email);
 
 
@@ -101,7 +142,7 @@ class AdminController extends AbstractController
 
 
         return $this->render('/admin/addParticipants.html.twig', [
-            "adminParticipantForm" => $adminParticipantForm->createView(), 'campuses' => $campuses]);
+            "adminParticipantForm" => $adminParticipantForm->createView(), 'campuses' => $campuses, 'adminCSVForm' => $adminCSVForm->createView()]);
     }
 
 
