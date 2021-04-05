@@ -40,7 +40,6 @@ function insertLocations() {
                 selectLocation.appendChild(option);
                 zipCodeElement.innerHTML = location.zipcode;
             }
-
         }
     }
 }
@@ -58,13 +57,12 @@ function getInfos(){
     req.send();
 }
 
-function insertInfos(){
+function insertInfos() {
     console.log('status', this.status);
     console.log('responseText', this.responseText);
-
+    // if success
     if (this.status === 200) {
-
-// this.responseText gets content returned by server
+        // this.responseText gets content returned by server
         const infos = JSON.parse(this.responseText);
         console.log(infos);
 
@@ -79,15 +77,11 @@ function insertInfos(){
             street.innerHTML = "<p>Pas d'adresse pour ce lieu.</p>"
             latitude.innerHTML = "<p>Pas de latitude pour ce lieu.</p>"
             longitude.innerHTML = "<p>Pas de longitude pour ce lieu.</p>"
-        }
-        else {
+        } else {
 
-                street.innerHTML = infos.street;
+            street.innerHTML = infos.street;
             latitude.innerHTML = infos.latitude;
             longitude.innerHTML = infos.longitude;
         }
-
-
-
     }
 }

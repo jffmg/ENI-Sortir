@@ -97,7 +97,7 @@ class EventController extends AbstractController
         if ($eventForm->isSubmitted() && $eventForm->isValid()) {
             // status is "En création" by default at this stage
             $stateRepo = $this->getDoctrine()->getRepository()(State::class);
-            $state = $stateRepo->findOneBy(['shortLabel'=>'EC']);
+            $state = $stateRepo->findOneBy(['shortLabel' => 'EC']);
             $event->setState($state);
 
             // organizer is the Participant creating the event
@@ -130,6 +130,7 @@ class EventController extends AbstractController
         $locationRepo = $this->getDoctrine()->getRepository(\App\Entity\Location::class);
         $locations = $locationRepo->findByCityId($inputCity);
 
+        // get zipcode of city selected by user
         $cityRepo = $this->getDoctrine()->getRepository(\App\Entity\City::class);
         $city = $cityRepo->find($inputCity);
 
@@ -140,14 +141,11 @@ class EventController extends AbstractController
             $loc = new \stdClass();
             $loc->id = $location->getId();
             $loc->name = $location->getName();
-            $loc->street = $location->getStreet();
-            $loc->latitude = $location->getLatitude();
-            $loc->longitude = $location->getLongitude();
+            // we'll need the zipcode too for display
             $loc->zipcode = $city->getZipCode();
 
             $result[] = $loc;
         }
-
 
         // serialize $locations to return them
         $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
@@ -163,13 +161,6 @@ class EventController extends AbstractController
         // get infos associated to location selected by user
         $locationRepo = $this->getDoctrine()->getRepository(Location::class);
         $location = $locationRepo->find($inputLocation);
-        // create an array with infos
-/*        $locationName = $location->getName();
-        $locationStreet = $location->getStreet();
-        $locationLatitude = $location->getLatitude();
-        $locationLongitude = $location->getLongtide();*/
-        /*$result = array();*/
-
 
         $loc = new \stdClass();
         $loc->id = $location->getId();
@@ -178,17 +169,9 @@ class EventController extends AbstractController
         $loc->latitude = $location->getLatitude();
         $loc->longitude = $location->getLongitude();
 
-        /*$result[] = $loc;*/
-
-        /*$location->setName($result->getName());
-        $location->setStreet($result->getStreet());
-        $location->setLatitude($result->getLatitude());
-        $location->setLongitude($result->getLongitude());*/
-
         $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
 
         return new Response($serializer->serialize($loc, 'json'));
-
     }
 
     /**

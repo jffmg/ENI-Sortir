@@ -32,7 +32,7 @@ class LocationRepository extends ServiceEntityRepository
             ->orderBy('l.id', 'ASC')
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
 
     /*

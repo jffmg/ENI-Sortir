@@ -59,7 +59,6 @@ class MyServices extends AbstractController
             if ($state == $stateOU or $state == $stateCL or $state == $stateAEC) {
                 if($dateEndEvent < $now and $dateEvent > $dateArchive)
                 {
-                    dump('doit updater à AT');
                     $event->setState($stateAT);
                     $em->persist($event);
                 }
