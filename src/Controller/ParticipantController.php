@@ -56,9 +56,6 @@ class ParticipantController extends AbstractController
         $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
         $participant = $participantRepo->find($id);
 
-//        $participant->setPictureFile(
-//            new File($this->getParameter('pictures_directory').'/'.$participant->getPicture())
-//        );
 
         $participantForm = $this->createForm(ParticipantType::class, $participant);
 
@@ -69,28 +66,6 @@ class ParticipantController extends AbstractController
             // hash password
             $hashed = $encoder->encodePassword($participant, $participant->getPassword());
             $participant->setPassword($hashed);
-
-            /** @var UploadedFile $pictureFile */
-            /*$participant->$participantForm->get('picture')->getData();
-            if($pictureFile) {
-                $originalFileName = pathinfo($pictureFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFileName = $slugger->slug($originalFileName);
-                $newFileName = $safeFileName.'-'.uniqid().'.'.$pictureFile->guessExtension();
-                try {
-                    $pictureFile->move(
-                        $this->getParameter('pictures_directory'),
-                        $newFileName
-                    );
-                } catch (FileException $e) {
-                    // todo handle exception if something happens during file upload
-                }
-                $participant->setPicture(
-                    new File($newFileName)
-                );
-            }*/
-
-
-
 
             $em->persist($participant);
             $em->flush();

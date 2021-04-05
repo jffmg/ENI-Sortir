@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\City;
 use App\Entity\Event;
+use App\Entity\Location;
 use App\Entity\Participant;
 use App\Entity\SearchEvents;
 use App\Entity\State;
@@ -18,6 +19,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 
 class EventController extends AbstractController
@@ -118,21 +122,73 @@ class EventController extends AbstractController
     }
 
     /**
-     * @Route("/event/add/ajax{inputCity}", methods={"GET"})
+     * @Route("/event/add/ajax/{inputCity}", methods={"GET"})
      */
     public function fetchLocationsByCity(Request $request, $inputCity): Response
     {
-
-
-        dump($inputCity);
         // get locations associated to city selected by user
         $locationRepo = $this->getDoctrine()->getRepository(\App\Entity\Location::class);
         $locations = $locationRepo->findByCityId($inputCity);
-dump($locations);
-//        // serialize $locations to return them
+
+        $cityRepo = $this->getDoctrine()->getRepository(\App\Entity\City::class);
+        $city = $cityRepo->find($inputCity);
+
+        // Create the array with the locations / separated from DB (if not separated, we had some circular issues)
+        $result = array();
+        foreach ($locations as $location) {
+
+            $loc = new \stdClass();
+            $loc->id = $location->getId();
+            $loc->name = $location->getName();
+            $loc->street = $location->getStreet();
+            $loc->latitude = $location->getLatitude();
+            $loc->longitude = $location->getLongitude();
+            $loc->zipcode = $city->getZipCode();
+
+            $result[] = $loc;
+        }
 
 
-        return new Response(null);
+        // serialize $locations to return them
+        $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
+
+        return new Response($serializer->serialize($result, 'json'));
+    }
+
+    /**
+     * @Route("/event/add/ajax/location/{inputLocation}", methods={"GET"})
+     */
+    public function fetchInfosByLocation(Request $request, $inputLocation): Response
+    {
+        // get infos associated to location selected by user
+        $locationRepo = $this->getDoctrine()->getRepository(Location::class);
+        $location = $locationRepo->find($inputLocation);
+        // create an array with infos
+/*        $locationName = $location->getName();
+        $locationStreet = $location->getStreet();
+        $locationLatitude = $location->getLatitude();
+        $locationLongitude = $location->getLongtide();*/
+        /*$result = array();*/
+
+
+        $loc = new \stdClass();
+        $loc->id = $location->getId();
+        $loc->name = $location->getName();
+        $loc->street = $location->getStreet();
+        $loc->latitude = $location->getLatitude();
+        $loc->longitude = $location->getLongitude();
+
+        /*$result[] = $loc;*/
+
+        /*$location->setName($result->getName());
+        $location->setStreet($result->getStreet());
+        $location->setLatitude($result->getLatitude());
+        $location->setLongitude($result->getLongitude());*/
+
+        $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
+
+        return new Response($serializer->serialize($loc, 'json'));
+
     }
 
     /**
@@ -190,6 +246,7 @@ dump($locations);
         return $this->redirectToRoute("main_home");
 
     }
+
 
     /**
      * @Route("/event/unsubscribe/{eventId}{userId}", name="event_unsubscribe")

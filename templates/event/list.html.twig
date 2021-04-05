@@ -19,7 +19,7 @@
 
     <div class="app-form-search-events app-form-container app-framed">
         <div class="app-form-search-events-fields">
-        {{ form_start(searchEventsForm) }}
+            {{ form_start(searchEventsForm) }}
 
             {# {{ form_widget(searchEventsForm) }} #}
             <p class="app-search-form-container"><span
@@ -37,29 +37,33 @@
         </div>
         <div class="app-form-search-events-checkboxes">
             <p class="app-search-form-container"><span
-                        class="app-profile-label"> {{ form_label(searchEventsForm.userIsOrganizer) }}</span> <span>{{ form_widget(searchEventsForm.userIsOrganizer) }}</span>
+                        class="app-profile-label"> {{ form_label(searchEventsForm.userIsOrganizer) }}</span>
+                <span>{{ form_widget(searchEventsForm.userIsOrganizer) }}</span>
             </p><br>
             <p class="app-search-form-container"><span
-                        class="app-profile-label"> {{ form_label(searchEventsForm.userIsRegistered) }}</span> <span>{{ form_widget(searchEventsForm.userIsRegistered) }}</span>
+                        class="app-profile-label"> {{ form_label(searchEventsForm.userIsRegistered) }}</span>
+                <span>{{ form_widget(searchEventsForm.userIsRegistered) }}</span>
             </p><br>
             <p class="app-search-form-container"><span
-                        class="app-profile-label"> {{ form_label(searchEventsForm.userIsNotRegistered) }}</span> <span>{{ form_widget(searchEventsForm.userIsNotRegistered) }}</span>
+                        class="app-profile-label"> {{ form_label(searchEventsForm.userIsNotRegistered) }}</span>
+                <span>{{ form_widget(searchEventsForm.userIsNotRegistered) }}</span>
             </p><br>
             <p class="app-search-form-container"><span
-                        class="app-profile-label"> {{ form_label(searchEventsForm.endedEvents) }}</span> <span>{{ form_widget(searchEventsForm.endedEvents) }}</span>
+                        class="app-profile-label"> {{ form_label(searchEventsForm.endedEvents) }}</span>
+                <span>{{ form_widget(searchEventsForm.endedEvents) }}</span>
             </p><br>
 
         </div>
         <div class="app-form-btn-container">
             <button class="app-btn app-search-btn" type="submit">Rechercher</button>
 
-        {{ form_end(searchEventsForm) }}
+            {{ form_end(searchEventsForm) }}
         </div>
     </div>
 
     {# Second button for when the list is long - so user don't have to scroll down #}
     <div class="app-form-btn-container app-btn-link-container">
-        <button class="app-btn-list"><a class="app-btn-link" href="{{ path('main_home') }}">Créer une sortie</a>
+        <button class="app-btn-list"><a class="app-btn-link" href="{{ path('event_add') }}">Créer une sortie</a>
         </button>
     </div>
 
@@ -105,13 +109,17 @@
                         <a class="app-link" href="{{ path('event_detail', {id: event.id}) }}">Afficher</a>
                     {% endif %}
 
+                    {% if app.user.admin == 1 %}
+                        <a class="app-link app-admin-cancel" href="{{ path('event_cancel',{'id': event.id}) }}">Annuler</a>
+                    {% endif %}
+
                     {% if app.user == event.organizer %}
                         {# TODO Ajouter les fonctionnalités et path modifier / publier / annuler #}
                         {% if event.state == stateEC %}
                             <a class="app-link" href="{{ path('main_home') }}">Modifier</a>
                             <a class="app-link" href="{{ path('main_home') }}">Publier</a>
                             <a class="app-link" href="{{ path('event_delete',{'id': event.id}) }}">Annuler</a>
-                        {% elseif event.state == stateOU or event.state == stateCL  %}
+                        {% elseif event.state == stateOU or event.state == stateCL %}
                             {# TODO Ajouter condition sur date inscription et faire les fonctionnalités / path corrspondantes #}
                             <a class="app-link" href="{{ path('main_home') }}">Modifier</a>
                             <a class="app-link" href="{{ path('event_cancel',{'id': event.id}) }}">Annuler</a>
@@ -123,17 +131,22 @@
                     {% if event.participants.count > 0 %}
                         {% for p in event.participants %}
                             {% if app.user == p and now < event.dateTimeStart and event.state == stateOU %}
-                                <a class="app-link" id="unsubscribe" href="{{ path('event_unsubscribe',{'eventId': event.id, 'userId': app.user.id}) }}">Se désister</a>
+                                <a class="app-link" id="unsubscribe"
+                                   href="{{ path('event_unsubscribe',{'eventId': event.id, 'userId': app.user.id}) }}">Se
+                                    désister</a>
                                 {% set isNotRegistered = false %}
                             {% elseif app.user == p and now < event.dateTimeStart and event.state == stateCL %}
-                                <a class="app-link" id="unsubscribe" href="{{ path('event_unsubscribe',{'eventId': event.id, 'userId': app.user.id}) }}">Se désister</a>
+                                <a class="app-link" id="unsubscribe"
+                                   href="{{ path('event_unsubscribe',{'eventId': event.id, 'userId': app.user.id}) }}">Se
+                                    désister</a>
                                 {% set isNotRegistered = false %}
                             {% endif %}
                         {% endfor %}
                     {% endif %}
 
                     {% if isNotRegistered and event.state == stateOU and now < event.dateEndInscription %}
-                        <a class="app-link" id="subscribe" href="{{ path('event_subscribe', {'eventId': event.id, 'userId': app.user.id}) }}">S'inscrire</a>
+                        <a class="app-link" id="subscribe"
+                           href="{{ path('event_subscribe', {'eventId': event.id, 'userId': app.user.id}) }}">S'inscrire</a>
                     {% endif %}
 
                 </td>
@@ -143,7 +156,7 @@
     </table>
 
     <div class="app-form-btn-container app-btn-link-container">
-        <button class="app-btn-list"><a class="app-btn-link" href="{{ path('main_home') }}">Créer une sortie</a>
+        <button class="app-btn-list"><a class="app-btn-link" href="{{ path('event_add') }}">Créer une sortie</a>
         </button>
     </div>
 {% endblock %}

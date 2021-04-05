@@ -6,7 +6,13 @@
 
     <h1 class="app-main-title"> Profil de {{ participant.userName }} du campus de {{ participant.campus.name }}</h1>
 
-    <div class="app-form-container app-framed">
+    {% if participant.pictureName != null %}
+    <div>
+        <img class="app-profile-picture app-framed" src="{{asset('images/pictures/'~participant.pictureName)}}">
+    </div>
+    {% endif %}
+
+    <div class="app-form-container app-profile-container app-framed">
         <p><span class="app-profile-label"> Nom :</span> {{ participant.name }}</p><br>
         <p><span class="app-profile-label"> Prénom :</span> {{ participant.firstName }}</p><br>
         <p><span class="app-profile-label"> Mail :</span> {{ participant.mail }}</p><br>

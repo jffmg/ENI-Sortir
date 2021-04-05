@@ -74,7 +74,8 @@ class ParticipantType extends AbstractType
                 'attr' => [
                     'class' => 'app-form-field app-update-field',
                 ]
-            ]);;
+            ])
+        ->setMethod('POST');
     }
 
     public function configureOptions(OptionsResolver $resolver)

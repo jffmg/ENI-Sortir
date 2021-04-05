@@ -38,7 +38,7 @@ class Participant implements UserInterface, \Serializable
 
     /**
      * @Assert\Length(max=255, maxMessage="255 caractères maximum")
-    * @Assert\NotBlank(message="Ce champ est obligatoire")
+     * @Assert\NotBlank(message="Ce champ est obligatoire")
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -106,7 +106,7 @@ class Participant implements UserInterface, \Serializable
     private $campus;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $pictureName;
 
@@ -128,7 +128,7 @@ class Participant implements UserInterface, \Serializable
 
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      *
      * @var int|null
      */
@@ -440,16 +440,24 @@ class Participant implements UserInterface, \Serializable
     }
 
 
-
     public function getRoles()
     {
-        return ["ROLE_USER"];
+        if ($this->getAdmin() == 1) {
+            return ["ROLE_USER", "ROLE_ADMIN"];
+        } else {
+            return ["ROLE_USER"];
+        }
     }
 
 
     // Unused methods
-    public function getSalt(){}
-    public function eraseCredentials(){}
+    public function getSalt()
+    {
+    }
+
+    public function eraseCredentials()
+    {
+    }
 
 
 }
