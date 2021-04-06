@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Participant;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
+use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -33,15 +34,19 @@ class ResetPasswordController extends AbstractController
     /**
      * @Route("/reset-password", name="app_forgot_password_request")
      */
-    public function request(Request $request, MailerInterface $mailer): Response
+    public function request(Request $request, MailerInterface $mailer, LoggerInterface $logger): Response
     {
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
+        $logger->info("========== RESET_PASSWORD ===============");
+        $logger->info("isSubmitted: ".$form->isSubmitted());
+
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->processSendingPasswordResetEmail(
                 $form->get('mail')->getData(),
-                $mailer
+                $mailer,
+                $logger
             );
         }
 
@@ -53,10 +58,14 @@ class ResetPasswordController extends AbstractController
     /**
      * @Route("/check-email", name="app_check_email")
      */
-    public function checkEmail(): Response
+    public function checkEmail(LoggerInterface $logger): Response
     {
+        $logger->info("========== CHECK_EMAIL ===============");
+
+        $resetToken = $this->getTokenObjectFromSession();
+
         // We prevent users from directly accessing this page
-        if (null === ($resetToken = $this->getTokenObjectFromSession())) {
+        if (null === $resetToken) {
             return $this->redirectToRoute('app_forgot_password_request');
         }
 
@@ -88,7 +97,7 @@ class ResetPasswordController extends AbstractController
             $user = $this->resetPasswordHelper->validateTokenAndFetchUser($token);
         } catch (ResetPasswordExceptionInterface $e) {
             $this->addFlash('reset_password_error', sprintf(
-                'There was a problem validating your reset request - %s',
+                'Une erreur est survenue lors de votre requête - %s',
                 $e->getReason()
             ));
 
@@ -123,14 +132,19 @@ class ResetPasswordController extends AbstractController
         ]);
     }
 
-    private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer): RedirectResponse
+    private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer,
+                                                      LoggerInterface $logger): RedirectResponse
     {
         $user = $this->getDoctrine()->getRepository(Participant::class)->findOneBy([
             'mail' => $emailFormData,
         ]);
 
+        $logger->info("mail: ".$emailFormData);
+        $logger->info("user: ".($user ? $user->getName() : "???"));
+
         // Do not reveal whether a user account was found or not.
         if (!$user) {
+            $logger->info("REDIRECT1");
             return $this->redirectToRoute('app_check_email');
         }
 
@@ -140,19 +154,20 @@ class ResetPasswordController extends AbstractController
             // If you want to tell the user why a reset email was not sent, uncomment
             // the lines below and change the redirect to 'app_forgot_password_request'.
             // Caution: This may reveal if a user is registered or not.
-            //
-            // $this->addFlash('reset_password_error', sprintf(
-            //     'There was a problem handling your password reset request - %s',
-            //     $e->getReason()
-            // ));
 
+             /*$this->addFlash('reset_password_error', sprintf(
+                 'There was a problem handling your password reset request - %s',
+                 $e->getReason()
+            ));*/
+
+            $logger->info("REDIRECT2");
             return $this->redirectToRoute('app_check_email');
         }
 
         $email = (new TemplatedEmail())
             ->from(new Address('sorties@eni.fr', 'ENI Sorties'))
             ->to($user->getMail())
-            ->subject('Your password reset request')
+            ->subject('Réinitialisation du mot de passe')
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,

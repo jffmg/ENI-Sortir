@@ -317,6 +317,7 @@ body {
     height:3em;
     position: fixed;
     bottom: 0;
+    left: 0;
     z-index: 100;
 }
 
@@ -340,8 +341,9 @@ body {
     display: none;
 }
 
+/* RESET PASSWORDS PAGES */
+
 .app-container-reset-password {
-    margin-top: 10vh;
     padding: 2em;
     position: fixed;
     top: 30vh;
@@ -350,6 +352,10 @@ body {
     border-radius: 15px;
     background-color: mintcream;
     box-shadow: 1px 1px 4px 0 rgb(0 0 0 / 10%);
+}
+
+.app-container-passwords {
+    height: 12em;
 }
 
 .app-container-btn-reset-password{
@@ -362,6 +368,16 @@ body {
 .app-btn-pop-reset-password {
     padding-right: 1em;
     padding-left: 1em;
+}
+
+.app-message-password-reset{
+    margin : 4em;
+}
+
+.app-form-password-reset-label {
+    align-self: start;
+    font-family: "Exo 2 Black", sans-serif;
+    color: plum;
 }
 
 /* M devices (tablets, 768px and up)*/
