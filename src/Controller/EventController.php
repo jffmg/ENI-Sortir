@@ -386,12 +386,34 @@ class EventController extends AbstractController
     /**
      * @Route("/event/delete/{id}", name="event_delete")
      */
-    public function delete(EntityManagerInterface $em, $id)
+    public function delete(EntityManagerInterface $em, int $id, Request $request)
     {
-        // todo IMPLEMENTER LA FONCTION POUR SUPPRIMER L'EVENT DE LA DB
-        /*CREATE REAL FUNCTION TO DELETE FROM DATABASE*/
-        $var = 'DELETED';
-        dd($var);
+        // Access denied if user not connected
+        $this->denyAccessUnlessGranted("ROLE_USER");
+
+        // Get the event from database
+        $eventRepo = $this->getDoctrine()->getRepository(Event::class);
+        $event = $eventRepo->find($id);
+
+
+        // error if not valid id
+        if (empty($event)) {
+            throw $this->createNotFoundException("Cette sortie n'existe pas");
+        }
+
+        $cancelForm = $this->createForm(CancelType::class, $event);
+
+        $cancelForm->handleRequest($request);
+
+
+        if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
+            $em->remove($event);
+            $em->flush();
+
+            $this->addFlash('success', 'La sortie a été supprimée');
+        }
+
+        return $this->redirectToRoute("main_home");
     }
 
     /**
@@ -419,7 +441,7 @@ class EventController extends AbstractController
 
         if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
             $cancelReason = $_POST["app-cancel-reason"];
-            dump($cancelReason);
+//            dump($cancelReason);
             $event->setInfosEvent($cancelReason);
             $state = $em->getRepository(State::class)
                 ->findOneBy(['shortLabel' => 'AN']);
