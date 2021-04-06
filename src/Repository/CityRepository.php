@@ -19,32 +19,21 @@ class CityRepository extends ServiceEntityRepository
         parent::__construct($registry, City::class);
     }
 
-    // /**
-    //  * @return City[] Returns an array of City objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findByKeyWord($keywordsArray)
     {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('v.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $qb = $this->createQueryBuilder('c');
+        $i = 0;
+        foreach ($keywordsArray as $keyword) {
+            $keyword = strtolower($keyword);
+            $qb->andWhere($qb->expr()->orX(
+                $qb->expr()->like('c.name', ":keyword" . $i)
+            ));
+            $qb->setParameter(":keyword" . $i, "%" . $keyword . "%");
+            $i++;
+        }
+        $result = $qb->getQuery()->getResult();
+        return $result;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?City
-    {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+
 }

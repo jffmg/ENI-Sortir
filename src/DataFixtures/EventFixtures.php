@@ -73,7 +73,7 @@ class EventFixtures extends Fixture implements OrderedFixtureInterface
         $event->setCampusOrganizer($campusOrganizer);
         $event->setLocation($location);
         $event->setName($faker->realText(34));
-        $event->setNbInscriptionsMax($faker->numberBetween(1, 20));
+        $event->setNbInscriptionsMax($faker->numberBetween(6, 20));
         $event->setInfosEvent($faker->realText(200));
         $duration = $this->durationCreator();
         $event->setDuration($duration);

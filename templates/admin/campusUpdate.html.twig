@@ -1,0 +1,15 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Sortir.com | Modifier les campus{% endblock %}
+
+{% block main %}
+    {% set namePlaceholder = campus.name %}
+    <h1 class="app-main-title app-small-screen-display-none">Modifier le campus de {{ campus.name }}</h1>
+
+    <div class="app-form-container app-framed">
+        {{ form_start(campusForm) }}
+        {{ form_widget(campusForm.name, {'attr': {'placeholder': namePlaceholder}, 'value' : campus.name}) }}
+        <button type="subit" name="add" form="newCampusForm">Modifier</button>
+        {{ form_end(campusForm) }}
+    </div>
+{% endblock %}

@@ -69,4 +69,6 @@ class ParticipantRepository extends ServiceEntityRepository implements UserLoade
 
         $qb->getQuery()->execute();
     }
+
+
 }

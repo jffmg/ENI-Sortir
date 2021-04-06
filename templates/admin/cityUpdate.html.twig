@@ -1,0 +1,17 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Sortir.com | Gérer les villes{% endblock %}
+
+{% block main %}
+    {% set namePlaceholder = city.name %}
+    {% set zipCodePlaceholder = city.zipCode %}
+    <h1 class="app-main-title app-small-screen-display-none">Modifier la ville {{ city.name }}</h1>
+
+    <div class="app-form-container app-framed">
+        {{ form_start(cityForm) }}
+        {{ form_widget(cityForm.name, {'attr': {'placeholder': namePlaceholder}, 'value' : city.name}) }}
+        {{ form_widget(cityForm.zipCode, {'attr': {'placeholder': zipCodePlaceholder}, 'value' : city.zipCode}) }}
+        <button type="subit" name="add" form="newCityForm">Modifier</button>
+        {{ form_end(cityForm) }}
+    </div>
+{% endblock %}

@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Campus;
+use App\Entity\City;
+use App\Entity\Event;
 use App\Entity\Participant;
 use App\Form\AdminParticipantType;
+use App\Form\CampusType;
+use App\Form\CityType;
 use App\Form\FileUploadType;
 use App\Form\ParticipantsManagerType;
 use App\Form\ParticipantType;
@@ -169,25 +173,25 @@ class AdminController extends AbstractController
             }*/
 
             if (isset($_POST['modify'])) {
-               $participantsToModify = $participantRepo->findMultipleByIds($selectionArray);
-               /*dump($participantsToModify);*/
-               foreach ($participantsToModify as $p) {
-                   if ($p->getActive() == 1) {
-                       $selectionToDeactivate[] = $p->getId();
-                   } else {
-                       $selectionToActivate[] = $p->getId();
-                   }
+                $participantsToModify = $participantRepo->findMultipleByIds($selectionArray);
+                /*dump($participantsToModify);*/
+                foreach ($participantsToModify as $p) {
+                    if ($p->getActive() == 1) {
+                        $selectionToDeactivate[] = $p->getId();
+                    } else {
+                        $selectionToActivate[] = $p->getId();
+                    }
                 }
-               if (count($selectionToDeactivate) > 0) {
-                   $participantRepo->deactivateSelection($selectionToDeactivate);
-               }
+                if (count($selectionToDeactivate) > 0) {
+                    $participantRepo->deactivateSelection($selectionToDeactivate);
+                }
                 if (count($selectionToActivate) > 0) {
                     $participantRepo->activateSelection($selectionToActivate);
                 }
                 return $this->redirectToRoute('admin_manager');
             }
 
-            if(isset($_POST['delete'])) {
+            if (isset($_POST['delete'])) {
                 $participantsToModify = $participantRepo->findMultipleByIds($selectionArray);
                 foreach ($participantsToModify as $p) {
                     $selectionToDelete[] = $p->getId();
@@ -199,6 +203,143 @@ class AdminController extends AbstractController
 
         return $this->render('/admin/manager.html.twig', ['participants' => $participants/*, 'participantManagerForm' => $participantManagerForm->createView()*/]);
     }
+
+    /**
+     * @Route("/cities", name="cities")
+     */
+    public function cities(EntityManagerInterface $em, Request $request)
+    {
+
+        if (isset($_POST['search'])) {
+            $keywordsString = $_POST['keywords'];
+            $keywordsArray = explode(" ", trim($keywordsString));
+            if (count($keywordsArray) > 0) {
+                $cityRepo = $this->getDoctrine()->getRepository(City::class);
+                $cities = $cityRepo->findByKeyWord($keywordsArray);
+            } else {
+                $cityRepo = $this->getDoctrine()->getRepository(City::class);
+                $cities = $cityRepo->findAll();
+            }
+        } else {
+            $cityRepo = $this->getDoctrine()->getRepository(City::class);
+            $cities = $cityRepo->findAll();
+        }
+
+        if (isset($_POST['delete'])) {
+            $cityId = $_POST['cityId'];
+            $selectedCity = $cityRepo->find($cityId);
+            $em->remove($selectedCity);
+            $em->flush();
+            return $this->redirectToRoute('admin_cities');
+        }
+
+        $cityForm = $this->createForm(CityType::class);
+        $cityForm->handleRequest($request);
+
+        if ($cityForm->isSubmitted() && $cityForm->isValid()) {
+                $newCity = $cityForm->getData();
+                $em->persist($newCity);
+                $em->flush();
+                return $this->redirectToRoute('admin_cities');
+            }
+
+
+        return $this->render('admin/cities.html.twig', ['cities' => $cities, 'cityForm' => $cityForm->createView()]);
+    }
+
+    /**
+     * @Route("/cities/update/{id}", name="city_update")
+     */
+    public function cityUpdate(EntityManagerInterface $em, Request $request, $id)
+    {
+        $cityRepo = $this->getDoctrine()->getRepository(City::class);
+        $city = $cityRepo->find($id);
+
+
+        $cityForm = $this->createForm(CityType::class);
+        $cityForm->handleRequest($request);
+
+        if ($cityForm->isSubmitted() && $cityForm->isValid()) {
+            $updatedCity = $cityForm->getData();
+            $newName = $updatedCity->getName();
+            $newZip = $updatedCity->getZipCode();
+            $city->setName($newName);
+            $city->setZipCode($newZip);
+            $em->flush();
+            return $this->redirectToRoute('admin_cities');
+        }
+
+        return $this->render('admin/cityUpdate.html.twig', ['city' => $city, 'cityForm' => $cityForm->createView()]);
+    }
+
+
+    /**
+     * @Route("/campuses", name="campuses")
+     */
+    public function campuses(EntityManagerInterface $em, Request $request)
+    {
+
+        if (isset($_POST['search'])) {
+            $keywordsString = $_POST['keywords'];
+            $keywordsArray = explode(" ", trim($keywordsString));
+            if (count($keywordsArray) > 0) {
+                $campusRepo = $this->getDoctrine()->getRepository(Campus::class);
+                $campuses = $campusRepo->findByKeyWord($keywordsArray);
+            } else {
+                $campusRepo = $this->getDoctrine()->getRepository(Campus::class);
+                $campuses = $campusRepo->findAll();
+            }
+        } else {
+            $campusRepo = $this->getDoctrine()->getRepository(Campus::class);
+            $campuses = $campusRepo->findAll();
+        }
+
+        if (isset($_POST['delete'])) {
+            $campusId = $_POST['campusId'];
+            $selectedCampus = $campusRepo->find($campusId);
+            $em->remove($selectedCampus);
+            $em->flush();
+            return $this->redirectToRoute('admin_campuses');
+        }
+
+
+        $campusForm = $this->createForm(CampusType::class);
+        $campusForm->handleRequest($request);
+
+        if ($campusForm->isSubmitted() && $campusForm->isValid()) {
+            $newCampus = $campusForm->getData();
+            $em->persist($newCampus);
+            $em->flush();
+            return $this->redirectToRoute('admin_campuses');
+        }
+
+
+        return $this->render('admin/campuses.html.twig', ['campuses' => $campuses, 'campusForm' => $campusForm->createView()]);
+    }
+
+    /**
+     * @Route("/campuses/update/{id}", name="campus_update")
+     */
+    public function campusUpdate(EntityManagerInterface $em, Request $request, $id)
+    {
+        $campusRepo = $this->getDoctrine()->getRepository(Campus::class);
+        $campus = $campusRepo->find($id);
+
+
+        $campusForm = $this->createForm(CampusType::class);
+        $campusForm->handleRequest($request);
+
+        if ($campusForm->isSubmitted() && $campusForm->isValid()) {
+            $updatedCampus = $campusForm->getData();
+            $newName = $updatedCampus->getName();
+            $campus->setName($newName);
+            $em->flush();
+            return $this->redirectToRoute('admin_campuses');
+        }
+
+        return $this->render('admin/campusUpdate.html.twig', ['campus' => $campus, 'campusForm' => $campusForm->createView()]);
+    }
+
 
 
 }

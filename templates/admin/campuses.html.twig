@@ -1,0 +1,61 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Sortir.com | Gérer les campus{% endblock %}
+
+{% block main %}
+
+    <h1 class="app-main-title app-small-screen-display-none">Gérer les campus</h1>
+
+    <div class="app-form-container app-framed app-small-screen-display-none">
+        <h5>Filtrer les campus</h5>
+        <form action="#" method="POST" id="campusSearchForm">
+            <label>Le nom contient : <input type="text" name="keywords"></label>
+            <button type="submit" name="search" form="campusSearchForm">Rechercher</button>
+        </form>
+    </div>
+
+
+    <table class="app-table">
+        <thead>
+        <tr class="app-table-head-row app-table-row">
+            <th class="app-table-head-title app-table-cell">Campus</th>
+            <th class="app-table-head-title app-table-cell">Actions</th>
+
+
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for campus in campuses %}
+            <tr class="app-table-body-row app-table-row">
+
+                <td class="app-table-cell" data-label="Ville">{{ campus.name }}</td>
+                <td class="app-table-cell"
+                    data-label="Actions">
+
+                    <form action="#" method="POST" id="action{{ campus.id }}">
+                        <input type="hidden" name="campusId" value="{{ campus.id }}">
+                        <button><a class="app-btn-link" href="{{ path('admin_campus_update', {'id': campus.id}) }}">Modifier</a></button>
+                        <button type="submit" name="delete" form="action{{ campus.id }}" value="delete">Supprimer</button>
+                    </form>
+                </td>
+
+            </tr>
+
+        {% endfor %}
+
+        {{ form_start(campusForm) }}
+        <tr class="app-table-body-row app-table-row">
+            <td class="app-table-cell" data-label="Campus">
+                {{ form_widget(campusForm.name) }}
+            </td>
+            <td class="app-table-cell"
+                data-label="Actions">
+                <button type="subit" name="add" form="newCampusForm">Ajouter</button>
+            </td>
+        </tr>
+        {{ form_end(campusForm) }}
+        </tbody>
+    </table>
+    </form>
+{% endblock %}

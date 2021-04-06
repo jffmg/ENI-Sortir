@@ -27,7 +27,7 @@ class City
 
     /**
      * @Assert\Regex(
-     *     pattern     = "/[0-9]{5})/i",
+     *     pattern     = "/[0-9]{5}/i",
      *     htmlPattern = "/[0-9]{5}/",
      *     message = "Le code postal doit contenir 5 caractères"
      * )
