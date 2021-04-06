@@ -3,14 +3,31 @@
 function getLocations() {
     // get the input from the event-city select
     let inputCity = document.getElementById("event-city");
-    // create an instance to send requests to server
-    let req = new XMLHttpRequest();
-    // create the request
-    req.open("GET", "/ENI-Sortir/public/event/add/ajax/" + inputCity.value, true);
-    // method called when response is received
-    req.onload = insertLocations;
-    // send the request
-    req.send();
+
+    // initialize fields to empty
+    let zipCode = document.getElementById("event-zipcode");
+    zipCode.innerHTML = "";
+    let selectLocation = document.getElementById("event-location");
+    selectLocation.innerHTML = "";
+    let street = document.getElementById("event-street");
+    street.innerHTML = "";
+    let latitude = document.getElementById("event-latitude");
+    latitude.innerHTML = "";
+    let longitude = document.getElementById("event-longitude");
+    longitude.innerHTML = "";
+
+
+    // if a city is selected, send its id to controller and call insertion of associated locations
+    if (inputCity.value !== "") {
+        // create an instance to send requests to server
+        let req = new XMLHttpRequest();
+        // create the request
+        req.open("GET", "/ENI-Sortir/public/event/add/ajax/" + inputCity.value, true);
+        // method called when response is received
+        req.onload = insertLocations;
+        // send the request
+        req.send();
+    }
 }
 
 function insertLocations() {
@@ -23,16 +40,28 @@ function insertLocations() {
         const locations = JSON.parse(this.responseText);
         console.log(locations);
 
+        // initialize fields to empty
         let selectLocation = document.getElementById("event-location");
         selectLocation.innerHTML = "";
         let zipCodeElement = document.getElementById("event-zipcode");
         zipCodeElement.innerHTML = "";
+        let street = document.getElementById("event-street");
+        street.innerHTML = "";
+        let latitude = document.getElementById("event-latitude");
+        latitude.innerHTML = "";
+        let longitude = document.getElementById("event-longitude");
+        longitude.innerHTML = "";
 
         if (!locations && locations.length == 0) {
             selectLocation.innerHTML = "<p>Pas de lieu associé à cette ville.</p>"
             zipCodeElement.innerHTML = "<p>Pas de code postal pour ce lieu.</p>"
         }
+        // if a location is selected and infos found in base, display infos
         else {
+            const option = document.createElement("option");
+            option.value = "";
+            option.innerHTML = "Sélectionnez un lieu";
+            selectLocation.appendChild(option);
             for (const location of locations) {
                 const option = document.createElement("option");
                 option.value = location.id;
@@ -47,14 +76,27 @@ function insertLocations() {
 function getInfos(){
     // get the input from the event-locations select
     let inputLocation = document.getElementById("event-location");
-    // create an instance to send requests to server
-    let req = new XMLHttpRequest();
-    // create the request
-    req.open("GET", "/ENI-Sortir/public/event/add/ajax/location/" + inputLocation.value, true);
-    // method called when response is received
-    req.onload = insertInfos;
-    // send the request
-    req.send();
+
+    // initializing fields to empty
+    let zipCode = document.getElementById("event-zipcode");
+    zipCode.innerHTML = "";
+    let street = document.getElementById("event-street");
+    street.innerHTML = "";
+    let latitude = document.getElementById("event-latitude");
+    latitude.innerHTML = "";
+    let longitude = document.getElementById("event-longitude");
+    longitude.innerHTML = "";
+
+    if (inputLocation.value !== "") {
+        // create an instance to send requests to server
+        let req = new XMLHttpRequest();
+        // create the request
+        req.open("GET", "/ENI-Sortir/public/event/add/ajax/location/" + inputLocation.value, true);
+        // method called when response is received
+        req.onload = insertInfos;
+        // send the request
+        req.send();
+    }
 }
 
 function insertInfos() {

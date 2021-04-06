@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Campus;
 use App\Entity\City;
 use App\Entity\Event;
 use App\Entity\Location;
@@ -59,7 +60,7 @@ class EventController extends AbstractController
         // Get the data from the form
         $searchEventsForm->handleRequest($request);
 
-        // Get the date from database
+        // Get the data from database
         $stateRepo = $this->getDoctrine()->getRepository(State::class);
         $states = $stateRepo->findAll();
         $stateEC = $service->getStateByShortLabel($states, 'EC');
@@ -85,6 +86,8 @@ class EventController extends AbstractController
      */
     public function add(EntityManagerInterface $em, Request $request)
     {
+
+        dump($request);
         // block access to non-connected users
         $this->denyAccessUnlessGranted("ROLE_USER");
         // creating a new instance of Event
@@ -102,7 +105,7 @@ class EventController extends AbstractController
 
         if ($eventForm->isSubmitted() && $eventForm->isValid()) {
             // status is "En création" by default at this stage
-            $stateRepo = $this->getDoctrine()->getRepository()(State::class);
+            $stateRepo = $this->getDoctrine()->getRepository(State::class);
             $state = $stateRepo->findOneBy(['shortLabel' => 'EC']);
             $event->setState($state);
 
@@ -110,6 +113,18 @@ class EventController extends AbstractController
             /** @var \App\Entity\User */
             $organizer = $this->getUser();
             $event->setOrganizer($organizer);
+            dump($organizer);
+
+            // campus is the campus associated to the organizer
+            $campus = $organizer->getCampus();
+            $event->setCampusOrganizer($campus);
+
+            // affect location to event
+            $locationId = $request->request->get('event-location');
+            $locationRepo = $this->getDoctrine()->getRepository(Location::class);
+            $location = $locationRepo->find($locationId);
+
+            $event->setLocation($location);
 
             $em->persist($event);
             $em->flush();
@@ -123,7 +138,7 @@ class EventController extends AbstractController
         // display form
         return $this->render('event/add.hml.twig', [
             "eventForm" => $eventForm->createView(),
-            "cities" => $cities
+            "cities" => $cities,
         ]);
     }
 
@@ -168,6 +183,7 @@ class EventController extends AbstractController
         $locationRepo = $this->getDoctrine()->getRepository(Location::class);
         $location = $locationRepo->find($inputLocation);
 
+        // create standard entity to put fetched location infos
         $loc = new \stdClass();
         $loc->id = $location->getId();
         $loc->name = $location->getName();
@@ -175,13 +191,100 @@ class EventController extends AbstractController
         $loc->latitude = $location->getLatitude();
         $loc->longitude = $location->getLongitude();
 
+        // serialize the object to pass on to js
         $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
 
         return new Response($serializer->serialize($loc, 'json'));
     }
 
     /**
-     * @Route("/event/detail/{id}", name="event_detail")
+     * @Route("/event/publish/{id}", name="event_publish", requirements={"id": "\d*"})
+     */
+    public function publish(EntityManagerInterface $em, int $id)
+    {
+        dump($id);
+        // get event from database
+        $event = $em->getRepository(Event::class)
+            ->find($id);
+        if (empty($event)) {
+            throw $this->createNotFoundException("Cette sortie n'existe pas");
+        }
+        dump($event);
+
+        // get "ouverte" status from database
+        $stateRepo = $this->getDoctrine()->getRepository(State::class);
+        $state = $stateRepo->findOneBy(['shortLabel' => 'OU']);
+        dump($state);
+
+        // set event to "ouverte" status
+        $event->setState($state);
+        dump($event);
+
+        $em->persist($event);
+        $em->flush();
+
+        $this->addFlash('success', 'La sortie est maintenant ouverte.');
+        // return to homepage
+        return $this->redirectToRoute("main_home");
+    }
+
+    /**
+     * @Route("/event/update/{id}", name="event_update", requirements={"id": "\d*"})
+     */
+    public function updateEvent(EntityManagerInterface $em, Request $request, int $id)
+    {
+
+        $eventRepo = $this->getDoctrine()->getRepository(Event::class);
+        $event = $eventRepo->find($id);
+
+        dump($id);
+        if ($this->getUser() !== $event->getOrganizer()){
+            $this->redirectToRoute("main_home");
+        } else {
+
+
+            $eventForm = $this->createForm(EventType::class, $event);
+
+            // get the cities from database
+            $cityRepo = $this->getDoctrine()->getRepository(City::class);
+            $cities = $cityRepo->findAll();
+
+            // get the locations from database
+            $locationRepo = $this->getDoctrine()->getRepository(Location::class);
+            $locations = $locationRepo->findAll();
+
+            $eventForm->handleRequest($request);
+
+            if ($eventForm->isSubmitted() && $eventForm->isValid()) {
+
+                // affect location to event
+                $locationId = $request->request->get('event-location');
+                $location = $locationRepo->find($locationId);
+
+                $event->setLocation($location);
+
+                $em->persist($event);
+                $em->flush();
+                $this->addFlash('success', 'La sortie a bien été modifiée.');
+
+                return $this->redirectToRoute('event_detail', [
+                    'id' => $event->getId()
+                ]);
+            }
+
+            // display form
+            return $this->render('event/updateEvent.html.twig', [
+                "eventForm" => $eventForm->createView(),
+                "event" => $event,
+                "locations" => $locations,
+                "cities" => $cities,
+            ]);
+
+        }
+    }
+
+    /**
+     * @Route("/event/detail/{id}", name="event_detail", requirements={"id": "\d*"})
      */
     public function detail($id)
     {
