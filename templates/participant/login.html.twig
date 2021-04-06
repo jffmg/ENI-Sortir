@@ -1,4 +1,4 @@
-{% extends 'layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Sortir.com | Connexion{% endblock %}
 
@@ -15,7 +15,7 @@
 
                 <span class="app-profile-label"><label class="app-form-label" for="password">Mot de passe : </label></span>
                 <input class="app-form-field" type="password" name="_password" id="password">
-                <a onclick="showPasswordPopUp()">Mot de passe oublié</a>
+                <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié</a>
                 <br>
 
                 <div class="app-remember-me">
@@ -32,16 +32,6 @@
         <div class="app-alert">Paramètres de connexion invalides
         </div>
     {% endif %}
-
-    <div id="reset-password" class="app-reset-password">
-        Email: <input id="reset-password-email"></input>
-        <div class="app-container-btn-pop-up">
-            <button class="app-btn-pop-up" id="reset-password-btn-ok" onclick="resetPassword()">Envoyer</button>
-            <button class="app-btn-pop-up" id="reset-password-btn-cancel" onclick="hidePasswordPopUp()">Annuler</button>
-        </div>
-    </div>
-    <div id="email-sent" class="app-alert-success ">
-    </div>
 
 {% endblock %}
 

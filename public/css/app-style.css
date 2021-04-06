@@ -340,11 +340,9 @@ body {
     display: none;
 }
 
-.app-reset-password {
-    display: none;
-    border: 1px solid darkslategray;
-    padding: 3em;
-    z-index: 200;
+.app-container-reset-password {
+    margin-top: 10vh;
+    padding: 2em;
     position: fixed;
     top: 30vh;
     height: 10em;
@@ -354,14 +352,14 @@ body {
     box-shadow: 1px 1px 4px 0 rgb(0 0 0 / 10%);
 }
 
-.app-container-btn-pop-up{
-    margin-top: 2em;
+.app-container-btn-reset-password{
+    margin-top: 0.5em;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
-.app-btn-pop-up {
+.app-btn-pop-reset-password {
     padding-right: 1em;
     padding-left: 1em;
 }

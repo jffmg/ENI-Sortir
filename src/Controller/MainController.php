@@ -8,8 +8,6 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -23,7 +21,9 @@ class MainController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('/participant/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('/participant/login.html.twig', ['last_username' => $lastUsername,
+            'error' => $error,
+            ]);
     }
 
     /**
@@ -61,30 +61,4 @@ class MainController extends AbstractController
         return new Response("Batch exécuté");
     }
 
-    /**
-     * @Route("/password/ajax/{email}", methods={"GET"})
-     */
-    public function sendEmail(Request $request, $email, LoggerInterface $logger, MailerInterface $mailer) : Response
-    {
-
-        $logger->info('sending email to: '.$email);
-
-        $message = new Email();
-        $message->from('sorties@eni.fr')
-            ->to($email)
-            ->subject('Réinitialiser votre mot de passe')
-            ->html('<H1>Cliquez sur le lien pour réinitialiser votre mot de passe</h1><a href=""></a>');
-
-        $mailer->send($message);
-
-        return new Response("OK");
-    }
-
-    /**
-     * @Route("/password/forgotten")
-     */
-    public function passwordForgotten()
-    {
-
-    }
 }
