@@ -23,12 +23,12 @@ class LocationRepository extends ServiceEntityRepository
     //  * @return Location[] Returns an array of Location objects
     //  */
 
-    public function findByCityId($value)
+    public function findByCityId($cityId)
     {
         return $this->createQueryBuilder('l')
             ->join('l.city', 'c')
-            ->andWhere('c.id = :val')
-            ->setParameter('val', $value)
+            ->andWhere('c.id = :cId')
+            ->setParameter('cId', $cityId)
             ->orderBy('l.id', 'ASC')
             ->getQuery()
             ->getResult()

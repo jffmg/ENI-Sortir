@@ -33,7 +33,7 @@ class State
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="state")
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="state",cascade="remove")
      */
     private $events;
 

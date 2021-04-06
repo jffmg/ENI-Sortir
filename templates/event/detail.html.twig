@@ -65,6 +65,16 @@
 			</p>
 		</div>
 
+		<div class="app-form-btn-container app-separate-btns">
+			{% if event.organizer.userName == app.user.username and event.state.shortLabel == "EC" %}
+				<button type="button" class="app-btn"><a class="app-btn-link"
+														 href="{{ path('event_update', {id: event.id}) }}">Modifier la sortie</a></button>
+				<button type="button" class="app-btn">	<a class="app-btn-link" href="{{ path('event_publish', {id: event.id}) }}">Publier la sortie</a></button>
+			{% endif %}
+			<button class="app-btn"><a class="app-btn-link" href="{{ path('main_home') }}">Retour</a></button>
+
+		</div>
+
 	</div>
 
 	<h2> Liste des inscrits : </h2>
