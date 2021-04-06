@@ -4,63 +4,78 @@
 
 {% block main %}
     <h1 class="app-main-title">Gérer les participants</h1>
-<form action="#" method="POST">
-    <div class="app-form-search-events app-form-container app-framed">
-        <button type="submit" name="modify">Modifier l'activité de la sélection</button>
-        <button type="submit" name="delete">Supprimer la sélection</button>
-    </div>
+
+    <!-- IMPORTANT : the page must be reloaded after the form is submitted - condition for showSuppressPopUp btn to work -->
+    <form action="#" method="POST" id="form-manage-participants">
+        <div class="app-form-search-events app-form-container app-framed">
+            <button type="submit" name="modify">Modifier l'activité de la sélection</button>
+            <button type="submit" name="delete" onclick="showSuppressPopUp(event);">Supprimer la sélection</button>
+        </div>
 
 
-    <table class="app-table">
-        <thead>
-        <tr class="app-table-head-row app-table-row">
-            <th class="app-table-head-title app-table-cell">Sélection</th>
-            <th class="app-table-head-title app-table-cell">Pseudo</th>
-            <th class="app-table-head-title app-table-cell">Nom</th>
-            <th class="app-table-head-title app-table-cell">Prénom</th>
-            <th class="app-table-head-title app-table-cell">Email</th>
-            <th class="app-table-head-title app-table-cell">Actif</th>
-            <th class="app-table-head-title app-table-cell">Admin</th>
+        <table class="app-table">
+            <thead>
+            <tr class="app-table-head-row app-table-row">
+                <th class="app-table-head-title app-table-cell">Sélection</th>
+                <th class="app-table-head-title app-table-cell">Pseudo</th>
+                <th class="app-table-head-title app-table-cell">Nom</th>
+                <th class="app-table-head-title app-table-cell">Prénom</th>
+                <th class="app-table-head-title app-table-cell">Email</th>
+                <th class="app-table-head-title app-table-cell">Actif</th>
+                <th class="app-table-head-title app-table-cell">Admin</th>
 
-
-        </tr>
-        </thead>
-
-        <tbody>
-        {% for participant in participants %}
-            <tr class="app-table-body-row app-table-row">
-                <td class="app-table-cell" data-label="Sélection">
-                    <input type="checkbox" value="{{ participant.id }}" name="selection[]">
-                </td>
-                <td class="app-table-cell" data-label="Pseudo">{{ participant.userName }}</td>
-                <td class="app-table-cell"
-                    data-label="Nom">{{ participant.name }}</td>
-                <td class="app-table-cell" data-label="Prénom">{{ participant.firstName }}</td>
-                <td class="app-table-cell" data-label="Email">{{ participant.mail }}</td>
-                <td class="app-table-cell" data-label="Actif">
-                    {% if participant.active == 1 %}
-                        <span class="app-green-text">Actif</span>
-                    {% else %}
-                        <span class="app-red-text">Inactif</span>
-                    {% endif %}
-                </td>
-
-                <td class="app-table-cell" data-label="Admin">
-                    {% if participant.admin == 0 %}
-                        <span>Participant</span>
-                    {% else %}
-                        <span class="app-red-text">Administrateur</span>
-                    {% endif %}
-                </td>
 
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
 
-    {#<div class="app-form-search-events app-form-container app-framed">
-        <button type="submit">Modifier l'activité de la sélection</button>
-    </div>#}
-</form>
+            <tbody>
+            {% for participant in participants %}
+                <tr class="app-table-body-row app-table-row">
+                    <td class="app-table-cell" data-label="Sélection">
+                        <input type="checkbox" value="{{ participant.id }}" name="selection[]">
+                    </td>
+                    <td class="app-table-cell" data-label="Pseudo">{{ participant.userName }}</td>
+                    <td class="app-table-cell"
+                        data-label="Nom">{{ participant.name }}</td>
+                    <td class="app-table-cell" data-label="Prénom">{{ participant.firstName }}</td>
+                    <td class="app-table-cell" data-label="Email">{{ participant.mail }}</td>
+                    <td class="app-table-cell" data-label="Actif">
+                        {% if participant.active == 1 %}
+                            <span class="app-green-text">Actif</span>
+                        {% else %}
+                            <span class="app-red-text">Inactif</span>
+                        {% endif %}
+                    </td>
 
+                    <td class="app-table-cell" data-label="Admin">
+                        {% if participant.admin == 0 %}
+                            <span>Participant</span>
+                        {% else %}
+                            <span class="app-red-text">Administrateur</span>
+                        {% endif %}
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {#<div class="app-form-search-events app-form-container app-framed">
+            <button type="submit">Modifier l'activité de la sélection</button>
+        </div>#}
+    </form>
+
+    <div id="suppress-participants" class="app-suppress-participants-popUp">
+        <p> Attention si vous supprimez ces utilisateurs, les événements qu'ils ont organisés seront également supprimés.
+            Etes-vous sûr de vouloir continuer ?</p>
+        <div class="app-container-btn-pop-up">
+            <button class="app-btn-pop-up" id="suppress-participants-btn-ok" onclick="suppressParticipants()">Oui, Supprimer</button>
+            <button class="app-btn-pop-up" id="suppress-participants-btn-cancel" onclick="hideSuppressPopUp()">Non, Annuler</button>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ asset('js/suppressPopUp.js') }}"></script>
 {% endblock %}

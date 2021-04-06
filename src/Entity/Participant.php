@@ -87,7 +87,7 @@ class Participant implements UserInterface, \Serializable
 
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="App\Entity\Event")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Event", cascade="remove")
      * @ORM\JoinTable(name="participantEvents")
      */
     private $eventsParticipant;
@@ -100,7 +100,7 @@ class Participant implements UserInterface, \Serializable
 
     /**
      * @var Campus
-     * @ORM\ManyToOne(targetEntity="App\Entity\Campus", inversedBy="participants")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Campus", inversedBy="participants", cascade="remove")
      * @ORM\JoinColumn(nullable=false)
      */
     private $campus;

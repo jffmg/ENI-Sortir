@@ -27,13 +27,13 @@ class Campus
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="App\Entity\Participant", mappedBy="campus")
+     * @ORM\OneToMany(targetEntity="App\Entity\Participant", mappedBy="campus",cascade="remove")
      */
     private $participants;
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="campusOrganizer")
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="campusOrganizer",cascade="remove")
      */
     private $eventsCampus;
 

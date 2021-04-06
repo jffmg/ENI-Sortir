@@ -53,7 +53,7 @@ class Event
 
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="App\Entity\Participant")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Participant",cascade="remove")
      * @ORM\JoinTable(name="eventParticipants")
      */
     private $participants;
@@ -61,7 +61,7 @@ class Event
     /**
      * @var Participant
      * @ORM\ManyToOne(targetEntity="App\Entity\Participant", inversedBy="eventsOrganizer")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $organizer;
 

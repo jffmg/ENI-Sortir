@@ -380,6 +380,33 @@ body {
     color: plum;
 }
 
+/*SUPPRESS POP UP*/
+
+.app-suppress-participants-popUp {
+    padding: 2em;
+    position: fixed;
+    top: 30vh;
+    left: 35vw;
+    width: 30vw;
+    border-radius: 15px;
+    border : solid 1px darkslategrey;
+    background-color: mintcream;
+    box-shadow: 1px 1px 4px 0 rgb(0 0 0 / 10%);
+    display: none;
+    z-index: 100;
+}
+
+.app-container-btn-pop-up{
+    margin-top: 1em;
+    display: flex;
+    justify-content: space-around;
+}
+
+.app-btn-pop-up{
+    padding: 0.5em 1em;
+}
+
+
 /* M devices (tablets, 768px and up)*/
 @media (min-width: 768px) {
 
