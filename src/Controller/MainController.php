@@ -21,7 +21,9 @@ class MainController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('/participant/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('/participant/login.html.twig', ['last_username' => $lastUsername,
+            'error' => $error,
+            ]);
     }
 
     /**

@@ -112,6 +112,7 @@ body {
     height: inherit;
     justify-content: flex-start;
     align-content: flex-end;
+    z-index: 50;
     /*overflow: scroll;*/
 }
 
@@ -316,17 +317,67 @@ body {
     height:3em;
     position: fixed;
     bottom: 0;
+    left: 0;
+    z-index: 100;
 }
 
 .app-footer-margin {
     height: 5em;
 }
 
-/*ERROR MESSAGES*/
+/*ALERT MESSAGES*/
 .app-alert {
     font-family: "Exo 2 Black", sans-serif;
     color: #ff0000;
-    padding: 4em;
+    padding: 1em;
+    background-color: mistyrose;
+}
+
+.app-alert-success {
+    font-family: "Exo 2 Black", sans-serif;
+    color: darkslategray;
+    padding: 1em;
+    background-color: mintcream;
+    display: none;
+}
+
+/* RESET PASSWORDS PAGES */
+
+.app-container-reset-password {
+    padding: 2em;
+    position: fixed;
+    top: 30vh;
+    height: 10em;
+    width: 20em;
+    border-radius: 15px;
+    background-color: mintcream;
+    box-shadow: 1px 1px 4px 0 rgb(0 0 0 / 10%);
+}
+
+.app-container-passwords {
+    height: 12em;
+}
+
+.app-container-btn-reset-password{
+    margin-top: 0.5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.app-btn-pop-reset-password {
+    padding-right: 1em;
+    padding-left: 1em;
+}
+
+.app-message-password-reset{
+    margin : 4em;
+}
+
+.app-form-password-reset-label {
+    align-self: start;
+    font-family: "Exo 2 Black", sans-serif;
+    color: plum;
 }
 
 /* M devices (tablets, 768px and up)*/
