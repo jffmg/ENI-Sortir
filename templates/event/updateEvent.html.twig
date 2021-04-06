@@ -27,17 +27,21 @@
 		<p><span class="app-profile-label">Campus</span><span class="app-form-field">{{ app.user.campus.name }}</span>
 		</p><br>
 		<p class="app-add-form-container"><label for="event-city" class="app-profile-label">Ville</label>
-			<select id="event-city" name="event-city" onchange="getLocations()" required>
+			<select id="event-city" name="event-city" onchange="getLocations({{ event.location.id }})" required>
 				<option value="{{ event.location.city.id }}">{{ event.location.city.name }}</option>
 				{% for c in cities %}
+					{% if c.id == event.location.city.id %}
+					<option style="display : none" value="{{ c.id }}">{{ c.name }}</option>
+					{% else %}
 					<option value="{{ c.id }}">{{ c.name }}</option>
+						{% endif %}
 				{% endfor %}
 			</select>
 		</p><br>
 
 		<p class="app-add-form-container"><label for="event-location" class="app-profile-label">Lieu</label>
 			<select id="event-location" name="event-location"  onchange="getInfos()" required>
-				<option value="{{ event.location.id }}">{{ event.location.name }}</option>
+				<option id="event-location-id" value="{{ event.location.id }}">{{ event.location.name }}</option>
 			</select>
 		</p><br>
 		<p class="app-add-form-container"><label for="event-street" class="app-profile-label">Rue</label></p><span id="event-street" class="app-form-field">{{ event.location.street }}</span><br>

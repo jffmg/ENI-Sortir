@@ -307,7 +307,7 @@ class EventController extends AbstractController
     }
 
     /**
-     * @Route("/event/subscribe/{eventId}{userId}", name="event_subscribe")
+     * @Route("/event/subscribe/{eventId}/{userId}", name="event_subscribe")
      */
     public function subscribe(EntityManagerInterface $em, $eventId, $userId)
     {
@@ -342,7 +342,7 @@ class EventController extends AbstractController
 
 
     /**
-     * @Route("/event/unsubscribe/{eventId}{userId}", name="event_unsubscribe")
+     * @Route("/event/unsubscribe/{eventId}/{userId}", name="event_unsubscribe")
      */
     public function unsubscribe(EntityManagerInterface $em, $eventId, $userId)
     {
@@ -402,22 +402,24 @@ class EventController extends AbstractController
         // Access denied if user not connected
         $this->denyAccessUnlessGranted("ROLE_USER");
 
-        // Get the participant from database
+        // Get the event from database
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
         $event = $eventRepo->find($id);
+
 
         // error if not valid id
         if (empty($event)) {
             throw $this->createNotFoundException("Cette sortie n'existe pas");
         }
 
-        $cancelForm = $this->createForm(CancelType::class);
+        $cancelForm = $this->createForm(CancelType::class, $event);
 
         $cancelForm->handleRequest($request);
 
 
         if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
             $cancelReason = $_POST["app-cancel-reason"];
+            dump($cancelReason);
             $event->setInfosEvent($cancelReason);
             $state = $em->getRepository(State::class)
                 ->findOneBy(['shortLabel' => 'AN']);
