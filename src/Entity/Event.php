@@ -20,27 +20,33 @@ class Event
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Veuillez indiquer un intitulé")
      * @Assert\Length(max=255, maxMessage="255 caractères maximum")
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
+     * @Assert\NotBlank(message="Veuillez indiquer une date et une heure")
      * @ORM\Column(type="datetime")
      */
     private $dateTimeStart;
 
     /**
+     * @Assert\NotBlank(message="Veuillez indiquer une durée en minutes")
      * @ORM\Column(type="integer")
      */
     private $duration;
 
     /**
+     * @Assert\NotBlank(message="Veuillez indiquer une date et une heure")
+     * @Assert\LessThan(propertyPath="dateTimeStart", message="Les inscriptions doivent être closes avant le début de l'activité")
      * @ORM\Column(type="datetime")
      */
     private $dateEndInscription;
 
     /**
+     * @Assert\NotBlank(message="Veuillez indiquer un nombre de places")
      * @ORM\Column(type="integer")
      */
     private $nbInscriptionsMax;

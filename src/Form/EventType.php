@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class EventType extends AbstractType
 {
@@ -22,7 +24,8 @@ class EventType extends AbstractType
                 'label_attr' => ['class' => 'app-form-label'],
                 'attr' => [
                     'class' => 'app-form-field app-add-field',
-                ]
+                ],
+                'constraints' => [],
             ])
             ->add('dateTimeStart', DateTimeType::class, [
                 'label' => 'Date de début : ',
@@ -31,46 +34,42 @@ class EventType extends AbstractType
                 'attr' => [
                     'class' => 'app-form-field app-add-field',
 //                    'placeholder' => new \DateTime()
-                ]
+                ],
+                'constraints' => [],
             ])
             ->add('duration', IntegerType::class, [
                 'label' => 'Durée (minutes) : ',
                 'label_attr' => ['class' => 'app-form-label'],
                 'attr' => [
                     'class' => 'app-form-field app-add-field',
-                ]
+                ],
+                'constraints' => [],
             ])
             ->add('nbInscriptionsMax', IntegerType::class, [
-                'label' => 'Nombre maximal de participants : ',
+                'label' => 'Nombre de places : ',
                 'label_attr' => ['class' => 'app-form-label'],
                 'attr' => [
                     'class' => 'app-form-field app-add-field',
                 ],
+                'constraints' => [],
             ])
             ->add('infosEvent', TextareaType::class, [
                 'label' => 'Description : ',
                 'label_attr' => ['class' => 'app-form-label'],
                 'attr' => [
                     'class' => 'app-form-field app-add-field',
-                ]
+                ],
+                'constraints' => [],
             ])
             ->add('dateEndInscription', DateTimeType::class, [
-                'widget' => 'single_text',
                 'label' => 'Date limite d\'inscription : ',
+                'widget' => 'single_text',
                 'label_attr' => ['class' => 'app-form-label'],
                 'attr' => [
                     'class' => 'app-form-field app-add-field',
-                ]
-            ])
-//            ->add('location', LocationType::class, [
-//                'label' => 'Lieu : ',
-//                'class' => Location::class,
-//                'label_attr'=> ['class'=> 'app-form-label'],
-//                'attr' => [
-//                    'class' => 'app-form-field app-add-field',
-//                ]
-//            ])
-        ;
+                ],
+                'constraints' => [],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

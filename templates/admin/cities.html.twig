@@ -15,7 +15,7 @@
     </div>
 
 
-    <table class="app-table">
+    <table class="app-table app-table-participants">
         <thead>
         <tr class="app-table-head-row app-table-row">
             <th class="app-table-head-title app-table-cell">Ville</th>
@@ -37,8 +37,8 @@
 
                     <form action="#" method="POST" id="action{{ city.id }}">
                         <input type="hidden" name="cityId" value="{{ city.id }}">
-                        <button><a class="app-btn-link" href="{{ path('admin_city_update', {'id': city.id}) }}">Modifier</a></button>
-                        <button type="submit" name="delete" form="action{{ city.id }}" value="delete">Supprimer</button>
+                        <button class="app-table-btn"><a class="app-btn-link" href="{{ path('admin_city_update', {'id': city.id}) }}">Modifier</a></button>
+                        <button class="app-table-btn" type="submit" name="delete" form="action{{ city.id }}" value="delete">Supprimer</button>
                     </form>
                 </td>
 
@@ -56,7 +56,7 @@
             </td>
             <td class="app-table-cell"
                 data-label="Actions">
-                <button type="subit" name="add" form="newCityForm">Ajouter</button>
+                <button class="app-table-btn" type="subit" name="add" form="newCityForm">Ajouter</button>
             </td>
         </tr>
         {{ form_end(cityForm) }}

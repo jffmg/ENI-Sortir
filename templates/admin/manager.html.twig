@@ -7,22 +7,23 @@
 
     <!-- IMPORTANT : the page must be reloaded after the form is submitted - condition for showSuppressPopUp btn to work -->
     <form action="#" method="POST" id="form-manage-participants">
-        <div class="app-form-search-events app-form-container app-framed">
+        {#<div class="app-form-search-events app-form-container app-framed">#}
+        <div class="app-manager-form app-framed app-small-screen-display-none">
             <button type="submit" name="modify">Modifier l'activité de la sélection</button>
             <button type="submit" name="delete" onclick="showSuppressPopUp(event);">Supprimer la sélection</button>
         </div>
 
 
-        <table class="app-table">
-            <thead>
-            <tr class="app-table-head-row app-table-row">
-                <th class="app-table-head-title app-table-cell">Sélection</th>
-                <th class="app-table-head-title app-table-cell">Pseudo</th>
-                <th class="app-table-head-title app-table-cell">Nom</th>
-                <th class="app-table-head-title app-table-cell">Prénom</th>
-                <th class="app-table-head-title app-table-cell">Email</th>
-                <th class="app-table-head-title app-table-cell">Actif</th>
-                <th class="app-table-head-title app-table-cell">Admin</th>
+    <table class="app-table app-table-participants">
+        <thead>
+        <tr class="app-table-head-row app-table-row">
+            <th class="app-table-head-title app-table-cell">Sélection</th>
+            <th class="app-table-head-title app-table-cell">Pseudo</th>
+            <th class="app-table-head-title app-table-cell">Nom</th>
+            <th class="app-table-head-title app-table-cell">Prénom</th>
+            <th class="app-table-head-title app-table-cell">Email</th>
+            <th class="app-table-head-title app-table-cell">Actif</th>
+            <th class="app-table-head-title app-table-cell">Admin</th>
 
 
             </tr>

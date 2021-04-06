@@ -594,6 +594,13 @@ body {
     .app-fixed-header-list tbody {
         height: 20vw;
     }
+
+    /*Admin*/
+    .app-manager-form{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
 }
 
 /* L devices (desktops, 992px and up)*/
