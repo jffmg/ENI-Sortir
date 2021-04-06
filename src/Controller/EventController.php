@@ -15,6 +15,7 @@ use App\Form\SearchEventsType;
 use App\Service\MyServices;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Spatie\Geocoder\Geocoder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -329,5 +330,18 @@ class EventController extends AbstractController
             "event" => $event
         ]);
     }
+
+    /**
+     * @Route("/event/add/location", name="addlocation")
+     */
+    public function addLocation()
+    {
+
+
+
+        return $this->render("event/addLocation.html.twig");
+    }
+
+
 
 }
