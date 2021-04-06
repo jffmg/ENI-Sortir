@@ -36,3 +36,10 @@
     align-self: flex-end;
     margin-right: 5vw;
    }
+
+.app-table-btn {
+    text-decoration: none;
+    background-color: transparent;
+    border: none;
+    font-family: "Exo 2 Medium", sans-serif;
+}

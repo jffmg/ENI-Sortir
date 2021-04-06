@@ -15,7 +15,7 @@
     </div>
 
 
-    <table class="app-table">
+    <table class="app-table app-table-participants">
         <thead>
         <tr class="app-table-head-row app-table-row">
             <th class="app-table-head-title app-table-cell">Campus</th>
@@ -35,8 +35,8 @@
 
                     <form action="#" method="POST" id="action{{ campus.id }}">
                         <input type="hidden" name="campusId" value="{{ campus.id }}">
-                        <button><a class="app-btn-link" href="{{ path('admin_campus_update', {'id': campus.id}) }}">Modifier</a></button>
-                        <button type="submit" name="delete" form="action{{ campus.id }}" value="delete">Supprimer</button>
+                        <button class="app-table-btn"><a class="app-btn-link" href="{{ path('admin_campus_update', {'id': campus.id}) }}">Modifier</a></button>
+                        <button class="app-table-btn" type="submit" name="delete" form="action{{ campus.id }}" value="delete">Supprimer</button>
                     </form>
                 </td>
 
@@ -51,7 +51,7 @@
             </td>
             <td class="app-table-cell"
                 data-label="Actions">
-                <button type="subit" name="add" form="newCampusForm">Ajouter</button>
+                <button class="app-table-btn" type="subit" name="add" form="newCampusForm">Ajouter</button>
             </td>
         </tr>
         {{ form_end(campusForm) }}
