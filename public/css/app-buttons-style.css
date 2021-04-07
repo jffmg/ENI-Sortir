@@ -69,3 +69,7 @@ width: 30px;
     justify-content: space-between;
 }
 
+.app-return-btn {
+    margin: 1em;
+}
+
