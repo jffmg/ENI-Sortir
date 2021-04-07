@@ -96,8 +96,7 @@ class EventRepository extends ServiceEntityRepository
         $endedEvents = $searchEvents->isEndedEvents();
         if ($endedEvents)
         {
-            $qb->join('e.state','s', 'WITH', 'e.state = :state');
-            $qb->setParameter("state", "AT");
+            $qb->join('e.state','s', 'WITH', "s.shortLabel = 'AT'");
             $qb->addSelect('s');
         }
 
