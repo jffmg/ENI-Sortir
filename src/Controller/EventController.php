@@ -239,7 +239,7 @@ class EventController extends AbstractController
         $event = $eventRepo->find($id);
 
         dump($id);
-        if ($this->getUser() !== $event->getOrganizer()){
+        if ($this->getUser() !== $event->getOrganizer()) {
             $this->redirectToRoute("main_home");
         } else {
 
@@ -401,18 +401,14 @@ class EventController extends AbstractController
             throw $this->createNotFoundException("Cette sortie n'existe pas");
         }
 
-        $cancelForm = $this->createForm(CancelType::class, $event);
+        // delete event from database
+        $em->remove($event);
+        $em->flush();
 
-        $cancelForm->handleRequest($request);
+        // display success message
+        $this->addFlash('success', 'La sortie a été supprimée');
 
-
-        if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
-            $em->remove($event);
-            $em->flush();
-
-            $this->addFlash('success', 'La sortie a été supprimée');
-        }
-
+        //redirect to home
         return $this->redirectToRoute("main_home");
     }
 
@@ -465,10 +461,8 @@ class EventController extends AbstractController
     {
 
 
-
         return $this->render("event/addLocation.html.twig");
     }
-
 
 
 }
