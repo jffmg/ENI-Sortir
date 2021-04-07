@@ -62,12 +62,18 @@ function insertLocations() {
             option.value = "";
             option.innerHTML = "Sélectionnez un lieu";
             selectLocation.appendChild(option);
+            let eventLocationId = document.getElementById('event-location-id');
             for (const location of locations) {
+                if(location.id === eventLocationId) {
+
+                } else {
                 const option = document.createElement("option");
                 option.value = location.id;
                 option.innerHTML = location.name;
                 selectLocation.appendChild(option);
+                }
                 zipCodeElement.innerHTML = location.zipcode;
+
             }
         }
     }

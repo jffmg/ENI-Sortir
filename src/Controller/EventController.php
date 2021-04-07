@@ -16,6 +16,7 @@ use App\Form\SearchEventsType;
 use App\Service\MyServices;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Spatie\Geocoder\Geocoder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -287,7 +288,7 @@ class EventController extends AbstractController
         $event = $eventRepo->find($id);
 
         dump($id);
-        if ($this->getUser() !== $event->getOrganizer()){
+        if ($this->getUser() !== $event->getOrganizer()) {
             $this->redirectToRoute("main_home");
         } else {
 
@@ -361,7 +362,7 @@ class EventController extends AbstractController
     }
 
     /**
-     * @Route("/event/subscribe/{eventId}{userId}", name="event_subscribe")
+     * @Route("/event/subscribe/{eventId}/{userId}", name="event_subscribe")
      */
     public function subscribe(EntityManagerInterface $em, $eventId, $userId, MyServices $service)
     {
@@ -404,7 +405,7 @@ class EventController extends AbstractController
 
 
     /**
-     * @Route("/event/unsubscribe/{eventId}{userId}", name="event_unsubscribe")
+     * @Route("/event/unsubscribe/{eventId}/{userId}", name="event_unsubscribe")
      */
     public function unsubscribe(EntityManagerInterface $em, $eventId, $userId, MyServices $service)
     {
@@ -456,7 +457,7 @@ class EventController extends AbstractController
     /**
      * @Route("/event/delete/{id}", name="event_delete")
      */
-    public function delete(EntityManagerInterface $em, $id, MyServices $service)
+    public function delete(EntityManagerInterface $em, int $id, Request $request, MyServices $service)
     {
         // Access denied if user not connected
         $this->denyAccessUnlessGranted("ROLE_USER");
@@ -467,10 +468,25 @@ class EventController extends AbstractController
             return $this->redirectToRoute('participant_inactive');
         }
 
-        // todo IMPLEMENTER LA FONCTION POUR SUPPRIMER L'EVENT DE LA DB
-        /*CREATE REAL FUNCTION TO DELETE FROM DATABASE*/
-        $var = 'DELETED';
-        dd($var);
+        // Get the event from database
+        $eventRepo = $this->getDoctrine()->getRepository(Event::class);
+        $event = $eventRepo->find($id);
+
+
+        // error if not valid id
+        if (empty($event)) {
+            throw $this->createNotFoundException("Cette sortie n'existe pas");
+        }
+
+        // delete event from database
+        $em->remove($event);
+        $em->flush();
+
+        // display success message
+        $this->addFlash('success', 'La sortie a été supprimée');
+
+        //redirect to home
+        return $this->redirectToRoute("main_home");
     }
 
     /**
@@ -496,13 +512,14 @@ class EventController extends AbstractController
             throw $this->createNotFoundException("Cette sortie n'existe pas");
         }
 
-        $cancelForm = $this->createForm(CancelType::class);
+        $cancelForm = $this->createForm(CancelType::class, $event);
 
         $cancelForm->handleRequest($request);
 
 
         if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
             $cancelReason = $_POST["app-cancel-reason"];
+//            dump($cancelReason);
             $event->setInfosEvent($cancelReason);
             $state = $em->getRepository(State::class)
                 ->findOneBy(['shortLabel' => 'AN']);
@@ -518,5 +535,16 @@ class EventController extends AbstractController
             "event" => $event
         ]);
     }
+
+    /**
+     * @Route("/event/add/location", name="addlocation")
+     */
+    public function addLocation()
+    {
+
+
+        return $this->render("event/addLocation.html.twig");
+    }
+
 
 }
