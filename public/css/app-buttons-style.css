@@ -17,6 +17,7 @@
 .app-btn {
     width: 7em;
     align-self: flex-end;
+    margin: 1em;
 }
 
 .app-search-btn {
@@ -73,3 +74,15 @@ width: 30px;
     margin: 1em;
 }
 
+/* ADD LOCATION BUTTON */
+
+.app-plusBtn {
+    align-self: end;
+    display: flex;
+    justify-content: space-around;
+}
+
+.app-plusBtn-label{
+    padding: 0 1em;
+    font-size: 1em;
+}

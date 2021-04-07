@@ -1,4 +1,3 @@
-// todo comment faire pour afficher au chargement les infos de la ville 1 - ou alors n'avoir aucune ville sélectionnée par défaut au chargement
 function getLocations() {
     // get the input from the event-city select
     let inputCity = document.getElementById("event-city");
@@ -22,7 +21,7 @@ function getLocations() {
     // if a city is selected, send its id to controller and call insertion of associated locations
     if (inputCity.value !== "") {
         //display add location button (+)
-        plusBtnElement.style.display = "block";
+        plusBtnElement.style.display = "flex";
         hiddenCityInput.value = inputCity.value;
         console.log(hiddenCityInput.value);
         // create an instance to send requests to server
@@ -91,7 +90,7 @@ function getInfos() {
 
     // initializing fields to empty
     let zipCode = document.getElementById("event-zipcode");
-    zipCode.innerHTML = "";
+    //zipCode.innerHTML = "";
     let street = document.getElementById("event-street");
     street.innerHTML = "";
     let latitude = document.getElementById("event-latitude");
