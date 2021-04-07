@@ -382,7 +382,7 @@ body {
 
 /*SUPPRESS POP UP*/
 
-.app-suppress-participants-popUp {
+.app-suppress-participants-popUp/*, .app-add-location-popUp*/ {
     padding: 2em;
     position: fixed;
     top: 30vh;
@@ -401,7 +401,7 @@ body {
     position: fixed;
     top: 30vh;
     left: 35vw;
-    width: 55vw;
+    width: 30vw;
     border-radius: 15px;
     border : solid 1px darkslategrey;
     background-color: mintcream;
@@ -419,6 +419,8 @@ body {
 .app-btn-pop-up{
     padding: 0.5em 1em;
 }
+
+
 
 
 /* M devices (tablets, 768px and up)*/
@@ -497,6 +499,12 @@ body {
         justify-content: space-between;
         flex-direction: row;
         width: 55vw;
+    }
+    .app-add-form-row {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        width: 30vw;
     }
 
     .app-table {
@@ -636,6 +644,16 @@ body {
         display: none;
         padding: 0.5em;
     }
+
+    .app-add-form-container {
+        display: flex;
+        flex-direction: column;
+        width: 50vw;
+    }
+
+    .app-add-form-row {
+        width: 40vw;
+    }
 }
 
 /* L devices (desktops, 992px and up)*/
@@ -713,6 +731,16 @@ body {
         width: 30vw;
     }*/
 
+
+    .app-add-form-row {
+        width: 30vw;
+    }
+
+    .app-add-form-container {
+
+        width: 40vw;
+    }
+
 }
 
 /* XL devices (large desktops, 1200px and up)*/
@@ -755,6 +783,14 @@ body {
         width: 25vw;
     }*/
 
+    .app-add-form-row {
+        width: 25vw;
+    }
+
+    .app-add-form-container {
+        width: 30vw;
+    }
+
 }
 
 /* XXL devices (large desktops, 1900px and up)*/
@@ -790,6 +826,11 @@ body {
     .app-new-event-form-container {
         width: 40vw;
         align-items: center;
+    }
+
+    .app-add-form-row {
+
+        width: 20vw;
     }
 }
 
