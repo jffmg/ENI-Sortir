@@ -392,8 +392,12 @@ body {
     color: plum;
 }
 
-/*SUPPRESS POP UP*/
+.app-plusBtn {
+    align-self: end;
+}
 
+
+/*SUPPRESS POP UP*/
 .app-suppress-participants-popUp, .app-add-location-popUp {
     padding: 2em;
     position: fixed;

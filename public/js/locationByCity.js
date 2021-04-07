@@ -1,5 +1,6 @@
 // todo comment faire pour afficher au chargement les infos de la ville 1 - ou alors n'avoir aucune ville sélectionnée par défaut au chargement
 function getLocations() {
+    console.log("pouet")
     // get the input from the event-city select
     let inputCity = document.getElementById("event-city");
 

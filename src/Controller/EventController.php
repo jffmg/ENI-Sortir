@@ -37,7 +37,7 @@ class EventController extends AbstractController
         $this->denyAccessUnlessGranted("ROLE_USER");
 
         // Redirect if participant is inactive
-        if(!$service->manageInactiveParticipant()){
+        if (!$service->manageInactiveParticipant()) {
             dump('redirect inactive participant');
             return $this->redirectToRoute('participant_inactive');
         }
@@ -96,7 +96,7 @@ class EventController extends AbstractController
         $this->denyAccessUnlessGranted("ROLE_USER");
 
         // Redirect if participant is inactive
-        if(!$service->manageInactiveParticipant()){
+        if (!$service->manageInactiveParticipant()) {
             dump('redirect inactive participant');
             return $this->redirectToRoute('participant_inactive');
         }
@@ -121,51 +121,50 @@ class EventController extends AbstractController
         $cities = $cityRepo->findAll();
 
 
-                $eventForm->handleRequest($request);
-                $addLocationForm->handleRequest($request);
+        $eventForm->handleRequest($request);
+        $addLocationForm->handleRequest($request);
 
-            if ($eventForm->isSubmitted() && $eventForm->isValid()) {
-                // status is "En création" by default at this stage
-                $stateRepo = $this->getDoctrine()->getRepository(State::class);
-                $state = $stateRepo->findOneBy(['shortLabel' => 'EC']);
-                $event->setState($state);
+        if ($eventForm->isSubmitted() && $eventForm->isValid()) {
+            // status is "En création" by default at this stage
+            $stateRepo = $this->getDoctrine()->getRepository(State::class);
+            $state = $stateRepo->findOneBy(['shortLabel' => 'EC']);
+            $event->setState($state);
 
-                // organizer is the Participant creating the event
-                /** @var \App\Entity\User */
-                $organizer = $this->getUser();
-                $event->setOrganizer($organizer);
-                dump($organizer);
+            // organizer is the Participant creating the event
+            /** @var \App\Entity\User */
+            $organizer = $this->getUser();
+            $event->setOrganizer($organizer);
+            dump($organizer);
 
-                // campus is the campus associated to the organizer
-                $campus = $organizer->getCampus();
-                $event->setCampusOrganizer($campus);
+            // campus is the campus associated to the organizer
+            $campus = $organizer->getCampus();
+            $event->setCampusOrganizer($campus);
 
-                // affect location to event
-                $locationId = $request->request->get('event-location');
-                $locationRepo = $this->getDoctrine()->getRepository(Location::class);
-                $location = $locationRepo->find($locationId);
+            // affect location to event
+            $locationId = $request->request->get('event-location');
+            $locationRepo = $this->getDoctrine()->getRepository(Location::class);
+            $location = $locationRepo->find($locationId);
 
-                $event->setLocation($location);
+            $event->setLocation($location);
 
-                $em->persist($event);
-                $em->flush();
-                $this->addFlash('success', 'La sortie a bien été créée.');
+            $em->persist($event);
+            $em->flush();
+            $this->addFlash('success', 'La sortie a bien été créée.');
 
-                return $this->redirectToRoute('event_detail', [
-                    'id' => $event->getId()
-                ]);
-            }
+            return $this->redirectToRoute('event_detail', [
+                'id' => $event->getId()
+            ]);
+        }
 
-            if ($addLocationForm->isSubmitted() && $addLocationForm->isValid()) {
-                $cityId = $_POST["hidden-city"];
-                $city = $cityRepo->find($cityId);
-                $newLocation->setCity($city);
-                $em->persist($newLocation);
-                $em->flush();
+        if ($addLocationForm->isSubmitted() && $addLocationForm->isValid()) {
+            $cityId = $_POST["hidden-city"];
+            $city = $cityRepo->find($cityId);
+            $newLocation->setCity($city);
+            $em->persist($newLocation);
+            $em->flush();
 
 
-            }
-
+        }
 
 
         // display form
@@ -182,7 +181,7 @@ class EventController extends AbstractController
         $this->denyAccessUnlessGranted("ROLE_USER");
 
         // Redirect if participant is inactive
-        if(!$service->manageInactiveParticipant()){
+        if (!$service->manageInactiveParticipant()) {
             dump('redirect inactive participant');
             return $this->redirectToRoute('participant_inactive');
         }
@@ -223,7 +222,7 @@ class EventController extends AbstractController
         $this->denyAccessUnlessGranted("ROLE_USER");
 
         // Redirect if participant is inactive
-        if(!$service->manageInactiveParticipant()){
+        if (!$service->manageInactiveParticipant()) {
             dump('redirect inactive participant');
             return $this->redirectToRoute('participant_inactive');
         }
@@ -255,7 +254,7 @@ class EventController extends AbstractController
         $this->denyAccessUnlessGranted("ROLE_USER");
 
         // Redirect if participant is inactive
-        if(!$service->manageInactiveParticipant()){
+        if (!$service->manageInactiveParticipant()) {
             dump('redirect inactive participant');
             return $this->redirectToRoute('participant_inactive');
         }
@@ -295,7 +294,7 @@ class EventController extends AbstractController
         $this->denyAccessUnlessGranted("ROLE_USER");
 
         // Redirect if participant is inactive
-        if(!$service->manageInactiveParticipant()){
+        if (!$service->manageInactiveParticipant()) {
             dump('redirect inactive participant');
             return $this->redirectToRoute('participant_inactive');
         }
@@ -303,13 +302,18 @@ class EventController extends AbstractController
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
         $event = $eventRepo->find($id);
 
+        $newLocation = new Location();
+
         dump($id);
-        if ($this->getUser() !== $event->getOrganizer()){
+        if ($this->getUser() !== $event->getOrganizer()) {
             $this->redirectToRoute("main_home");
         } else {
 
 
             $eventForm = $this->createForm(EventType::class, $event);
+
+            //add location form
+            $addLocationForm = $this->createForm(LocationType::class, $newLocation);
 
             // get the cities from database
             $cityRepo = $this->getDoctrine()->getRepository(City::class);
@@ -320,6 +324,7 @@ class EventController extends AbstractController
             $locations = $locationRepo->findAll();
 
             $eventForm->handleRequest($request);
+            $addLocationForm->handleRequest($request);
 
             if ($eventForm->isSubmitted() && $eventForm->isValid()) {
 
@@ -336,10 +341,19 @@ class EventController extends AbstractController
                 return $this->redirectToRoute('event_detail', [
                     'id' => $event->getId()
                 ]);
+
+                if ($addLocationForm->isSubmitted() && $addLocationForm->isValid()) {
+                    $cityId = $_POST["hidden-city"];
+                    $city = $cityRepo->find($cityId);
+                    $newLocation->setCity($city);
+                    $em->persist($newLocation);
+                    $em->flush();
+                }
             }
 
             // display form
             return $this->render('event/updateEvent.html.twig', [
+                'addLocationForm' => $addLocationForm->createView(),
                 "eventForm" => $eventForm->createView(),
                 "event" => $event,
                 "locations" => $locations,
@@ -358,7 +372,7 @@ class EventController extends AbstractController
         $this->denyAccessUnlessGranted("ROLE_USER");
 
         // Redirect if participant is inactive
-        if(!$service->manageInactiveParticipant()){
+        if (!$service->manageInactiveParticipant()) {
             dump('redirect inactive participant');
             return $this->redirectToRoute('participant_inactive');
         }
@@ -386,7 +400,7 @@ class EventController extends AbstractController
         $this->denyAccessUnlessGranted("ROLE_USER");
 
         // Redirect if participant is inactive
-        if(!$service->manageInactiveParticipant()){
+        if (!$service->manageInactiveParticipant()) {
             dump('redirect inactive participant');
             return $this->redirectToRoute('participant_inactive');
         }
@@ -430,7 +444,7 @@ class EventController extends AbstractController
         $this->denyAccessUnlessGranted("ROLE_USER");
 
         // Redirect if participant is inactive
-        if(!$service->manageInactiveParticipant()){
+        if (!$service->manageInactiveParticipant()) {
             dump('redirect inactive participant');
             return $this->redirectToRoute('participant_inactive');
         }
@@ -479,7 +493,7 @@ class EventController extends AbstractController
         $this->denyAccessUnlessGranted("ROLE_USER");
 
         // Redirect if participant is inactive
-        if(!$service->manageInactiveParticipant()){
+        if (!$service->manageInactiveParticipant()) {
             dump('redirect inactive participant');
             return $this->redirectToRoute('participant_inactive');
         }
@@ -514,7 +528,7 @@ class EventController extends AbstractController
         $this->denyAccessUnlessGranted("ROLE_USER");
 
         // Redirect if participant is inactive
-        if(!$service->manageInactiveParticipant()){
+        if (!$service->manageInactiveParticipant()) {
             dump('redirect inactive participant');
             return $this->redirectToRoute('participant_inactive');
         }
@@ -560,10 +574,8 @@ class EventController extends AbstractController
     {
 
 
-
         return $this->render("event/addLocation.html.twig");
     }
-
 
 
 }
