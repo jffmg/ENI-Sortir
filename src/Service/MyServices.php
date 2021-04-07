@@ -40,8 +40,9 @@ class MyServices extends AbstractController
             $duration = $event->getDuration();
             $dateEvent = $event->getDateTimeStart();
             $dateEndEvent = clone($dateEvent);
-            $dateEndEvent->modify('+' . $duration . ' hours');
+            $dateEndEvent->modify('+' . $duration . ' minutes');
             //$dateEndEvent->add(new \Dateinterval('PT'.$duration.'H'));
+            $dateEndInscription = $event->getDateEndInscription();
 
             // Archive all events ended 1 month ago
             if ( $state != $stateAH and $dateEvent < $dateArchive)
@@ -49,6 +50,15 @@ class MyServices extends AbstractController
                 $logger->info('Event - ID - ' . $event->getId() . ' state is updated to AH');
                 $event->setState($stateAH);
                 $em->persist($event);
+            }
+
+            // Update status to CL
+            if ($state == $stateOU) {
+                if ($dateEndInscription < $now and $now < $dateEvent) {
+                    $logger->info('Event - ID - ' . $event->getId() . ' state is updated to CL');
+                    $event->setState($stateCL);
+                    $em->persist($event);
+                }
             }
 
             // Update status to AEC

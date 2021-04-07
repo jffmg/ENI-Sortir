@@ -43,7 +43,7 @@ class EventController extends AbstractController
         }
 
         // Update the events state - Now is done by admin and running every minute
-        //$service->updateState($em,$logger);
+        $service->updateState($em,$logger);
 
         // Create the form
         $searchEvents = new SearchEvents();
