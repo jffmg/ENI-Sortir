@@ -20,7 +20,7 @@
     {# display of flash messages after submitting forms #}
     {%  for label, messages in app.flashes %}
         {% for message in messages %}
-            <div class="flash flash-{{ label }}">
+            <div class="app-flash app-flash-{{ label }}">
                 {{ message }}
             </div>
         {% endfor %}

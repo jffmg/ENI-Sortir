@@ -223,7 +223,7 @@ body {
 
 .app-form-field {
     align-self: center;
-    margin: 0.5em;
+    margin: 0em 0.5em 0.5em 0.5em;
 }
 
 .app-update-field, .app-add-field {
@@ -234,11 +234,6 @@ body {
 .app-form-label {
     align-self: start;
     max-width: 50%;
-}
-
-.app-btn {
-    width: 7em;
-    align-self: flex-end;
 }
 
 
@@ -333,12 +328,29 @@ body {
     background-color: mistyrose;
 }
 
-.app-alert-success {
-    font-family: "Exo 2 Black", sans-serif;
-    color: darkslategray;
-    padding: 1em;
-    background-color: mintcream;
-    display: none;
+/*.app-alert-success {*/
+/*    font-family: "Exo 2 Black", sans-serif;*/
+/*    color: darkslategray;*/
+/*    padding: 1em;*/
+/*    background-color: mintcream;*/
+/*    display: none;*/
+/*}*/
+
+.app-flash {
+    padding: 1vh;
+    display: block;
+    font-size: 1em;
+    font-weight: bold;
+    color: #FFF;
+    margin: auto;
+}
+
+.app-flash-success {
+    background-color: #6B937B;
+}
+
+.app-flash-error {
+    background-color: #AA3333;
 }
 
 /* RESET PASSWORDS PAGES */
@@ -786,6 +798,10 @@ body {
 @media (min-width: 1900px) {
     .app-update-form-container, .app-add-form-container {
         width: 25vw;
+    }
+
+    .app-add-form-container {
+        width: 30vw;
     }
 
     .app-form-search-events {

@@ -29,7 +29,7 @@
                     class="app-form-error">{{ form_errors(eventForm.infosEvent) }}</span> {{ form_widget(eventForm.infosEvent) }}
         </p><br>
 
-        <p><span class="app-profile-label">Campus</span><span class="app-form-field">{{ app.user.campus.name }}</span>
+        <p class="app-add-form-container"><span class="app-profile-label">Campus</span><span class="app-form-field">{{ app.user.campus.name }}</span>
         </p><br>
         <p class="app-add-form-container"><label for="event-city" class="app-profile-label">Ville</label>
             <select id="event-city" name="event-city" onchange="getLocations()" required>
@@ -54,8 +54,8 @@
         </p><br>
 
 
-        <p class="app-add-form-container"><label for="event-street" class="app-profile-label">Rue</label></p><span
-                id="event-street" class="app-form-field"></span><br>
+        <p class="app-add-form-container"><label for="event-street" class="app-profile-label">Rue</label><span
+                id="event-street" class="app-form-field"></span></p><br>
         <p class="app-add-form-container"><label for="event-zipcode" class="app-profile-label">Code postal</label><span
                     id="event-zipcode" class="app-form-field"></span></p><br>
         <p class="app-add-form-container"><label for="event-latitude" class="app-profile-label">Latitude</label><span
@@ -69,8 +69,8 @@
 
     </div>
     <div class="app-form-btn-container">
-        <button class="app-btn" type="submit" form="event">Créer la sortie</button>
         <button class="app-btn"><a class="app-btn-link" href="{{ path('main_home') }}">Retour</a></button>
+        <button class="app-btn" type="submit" form="event">Créer la sortie</button>
     </div>
     {{ form_end(eventForm) }}
 
