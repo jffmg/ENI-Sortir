@@ -145,5 +145,17 @@ function showAddLocation(event) {
     event.preventDefault();
     document.getElementById('hidden-city').value = document.getElementById('event-city').value;
     document.getElementById("collapsible-content").style.display = "block";
+    document.getElementById("location_name").attributes.required = "true";
+    document.getElementById("location_street").attributes.required = "true";
+    document.getElementById("location_latitude").attributes.required = "true";
+    document.getElementById("location_longitude").attributes.required = "true";
 
+}
+
+function hideAddLocation() {
+    document.getElementById("collapsible-content").style.display = "none";
+    document.getElementById("location_name").attributes.required = "false";
+    document.getElementById("location_street").attributes.required = "false";
+    document.getElementById("location_latitude").attributes.required = "false";
+    document.getElementById("location_longitude").attributes.required = "false";
 }

@@ -18,7 +18,7 @@ class LocationType extends AbstractType
                 'label_attr' => ['class' => 'app-form-label'],
                 'attr' => [
                     'class' => 'app-form-field app-update-field app-add-location-field',
-                    'required' => true,
+                    'required' => false,
                 ]
             ])
             ->add('street', TextType::class, [
@@ -26,7 +26,7 @@ class LocationType extends AbstractType
                 'label_attr' => ['class' => 'app-form-label'],
                 'attr' => [
                     'class' => 'app-form-field app-update-field app-add-location-field',
-                    'required' => true,
+                    'required' => false,
                 ]
             ])
             ->add('latitude', TextType::class, [
@@ -34,6 +34,7 @@ class LocationType extends AbstractType
                 'label_attr' => ['class' => 'app-form-label'],
                 'attr' => [
                     'class' => 'app-form-field app-update-field app-add-location-field',
+                    'required' => false,
                 ]
             ])
             ->add('longitude', TextType::class, [
@@ -41,6 +42,7 @@ class LocationType extends AbstractType
                 'label_attr' => ['class' => 'app-form-label'],
                 'attr' => [
                     'class' => 'app-form-field app-update-field app-add-location-field',
+                    'required' => false,
                 ]
             ])
         ;

@@ -63,3 +63,9 @@ width: 30px;
     outline: none;
 }
 
+.app-separate-btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
