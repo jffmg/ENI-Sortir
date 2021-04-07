@@ -393,7 +393,6 @@ body {
 }
 
 /*SUPPRESS POP UP*/
-
 .app-suppress-participants-popUp, .app-add-location-popUp {
     padding: 2em;
     position: fixed;
