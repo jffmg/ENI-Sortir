@@ -2,7 +2,9 @@
 
 namespace App\Service;
 
+use App\Controller\ParticipantController;
 use App\Entity\Event;
+use App\Entity\Participant;
 use App\Entity\State;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -86,6 +88,20 @@ class MyServices extends AbstractController
             }
         }
         return $result;
+    }
+
+    public function manageInactiveParticipant(){
+        $userId = 0;
+
+        dump('manageInactiveParticipant function');
+
+        if ($this->getUser()) {
+            $user = $this->getUser();
+        }
+        $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
+        $participant = $participantRepo->find($user);
+
+        return $participant->getActive();
     }
 
 }

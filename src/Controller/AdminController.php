@@ -13,6 +13,7 @@ use App\Form\FileUploadType;
 use App\Form\ParticipantsManagerType;
 use App\Form\ParticipantType;
 use App\Service\CSVUploader;
+use App\Service\MyServices;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,9 +45,15 @@ class AdminController extends AbstractController
     /**
      * @Route("/portal", name="portal")
      */
-    public function portal(): Response
+    public function portal(MyServices $service): Response
     {
         $this->denyAccessUnlessGranted("ROLE_ADMIN");
+
+        // Redirect if participant is inactive
+        if(!$service->manageInactiveParticipant()){
+            dump('redirect inactive participant');
+            return $this->redirectToRoute('participant_inactive');
+        }
 
         return $this->render('/admin/admin.html.twig');
     }
@@ -54,9 +61,15 @@ class AdminController extends AbstractController
     /**
      * @Route("/add", name="addParticipants")
      */
-    public function addParticipants(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder, MailerInterface $mailer, CSVUploader $file_uploader): Response
+    public function addParticipants(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder, MailerInterface $mailer, CSVUploader $file_uploader, MyServices $service): Response
     {
         $this->denyAccessUnlessGranted("ROLE_ADMIN");
+
+        // Redirect if participant is inactive
+        if(!$service->manageInactiveParticipant()){
+            dump('redirect inactive participant');
+            return $this->redirectToRoute('participant_inactive');
+        }
 
         $campusRepo = $this->getDoctrine()->getRepository(Campus::class);
         $campuses = $campusRepo->findAll();
@@ -153,9 +166,15 @@ class AdminController extends AbstractController
     /**
      * @Route("/manager", name="manager", methods={"GET", "POST", "HEAD"})
      */
-    public function manager(Request $request): Response
+    public function manager(Request $request, MyServices $service): Response
     {
         $this->denyAccessUnlessGranted("ROLE_ADMIN");
+
+        // Redirect if participant is inactive
+        if(!$service->manageInactiveParticipant()){
+            dump('redirect inactive participant');
+            return $this->redirectToRoute('participant_inactive');
+        }
 
         $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
         $participants = $participantRepo->findAll();
@@ -207,8 +226,14 @@ class AdminController extends AbstractController
     /**
      * @Route("/cities", name="cities")
      */
-    public function cities(EntityManagerInterface $em, Request $request)
+    public function cities(EntityManagerInterface $em, Request $request, MyServices $service)
     {
+
+        // Redirect if participant is inactive
+        if(!$service->manageInactiveParticipant()){
+            dump('redirect inactive participant');
+            return $this->redirectToRoute('participant_inactive');
+        }
 
         if (isset($_POST['search'])) {
             $keywordsString = $_POST['keywords'];
@@ -250,8 +275,14 @@ class AdminController extends AbstractController
     /**
      * @Route("/cities/update/{id}", name="city_update")
      */
-    public function cityUpdate(EntityManagerInterface $em, Request $request, $id)
+    public function cityUpdate(EntityManagerInterface $em, Request $request, $id, MyServices $service)
     {
+        // Redirect if participant is inactive
+        if(!$service->manageInactiveParticipant()){
+            dump('redirect inactive participant');
+            return $this->redirectToRoute('participant_inactive');
+        }
+
         $cityRepo = $this->getDoctrine()->getRepository(City::class);
         $city = $cityRepo->find($id);
 
@@ -276,8 +307,13 @@ class AdminController extends AbstractController
     /**
      * @Route("/campuses", name="campuses")
      */
-    public function campuses(EntityManagerInterface $em, Request $request)
+    public function campuses(EntityManagerInterface $em, Request $request, MyServices $service)
     {
+        // Redirect if participant is inactive
+        if(!$service->manageInactiveParticipant()){
+            dump('redirect inactive participant');
+            return $this->redirectToRoute('participant_inactive');
+        }
 
         if (isset($_POST['search'])) {
             $keywordsString = $_POST['keywords'];
@@ -320,8 +356,14 @@ class AdminController extends AbstractController
     /**
      * @Route("/campuses/update/{id}", name="campus_update")
      */
-    public function campusUpdate(EntityManagerInterface $em, Request $request, $id)
+    public function campusUpdate(EntityManagerInterface $em, Request $request, $id, MyServices $service)
     {
+        // Redirect if participant is inactive
+        if(!$service->manageInactiveParticipant()){
+            dump('redirect inactive participant');
+            return $this->redirectToRoute('participant_inactive');
+        }
+
         $campusRepo = $this->getDoctrine()->getRepository(Campus::class);
         $campus = $campusRepo->find($id);
 

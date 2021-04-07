@@ -17,9 +17,7 @@ use App\Form\SearchEventsType;
 use App\Service\MyServices;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
-use Spatie\Geocoder\Geocoder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,6 +35,12 @@ class EventController extends AbstractController
     {
         // Access denied if user not connected
         $this->denyAccessUnlessGranted("ROLE_USER");
+
+        // Redirect if participant is inactive
+        if(!$service->manageInactiveParticipant()){
+            dump('redirect inactive participant');
+            return $this->redirectToRoute('participant_inactive');
+        }
 
         // Update the events state - Now is done by admin and running every minute
         //$service->updateState($em,$logger);
@@ -86,9 +90,18 @@ class EventController extends AbstractController
      * @Route("/event/add", name="event_add")
      * @param EntityManagerInterface $em
      */
-    public function add(EntityManagerInterface $em, Request $request)
+    public function add(EntityManagerInterface $em, Request $request, MyServices $service)
     {
+        // Access denied if user not connected
+        $this->denyAccessUnlessGranted("ROLE_USER");
 
+        // Redirect if participant is inactive
+        if(!$service->manageInactiveParticipant()){
+            dump('redirect inactive participant');
+            return $this->redirectToRoute('participant_inactive');
+        }
+
+        dump($request);
         // block access to non-connected users
         $this->denyAccessUnlessGranted("ROLE_USER");
         // creating a new instance of Event
@@ -163,9 +176,17 @@ class EventController extends AbstractController
     /**
      * @Route("/event/add/ajax/{inputCity}", methods={"GET"})
      */
-    public
-    function fetchLocationsByCity(Request $request, $inputCity): Response
+    public function fetchLocationsByCity(Request $request, $inputCity, MyServices $service): Response
     {
+        // Access denied if user not connected
+        $this->denyAccessUnlessGranted("ROLE_USER");
+
+        // Redirect if participant is inactive
+        if(!$service->manageInactiveParticipant()){
+            dump('redirect inactive participant');
+            return $this->redirectToRoute('participant_inactive');
+        }
+
         // get locations associated to city selected by user
         $locationRepo = $this->getDoctrine()->getRepository(\App\Entity\Location::class);
         $locations = $locationRepo->findByCityId($inputCity);
@@ -196,9 +217,17 @@ class EventController extends AbstractController
     /**
      * @Route("/event/add/ajax/location/{inputLocation}", methods={"GET"})
      */
-    public
-    function fetchInfosByLocation(Request $request, $inputLocation): Response
+    public function fetchInfosByLocation(Request $request, $inputLocation, MyServices $service): Response
     {
+        // Access denied if user not connected
+        $this->denyAccessUnlessGranted("ROLE_USER");
+
+        // Redirect if participant is inactive
+        if(!$service->manageInactiveParticipant()){
+            dump('redirect inactive participant');
+            return $this->redirectToRoute('participant_inactive');
+        }
+
         // get infos associated to location selected by user
         $locationRepo = $this->getDoctrine()->getRepository(Location::class);
         $location = $locationRepo->find($inputLocation);
@@ -220,9 +249,17 @@ class EventController extends AbstractController
     /**
      * @Route("/event/publish/{id}", name="event_publish", requirements={"id": "\d*"})
      */
-    public
-    function publish(EntityManagerInterface $em, int $id)
+    public function publish(EntityManagerInterface $em, int $id, MyServices $service)
     {
+        // Access denied if user not connected
+        $this->denyAccessUnlessGranted("ROLE_USER");
+
+        // Redirect if participant is inactive
+        if(!$service->manageInactiveParticipant()){
+            dump('redirect inactive participant');
+            return $this->redirectToRoute('participant_inactive');
+        }
+
         dump($id);
         // get event from database
         $event = $em->getRepository(Event::class)
@@ -252,15 +289,22 @@ class EventController extends AbstractController
     /**
      * @Route("/event/update/{id}", name="event_update", requirements={"id": "\d*"})
      */
-    public
-    function updateEvent(EntityManagerInterface $em, Request $request, int $id)
+    public function updateEvent(EntityManagerInterface $em, Request $request, int $id, MyServices $service)
     {
+        // Access denied if user not connected
+        $this->denyAccessUnlessGranted("ROLE_USER");
+
+        // Redirect if participant is inactive
+        if(!$service->manageInactiveParticipant()){
+            dump('redirect inactive participant');
+            return $this->redirectToRoute('participant_inactive');
+        }
 
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
         $event = $eventRepo->find($id);
 
         dump($id);
-        if ($this->getUser() !== $event->getOrganizer()) {
+        if ($this->getUser() !== $event->getOrganizer()){
             $this->redirectToRoute("main_home");
         } else {
 
@@ -308,11 +352,16 @@ class EventController extends AbstractController
     /**
      * @Route("/event/detail/{id}", name="event_detail", requirements={"id": "\d*"})
      */
-    public
-    function detail($id)
+    public function detail($id, MyServices $service)
     {
         // Access denied if user not connected
         $this->denyAccessUnlessGranted("ROLE_USER");
+
+        // Redirect if participant is inactive
+        if(!$service->manageInactiveParticipant()){
+            dump('redirect inactive participant');
+            return $this->redirectToRoute('participant_inactive');
+        }
 
         // Get the participant from database
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
@@ -331,9 +380,16 @@ class EventController extends AbstractController
     /**
      * @Route("/event/subscribe/{eventId}/{userId}", name="event_subscribe")
      */
-    public
-    function subscribe(EntityManagerInterface $em, $eventId, $userId)
+    public function subscribe(EntityManagerInterface $em, $eventId, $userId, MyServices $service)
     {
+        // Access denied if user not connected
+        $this->denyAccessUnlessGranted("ROLE_USER");
+
+        // Redirect if participant is inactive
+        if(!$service->manageInactiveParticipant()){
+            dump('redirect inactive participant');
+            return $this->redirectToRoute('participant_inactive');
+        }
 
         $event = $em->getRepository(Event::class)
             ->findOneBy(['id' => $eventId]);
@@ -367,10 +423,17 @@ class EventController extends AbstractController
     /**
      * @Route("/event/unsubscribe/{eventId}/{userId}", name="event_unsubscribe")
      */
-    public
-    function unsubscribe(EntityManagerInterface $em, $eventId, $userId)
+    public function unsubscribe(EntityManagerInterface $em, $eventId, $userId, MyServices $service)
     {
 
+        // Access denied if user not connected
+        $this->denyAccessUnlessGranted("ROLE_USER");
+
+        // Redirect if participant is inactive
+        if(!$service->manageInactiveParticipant()){
+            dump('redirect inactive participant');
+            return $this->redirectToRoute('participant_inactive');
+        }
 
         $event = $em->getRepository(Event::class)
             ->findOneBy(['id' => $eventId]);
@@ -410,25 +473,53 @@ class EventController extends AbstractController
     /**
      * @Route("/event/delete/{id}", name="event_delete")
      */
-    public
-    function delete(EntityManagerInterface $em, $id)
+    public function delete(EntityManagerInterface $em, int $id, Request $request, MyServices $service)
     {
-        // todo IMPLEMENTER LA FONCTION POUR SUPPRIMER L'EVENT DE LA DB
-        /*CREATE REAL FUNCTION TO DELETE FROM DATABASE*/
-        $var = 'DELETED';
-        dd($var);
+        // Access denied if user not connected
+        $this->denyAccessUnlessGranted("ROLE_USER");
+
+        // Redirect if participant is inactive
+        if(!$service->manageInactiveParticipant()){
+            dump('redirect inactive participant');
+            return $this->redirectToRoute('participant_inactive');
+        }
+
+        // Get the event from database
+        $eventRepo = $this->getDoctrine()->getRepository(Event::class);
+        $event = $eventRepo->find($id);
+
+
+        // error if not valid id
+        if (empty($event)) {
+            throw $this->createNotFoundException("Cette sortie n'existe pas");
+        }
+
+        // delete event from database
+        $em->remove($event);
+        $em->flush();
+
+        // display success message
+        $this->addFlash('success', 'La sortie a été supprimée');
+
+        //redirect to home
+        return $this->redirectToRoute("main_home");
     }
 
     /**
      * @Route("/event/cancel/{id}", name="event_cancel")
      */
-    public
-    function cancel(Request $request, EntityManagerInterface $em, $id)
+    public function cancel(Request $request, EntityManagerInterface $em, $id, MyServices $service)
     {
         // Access denied if user not connected
         $this->denyAccessUnlessGranted("ROLE_USER");
 
-        // Get the event from database
+        // Redirect if participant is inactive
+        if(!$service->manageInactiveParticipant()){
+            dump('redirect inactive participant');
+            return $this->redirectToRoute('participant_inactive');
+        }
+
+        // Get the participant from database
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
         $event = $eventRepo->find($id);
 
@@ -445,7 +536,7 @@ class EventController extends AbstractController
 
         if ($cancelForm->isSubmitted() && $cancelForm->isValid()) {
             $cancelReason = $_POST["app-cancel-reason"];
-            dump($cancelReason);
+//            dump($cancelReason);
             $event->setInfosEvent($cancelReason);
             $state = $em->getRepository(State::class)
                 ->findOneBy(['shortLabel' => 'AN']);
@@ -465,13 +556,14 @@ class EventController extends AbstractController
     /**
      * @Route("/event/add/location", name="addlocation")
      */
-    public
-    function addLocation()
+    public function addLocation()
     {
+
 
 
         return $this->render("event/addLocation.html.twig");
     }
+
 
 
 }

@@ -40,6 +40,12 @@ class MainController extends AbstractController
     {
         $this->denyAccessUnlessGranted("ROLE_ADMIN");
 
+        // Redirect if participant is inactive
+        if(!$service->manageInactiveParticipant()){
+            dump('redirect inactive participant');
+            return $this->redirectToRoute('participant_inactive');
+        }
+
         $logger->info('STARTING BATCH');
         set_time_limit(0);
 
