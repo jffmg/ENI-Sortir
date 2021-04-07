@@ -10,7 +10,6 @@ use App\Form\AdminParticipantType;
 use App\Form\CampusType;
 use App\Form\CityType;
 use App\Form\FileUploadType;
-use App\Form\ParticipantsManagerType;
 use App\Form\ParticipantType;
 use App\Service\CSVUploader;
 use App\Service\MyServices;
@@ -110,7 +109,6 @@ class AdminController extends AbstractController
                         $this->addFlash('success', 'Données insérées.');
                     }
                 } else {
-                    // ... handle exception if something happens during file upload
                     $this->addFlash('error', 'Echec à l\'insertion de données.');
                 }
             }
@@ -137,7 +135,6 @@ class AdminController extends AbstractController
             $participant->setCampus($campus);
             $em->persist($participant);
             $em->flush();
-            dump($participant);
 
             //send email to the new user
             $email = (new Email())
@@ -186,14 +183,9 @@ class AdminController extends AbstractController
 
         if (isset($_POST['selection'])) {
             $selectionArray = $_POST['selection'];
-            dump($selectionArray);
-            /*foreach($selectionArray as $selection) {
-                if
-            }*/
 
             if (isset($_POST['modify'])) {
                 $participantsToModify = $participantRepo->findMultipleByIds($selectionArray);
-                /*dump($participantsToModify);*/
                 foreach ($participantsToModify as $p) {
                     if ($p->getActive() == 1) {
                         $selectionToDeactivate[] = $p->getId();
