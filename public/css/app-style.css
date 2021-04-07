@@ -351,7 +351,7 @@ body {
     width: 20em;
     border-radius: 15px;
     background-color: mintcream;
-    box-shadow: 1px 1px 4px 0 rgb(0 0 0 / 10%);
+    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
 }
 
 .app-container-passwords {
@@ -382,8 +382,7 @@ body {
 
 /*SUPPRESS POP UP*/
 
-.app-suppress-participants-popUp /*, .app-add-location-popUp*/
-{
+.app-suppress-participants-popUp, .app-add-location-popUp {
     padding: 2em;
     position: fixed;
     top: 30vh;
@@ -392,12 +391,12 @@ body {
     border-radius: 15px;
     border: solid 1px darkslategrey;
     background-color: mintcream;
-    box-shadow: 1px 1px 4px 0 rgb(0 0 0 / 10%);
+    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
     display: none;
     z-index: 100;
 }
 
-.app-add-location-popUp {
+/*.app-add-location-popUp {
     padding: 2em;
     position: fixed;
     top: 30vh;
@@ -406,10 +405,10 @@ body {
     border-radius: 15px;
     border: solid 1px darkslategrey;
     background-color: mintcream;
-    box-shadow: 1px 1px 4px 0 rgb(0 0 0 / 10%);
+    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
     display: none;
     z-index: 100;
-}
+}*/
 
 .app-container-btn-pop-up {
     margin-top: 1em;
