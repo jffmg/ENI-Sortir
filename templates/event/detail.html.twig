@@ -75,16 +75,14 @@
 													 href="{{ path('event_publish', {id: event.id}) }}">Publier la sortie</a></button>
 			<button type="button" class="app-btn"><a class="app-btn-link" href="{{ path('event_delete',{'id': event.id}) }}">Supprimer la sortie</a></button>
 		{% endif %}
-		{% if event.organizer.userName == app.user.username and (event.state.shortLabel == "EC" or event.state.shortLabel == "OU") %}
+		{% if event.organizer.userName == app.user.username and event.state.shortLabel == "EC" %}
 			<button type="button" class="app-btn"><a class="app-btn-link"
 													 href="{{ path('event_update', {id: event.id}) }}">Modifier la sortie</a></button>
 		{% endif %}
-		{% if event.state.shortLabel == "EC" or event.state.shortLabel == "OU" or event.state.shortLabel == "CL" %}
+		{% if (event.state.shortLabel == "OU" or event.state.shortLabel == "CL") and (event.organizer.userName == app.user.userName) %}
 			<button type="button" class="app-btn"><a class="app-btn-link"
 													 href="{{ path('event_cancel',{'id': event.id}) }}">Annuler la sortie</a></button>
 		{% endif %}
-
-
 	</div>
 
 	<h2> Liste des inscrits : </h2>
@@ -110,4 +108,3 @@
 	</table>
 
 {% endblock %}
-
