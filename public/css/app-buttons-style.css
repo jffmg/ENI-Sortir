@@ -70,3 +70,19 @@ width: 30px;
     justify-content: space-between;
 }
 
+.app-return-btn {
+    margin: 1em;
+}
+
+/* ADD LOCATION BUTTON */
+
+.app-plusBtn {
+    align-self: end;
+    display: flex;
+    justify-content: space-around;
+}
+
+.app-plusBtn-label{
+    padding: 0 1em;
+    font-size: 1em;
+}

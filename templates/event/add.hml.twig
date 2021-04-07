@@ -41,17 +41,18 @@
         </p>
         <br>
 
-        <p class="app-add-form-container"><label for="event-location" class="app-profile-label">Lieu</label>
+        <div class="app-add-form-container"><label for="event-location" class="app-profile-label">Lieu</label>
 
-        <div id="plusBtn" style="display: none">
+        <div id="plusBtn" style="display: none" class="app-plusBtn">
             <button type="button" id="btn-collapsible" class="app-collapsible app-btn-add" onclick="showAddLocation(event)">
                 <span class="app-plusSymbol">+</span></button>
+            <span class="app-plusBtn-label">Ajouter un lieu</span>
         </div>
 
-        <select id="event-location" name="event-location" onchange="getInfos()" required>
+        <select id="event-location" name="event-location" onchange="getInfos()" class="app-form-field app-add-field" required>
             <option value="">Sélectionnez un lieu</option>
         </select>
-        </p><br>
+        </div><br>
 
 
         <p class="app-add-form-container"><label for="event-street" class="app-profile-label">Rue</label><span

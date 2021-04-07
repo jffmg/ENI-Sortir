@@ -8,8 +8,9 @@
     <!-- IMPORTANT : the page must be reloaded after the form is submitted - condition for showSuppressPopUp btn to work -->
     <form action="#" method="POST" id="form-manage-participants">
         <div class="app-manager-form app-framed app-small-screen-display-none">
-            <button type="submit" name="modify">Modifier l'activité de la sélection</button>
-            <button type="submit" name="delete" onclick="showSuppressPopUp(event);">Supprimer la sélection</button>
+            <button class="app-btn" type="submit" name="modify">Modifier la sélection</button>
+            <button class="app-btn app-return-btn" type="button"><a class="app-btn-link" href="{{ path('admin_portal') }}">Retour</a></button>
+            <button class="app-btn" type="submit" name="delete" onclick="showSuppressPopUp(event);">Supprimer la sélection</button>
         </div>
 
 
@@ -75,6 +76,10 @@
                 Annuler
             </button>
         </div>
+    </div>
+
+    <div class="app-form-btn-container app-separate-btns">
+        <button class="app-btn app-return-btn" type="button"><a class="app-btn-link" href="{{ path('admin_portal') }}">Retour</a></button>
     </div>
 
 {% endblock %}

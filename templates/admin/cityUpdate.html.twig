@@ -14,4 +14,8 @@
         <button type="subit" name="add" form="newCityForm">Modifier</button>
         {{ form_end(cityForm) }}
     </div>
+
+    <div class="app-form-btn-container app-separate-btns">
+        <button class="app-btn app-return-btn" type="button"><a class="app-btn-link" href="{{ path('admin_cities') }}">Retour</a></button>
+    </div>
 {% endblock %}

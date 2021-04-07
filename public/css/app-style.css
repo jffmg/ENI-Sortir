@@ -392,8 +392,13 @@ body {
     color: plum;
 }
 
-/*SUPPRESS POP UP*/
+.app-add-location-form-container {
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+}
 
+/*SUPPRESS POP UP*/
 .app-suppress-participants-popUp, .app-add-location-popUp {
     padding: 2em;
     position: fixed;
@@ -644,17 +649,15 @@ body {
         margin: 0.5em;
     }
 
+
+
     #app-collapsible-content {
         overflow: hidden;
         display: none;
         padding: 0.5em;
     }
 
-    .app-add-location-form-container {
-        display: flex;
-        flex-direction: column;
-        width: 50vw;
-    }
+
 
     .app-add-form-row {
         width: 40vw;
@@ -738,7 +741,6 @@ body {
     }
 
     .app-add-location-form-container {
-
         width: 40vw;
     }
 
