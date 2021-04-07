@@ -67,7 +67,7 @@ body {
 }
 
 .hidden-row {
-   display: none;
+    display: none;
 }
 
 #participant_password > div {
@@ -80,7 +80,7 @@ body {
 #admin_participant_admin {
     display: flex;
     flex-direction: row;
-   justify-content: flex-end;
+    justify-content: flex-end;
     align-items: center;
 }
 
@@ -172,7 +172,7 @@ body {
     align-items: center;
 }
 
-.app-form-search-events-checkboxes>p {
+.app-form-search-events-checkboxes > p {
     display: flex;
     flex-direction: row;
     width: inherit;
@@ -190,7 +190,7 @@ body {
     width: 15em;
 }
 
-.vich-image{
+.vich-image {
     display: flex;
     justify-content: flex-end;
 }
@@ -261,8 +261,8 @@ body {
 /*UPDATE PROFILE FORM,
  ADD EVENT FORM*/
 .app-update-form-container, .app-add-form-container, .app-search-form-container {
-   /* display: flex;
-    flex-direction: column;*/
+    /* display: flex;
+     flex-direction: column;*/
     /*justify-content: space-between;*/
     width: 60vw;
     /*align-items: center;
@@ -275,7 +275,7 @@ body {
 }
 
 /*DETAILS PAGE*/
-.app-detail-container{
+.app-detail-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -294,17 +294,17 @@ body {
     width: 90vw;
 }
 
-.app-detail-info-container{
+.app-detail-info-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.app-detail-info{
+.app-detail-info {
     width: 100%;
 }
 
-.app-table-participants{
+.app-table-participants {
     width: 90vw;
 }
 
@@ -312,9 +312,9 @@ body {
 .app-footer-container {
     text-align: center;
     padding: 0.5em;
-    background:mintcream;
-    width:100%;
-    height:3em;
+    background: mintcream;
+    width: 100%;
+    height: 3em;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -358,7 +358,7 @@ body {
     height: 12em;
 }
 
-.app-container-btn-reset-password{
+.app-container-btn-reset-password {
     margin-top: 0.5em;
     display: flex;
     flex-direction: row;
@@ -370,8 +370,8 @@ body {
     padding-left: 1em;
 }
 
-.app-message-password-reset{
-    margin : 4em;
+.app-message-password-reset {
+    margin: 4em;
 }
 
 .app-form-password-reset-label {
@@ -382,14 +382,15 @@ body {
 
 /*SUPPRESS POP UP*/
 
-.app-suppress-participants-popUp/*, .app-add-location-popUp*/ {
+.app-suppress-participants-popUp /*, .app-add-location-popUp*/
+{
     padding: 2em;
     position: fixed;
     top: 30vh;
     left: 35vw;
     width: 30vw;
     border-radius: 15px;
-    border : solid 1px darkslategrey;
+    border: solid 1px darkslategrey;
     background-color: mintcream;
     box-shadow: 1px 1px 4px 0 rgb(0 0 0 / 10%);
     display: none;
@@ -403,24 +404,22 @@ body {
     left: 35vw;
     width: 30vw;
     border-radius: 15px;
-    border : solid 1px darkslategrey;
+    border: solid 1px darkslategrey;
     background-color: mintcream;
     box-shadow: 1px 1px 4px 0 rgb(0 0 0 / 10%);
     display: none;
     z-index: 100;
 }
 
-.app-container-btn-pop-up{
+.app-container-btn-pop-up {
     margin-top: 1em;
     display: flex;
     justify-content: space-around;
 }
 
-.app-btn-pop-up{
+.app-btn-pop-up {
     padding: 0.5em 1em;
 }
-
-
 
 
 /* M devices (tablets, 768px and up)*/
@@ -472,7 +471,7 @@ body {
     }
 
     /*CANCEL FORM*/
-    .app-cancel-container{
+    .app-cancel-container {
         width: 70vw;
     }
 
@@ -490,8 +489,6 @@ body {
     /*.app-profile-picture {
         width: 40vw;
     }*/
-
-
     /*UPDATE PROFILE FORM,
 	 ADD EVENT FORM*/
     .app-update-form-container, .app-add-form-container, .app-search-form-container {
@@ -500,6 +497,7 @@ body {
         flex-direction: row;
         width: 55vw;
     }
+
     .app-add-form-row {
         display: flex;
         justify-content: space-between;
@@ -511,6 +509,7 @@ body {
         box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
         width: 80vw;
     }
+
     .app-table thead {
         visibility: visible;
     }
@@ -535,7 +534,7 @@ body {
         content: none;
     }
 
-    .app-form-search-events-checkboxes>p {
+    .app-form-search-events-checkboxes > p {
         width: 55vw;
     }
 
@@ -549,7 +548,6 @@ body {
 
 
     /*DETAILS PAGE*/
-
     .app-detail-item-container {
         flex-direction: row;
         width: 45vw;
@@ -559,15 +557,15 @@ body {
         width: 41vw;
     }
 
-    .app-detail-info-label{
+    .app-detail-info-label {
         width: 25%;
     }
 
-    .app-detail-infO{
+    .app-detail-infO {
         width: 65%;
     }
 
-    .app-table-participants{
+    .app-table-participants {
         width: 40vw;
     }
 
@@ -582,13 +580,13 @@ body {
     }
 
     .app-fixed-header tbody {
-         display: block;
-         overflow-y: scroll;
-         overflow-x: hidden;
-         height: 8vw;
-         width: 100%;
-         scrollbar-width: 0.5em;
-     }
+        display: block;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: 8vw;
+        width: 100%;
+        scrollbar-width: 0.5em;
+    }
 
     .app-fixed-header tbody::-webkit-scrollbar {
         width: 0.5em;
@@ -596,8 +594,8 @@ body {
     }
 
     .app-fixed-header tbody::-webkit-scrollbar-thumb {
-         background: darkgrey;
-     }
+        background: darkgrey;
+    }
 
     .app-fixed-header th, .app-fixed-header td {
         width: 20vw;
@@ -618,7 +616,7 @@ body {
     }
 
     /*Admin*/
-    .app-manager-form{
+    .app-manager-form {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -628,18 +626,14 @@ body {
         width: 15em;
     }
 
-    .app-add-location-container>div {
+    .app-add-location-container > div {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        margin:0.5em;
+        margin: 0.5em;
     }
 
-   /* #add-location-form {
-        display: none;
-    }*/
-
-    .app-collapsible-content {
+    #app-collapsible-content {
         overflow: hidden;
         display: none;
         padding: 0.5em;
@@ -684,7 +678,6 @@ body {
     }
 
     /*LIST PAGE*/
-
     .app-search-btn {
         align-self: center;
         height: 5em;
@@ -703,8 +696,7 @@ body {
         flex-direction: row;
         width: 20vw;
     }*/
-
-    .app-form-search-events-checkboxes>p {
+    .app-form-search-events-checkboxes > p {
         display: flex;
         flex-direction: row;
         width: 30vw;
@@ -718,20 +710,18 @@ body {
         width: auto;
     }
 
-    .app-btn-link-container{
+    .app-btn-link-container {
         align-self: flex-end;
     }
 
     /*CANCEL FORM*/
-    .app-cancel-container{
+    .app-cancel-container {
         width: 55vw;
     }
 
-   /* .app-profile-picture {
-        width: 30vw;
-    }*/
-
-
+    /* .app-profile-picture {
+         width: 30vw;
+     }*/
     .app-add-form-row {
         width: 30vw;
     }
@@ -763,26 +753,26 @@ body {
         display: block;
     }
 
-    .app-form-search-events-checkboxes>p {
+    .app-form-search-events-checkboxes > p {
         width: 35vw;
     }
 
     .app-form-search-events-fields {
         width: 40vw;
     }
+
     .app-form-search-events-fields .app-search-form-container {
         width: 40vw;
     }
 
     /*CANCEL FORM*/
-    .app-cancel-container{
+    .app-cancel-container {
         width: 45vw;
     }
 
     /*.app-profile-picture {
         width: 25vw;
     }*/
-
     .app-add-form-row {
         width: 25vw;
     }
@@ -803,26 +793,26 @@ body {
         width: 50vw;
     }
 
-    .app-form-search-events-checkboxes>p {
+    .app-form-search-events-checkboxes > p {
         width: 20vw;
     }
 
     .app-form-search-events-fields {
         width: 20vw;
     }
+
     .app-form-search-events-fields .app-search-form-container {
         width: 20vw;
     }
 
     /*CANCEL FORM*/
-    .app-cancel-container{
+    .app-cancel-container {
         width: 30vw;
     }
 
     /*.app-profile-picture {
         width: 15vw;
     }*/
-
     .app-new-event-form-container {
         width: 40vw;
         align-items: center;
@@ -836,7 +826,7 @@ body {
 
 /* S devices (mobiles, Less than 768px)*/
 @media (max-width: 768px) {
-    .app-small-screen-display-none{
+    .app-small-screen-display-none {
         display: none;
     }
 }

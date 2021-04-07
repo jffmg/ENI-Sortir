@@ -101,7 +101,7 @@ class EventController extends AbstractController
             return $this->redirectToRoute('participant_inactive');
         }
 
-        dump($request);
+        /*dump($request);*/
         // block access to non-connected users
         $this->denyAccessUnlessGranted("ROLE_USER");
         // creating a new instance of Event
