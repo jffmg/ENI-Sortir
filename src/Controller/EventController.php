@@ -12,6 +12,7 @@ use App\Entity\SearchEvents;
 use App\Entity\State;
 use App\Form\CancelType;
 use App\Form\EventType;
+use App\Form\LocationType;
 use App\Form\SearchEventsType;
 use App\Service\MyServices;
 use Doctrine\ORM\EntityManagerInterface;
@@ -88,65 +89,82 @@ class EventController extends AbstractController
     public function add(EntityManagerInterface $em, Request $request)
     {
 
-        dump($request);
         // block access to non-connected users
         $this->denyAccessUnlessGranted("ROLE_USER");
         // creating a new instance of Event
         $event = new Event();
+        $newLocation = new Location();
 
         // create a new instance of EventForm
         $eventForm = $this->createForm(EventType::class, $event);
+
+
+        //add location form
+        $addLocationForm = $this->createForm(LocationType::class, $newLocation);
 
         // we have to display the cities from those saved in base
         // get the cities from database
         $cityRepo = $this->getDoctrine()->getRepository(City::class);
         $cities = $cityRepo->findAll();
 
-        $eventForm->handleRequest($request);
 
-        if ($eventForm->isSubmitted() && $eventForm->isValid()) {
-            // status is "En création" by default at this stage
-            $stateRepo = $this->getDoctrine()->getRepository(State::class);
-            $state = $stateRepo->findOneBy(['shortLabel' => 'EC']);
-            $event->setState($state);
+                $eventForm->handleRequest($request);
+                $addLocationForm->handleRequest($request);
 
-            // organizer is the Participant creating the event
-            /** @var \App\Entity\User */
-            $organizer = $this->getUser();
-            $event->setOrganizer($organizer);
-            dump($organizer);
+            if ($eventForm->isSubmitted() && $eventForm->isValid()) {
+                // status is "En création" by default at this stage
+                $stateRepo = $this->getDoctrine()->getRepository(State::class);
+                $state = $stateRepo->findOneBy(['shortLabel' => 'EC']);
+                $event->setState($state);
 
-            // campus is the campus associated to the organizer
-            $campus = $organizer->getCampus();
-            $event->setCampusOrganizer($campus);
+                // organizer is the Participant creating the event
+                /** @var \App\Entity\User */
+                $organizer = $this->getUser();
+                $event->setOrganizer($organizer);
+                dump($organizer);
 
-            // affect location to event
-            $locationId = $request->request->get('event-location');
-            $locationRepo = $this->getDoctrine()->getRepository(Location::class);
-            $location = $locationRepo->find($locationId);
+                // campus is the campus associated to the organizer
+                $campus = $organizer->getCampus();
+                $event->setCampusOrganizer($campus);
 
-            $event->setLocation($location);
+                // affect location to event
+                $locationId = $request->request->get('event-location');
+                $locationRepo = $this->getDoctrine()->getRepository(Location::class);
+                $location = $locationRepo->find($locationId);
 
-            $em->persist($event);
-            $em->flush();
-            $this->addFlash('success', 'La sortie a bien été créée.');
+                $event->setLocation($location);
 
-            return $this->redirectToRoute('event_detail', [
-                'id' => $event->getId()
-            ]);
-        }
+                $em->persist($event);
+                $em->flush();
+                $this->addFlash('success', 'La sortie a bien été créée.');
+
+                return $this->redirectToRoute('event_detail', [
+                    'id' => $event->getId()
+                ]);
+            }
+
+            if ($addLocationForm->isSubmitted() && $addLocationForm->isValid()) {
+                $cityId = $_POST["hidden-city"];
+                $city = $cityRepo->find($cityId);
+                $newLocation->setCity($city);
+                $em->persist($newLocation);
+                $em->flush();
+
+
+            }
+
+
 
         // display form
-        return $this->render('event/add.hml.twig', [
-            "eventForm" => $eventForm->createView(),
-            "cities" => $cities,
-        ]);
+        return $this->render('event/add.hml.twig', ["eventForm" => $eventForm->createView(), 'addLocationForm' => $addLocationForm->createView(),
+            "cities" => $cities,]);
     }
 
     /**
      * @Route("/event/add/ajax/{inputCity}", methods={"GET"})
      */
-    public function fetchLocationsByCity(Request $request, $inputCity): Response
+    public
+    function fetchLocationsByCity(Request $request, $inputCity): Response
     {
         // get locations associated to city selected by user
         $locationRepo = $this->getDoctrine()->getRepository(\App\Entity\Location::class);
@@ -178,7 +196,8 @@ class EventController extends AbstractController
     /**
      * @Route("/event/add/ajax/location/{inputLocation}", methods={"GET"})
      */
-    public function fetchInfosByLocation(Request $request, $inputLocation): Response
+    public
+    function fetchInfosByLocation(Request $request, $inputLocation): Response
     {
         // get infos associated to location selected by user
         $locationRepo = $this->getDoctrine()->getRepository(Location::class);
@@ -201,7 +220,8 @@ class EventController extends AbstractController
     /**
      * @Route("/event/publish/{id}", name="event_publish", requirements={"id": "\d*"})
      */
-    public function publish(EntityManagerInterface $em, int $id)
+    public
+    function publish(EntityManagerInterface $em, int $id)
     {
         dump($id);
         // get event from database
@@ -232,14 +252,15 @@ class EventController extends AbstractController
     /**
      * @Route("/event/update/{id}", name="event_update", requirements={"id": "\d*"})
      */
-    public function updateEvent(EntityManagerInterface $em, Request $request, int $id)
+    public
+    function updateEvent(EntityManagerInterface $em, Request $request, int $id)
     {
 
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
         $event = $eventRepo->find($id);
 
         dump($id);
-        if ($this->getUser() !== $event->getOrganizer()){
+        if ($this->getUser() !== $event->getOrganizer()) {
             $this->redirectToRoute("main_home");
         } else {
 
@@ -287,7 +308,8 @@ class EventController extends AbstractController
     /**
      * @Route("/event/detail/{id}", name="event_detail", requirements={"id": "\d*"})
      */
-    public function detail($id)
+    public
+    function detail($id)
     {
         // Access denied if user not connected
         $this->denyAccessUnlessGranted("ROLE_USER");
@@ -309,7 +331,8 @@ class EventController extends AbstractController
     /**
      * @Route("/event/subscribe/{eventId}/{userId}", name="event_subscribe")
      */
-    public function subscribe(EntityManagerInterface $em, $eventId, $userId)
+    public
+    function subscribe(EntityManagerInterface $em, $eventId, $userId)
     {
 
         $event = $em->getRepository(Event::class)
@@ -344,7 +367,8 @@ class EventController extends AbstractController
     /**
      * @Route("/event/unsubscribe/{eventId}/{userId}", name="event_unsubscribe")
      */
-    public function unsubscribe(EntityManagerInterface $em, $eventId, $userId)
+    public
+    function unsubscribe(EntityManagerInterface $em, $eventId, $userId)
     {
 
 
@@ -386,7 +410,8 @@ class EventController extends AbstractController
     /**
      * @Route("/event/delete/{id}", name="event_delete")
      */
-    public function delete(EntityManagerInterface $em, $id)
+    public
+    function delete(EntityManagerInterface $em, $id)
     {
         // todo IMPLEMENTER LA FONCTION POUR SUPPRIMER L'EVENT DE LA DB
         /*CREATE REAL FUNCTION TO DELETE FROM DATABASE*/
@@ -397,7 +422,8 @@ class EventController extends AbstractController
     /**
      * @Route("/event/cancel/{id}", name="event_cancel")
      */
-    public function cancel(Request $request, EntityManagerInterface $em, $id)
+    public
+    function cancel(Request $request, EntityManagerInterface $em, $id)
     {
         // Access denied if user not connected
         $this->denyAccessUnlessGranted("ROLE_USER");
@@ -439,14 +465,13 @@ class EventController extends AbstractController
     /**
      * @Route("/event/add/location", name="addlocation")
      */
-    public function addLocation()
+    public
+    function addLocation()
     {
-
 
 
         return $this->render("event/addLocation.html.twig");
     }
-
 
 
 }

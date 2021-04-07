@@ -396,6 +396,20 @@ body {
     z-index: 100;
 }
 
+.app-add-location-popUp {
+    padding: 2em;
+    position: fixed;
+    top: 30vh;
+    left: 35vw;
+    width: 55vw;
+    border-radius: 15px;
+    border : solid 1px darkslategrey;
+    background-color: mintcream;
+    box-shadow: 1px 1px 4px 0 rgb(0 0 0 / 10%);
+    display: none;
+    z-index: 100;
+}
+
 .app-container-btn-pop-up{
     margin-top: 1em;
     display: flex;
@@ -601,6 +615,27 @@ body {
         flex-direction: row;
         justify-content: space-between;
     }
+
+    .app-add-location-field {
+        width: 15em;
+    }
+
+    .app-add-location-container>div {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin:0.5em;
+    }
+
+   /* #add-location-form {
+        display: none;
+    }*/
+
+    .app-collapsible-content {
+        overflow: hidden;
+        display: none;
+        padding: 0.5em;
+    }
 }
 
 /* L devices (desktops, 992px and up)*/
@@ -751,6 +786,11 @@ body {
     /*.app-profile-picture {
         width: 15vw;
     }*/
+
+    .app-new-event-form-container {
+        width: 40vw;
+        align-items: center;
+    }
 }
 
 /* S devices (mobiles, Less than 768px)*/

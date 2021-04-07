@@ -43,3 +43,23 @@
     border: none;
     font-family: "Exo 2 Medium", sans-serif;
 }
+
+.app-btn-add{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 2em;
+    padding: 0;
+    padding-top: 3px;
+    color: plum;
+    background-color: mintcream;
+    border-color: plum;
+}
+
+.app-btn-add:focus{
+    outline: none;
+}
+

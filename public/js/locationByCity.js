@@ -1,4 +1,3 @@
-
 // todo comment faire pour afficher au chargement les infos de la ville 1 - ou alors n'avoir aucune ville sélectionnée par défaut au chargement
 function getLocations() {
     // get the input from the event-city select
@@ -15,10 +14,17 @@ function getLocations() {
     latitude.innerHTML = "";
     let longitude = document.getElementById("event-longitude");
     longitude.innerHTML = "";
+    let plusBtnElement = document.getElementById("plusBtn");
+    plusBtnElement.style.display = "none";
+    let hiddenCityInput = document.getElementById('hidden-city');
 
 
     // if a city is selected, send its id to controller and call insertion of associated locations
     if (inputCity.value !== "") {
+        //display add location button (+)
+        plusBtnElement.style.display = "block";
+        hiddenCityInput.value = inputCity.value;
+        console.log(hiddenCityInput.value);
         // create an instance to send requests to server
         let req = new XMLHttpRequest();
         // create the request
@@ -52,7 +58,8 @@ function insertLocations() {
         let longitude = document.getElementById("event-longitude");
         longitude.innerHTML = "";
 
-        if (!locations && locations.length == 0) {
+
+        if (!locations && locations.length === 0) {
             selectLocation.innerHTML = "<p>Pas de lieu associé à cette ville.</p>"
             zipCodeElement.innerHTML = "<p>Pas de code postal pour ce lieu.</p>"
         }
@@ -64,22 +71,21 @@ function insertLocations() {
             selectLocation.appendChild(option);
             let eventLocationId = document.getElementById('event-location-id');
             for (const location of locations) {
-                if(location.id === eventLocationId) {
+                if (location.id === eventLocationId) {
 
                 } else {
-                const option = document.createElement("option");
-                option.value = location.id;
-                option.innerHTML = location.name;
-                selectLocation.appendChild(option);
+                    const option = document.createElement("option");
+                    option.value = location.id;
+                    option.innerHTML = location.name;
+                    selectLocation.appendChild(option);
                 }
                 zipCodeElement.innerHTML = location.zipcode;
-
             }
         }
     }
 }
 
-function getInfos(){
+function getInfos() {
     // get the input from the event-locations select
     let inputLocation = document.getElementById("event-location");
 
@@ -132,4 +138,12 @@ function insertInfos() {
             longitude.innerHTML = infos.longitude;
         }
     }
+}
+
+function showAddLocation(event) {
+
+    event.preventDefault();
+    document.getElementById('hidden-city').value = document.getElementById('event-city').value;
+    document.getElementById("collapsible-content").style.display = "block";
+
 }
