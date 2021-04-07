@@ -42,7 +42,7 @@ class EventController extends AbstractController
             return $this->redirectToRoute('participant_inactive');
         }
 
-        // Update the events state - Now is done by admin and running every minute
+        // Update the events state - on page load or comment the line below and use the batch path when connected as admin
         $service->updateState($em,$logger);
 
         // Create the form
