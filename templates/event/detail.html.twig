@@ -65,24 +65,25 @@
 			</p>
 		</div>
 
-		<div class="app-form-btn-container app-separate-btns">
-			<button class="app-btn"><a class="app-btn-link" href="{{ path('main_home') }}">Retour</a></button>
-			{% if event.organizer.userName == app.user.userName and event.state.shortLabel == "EC" %}
-				<button type="button" class="app-btn"><a class="app-btn-link"
-														 href="{{ path('event_publish', {id: event.id}) }}">Publier la sortie</a></button>
-				<button type="button" class="app-btn"><a class="app-btn-link" href="{{ path('event_delete',{'id': event.id}) }}">Supprimer la sortie</a></button>
-			{% endif %}
-			{% if event.organizer.userName == app.user.username and (event.state.shortLabel == "EC" or event.state.shortLabel == "OU") %}
-				<button type="button" class="app-btn"><a class="app-btn-link"
-														 href="{{ path('event_update', {id: event.id}) }}">Modifier la sortie</a></button>
-			{% endif %}
-			{% if event.state.shortLabel == "EC" or event.state.shortLabel == "OU" or event.state.shortLabel == "CL" %}
+
+
+	</div>
+	<div class="app-form-btn-container app-separate-btns">
+		<button class="app-btn"><a class="app-btn-link" href="{{ path('main_home') }}">Retour</a></button>
+		{% if event.organizer.userName == app.user.userName and event.state.shortLabel == "EC" %}
+			<button type="button" class="app-btn"><a class="app-btn-link"
+													 href="{{ path('event_publish', {id: event.id}) }}">Publier la sortie</a></button>
+			<button type="button" class="app-btn"><a class="app-btn-link" href="{{ path('event_delete',{'id': event.id}) }}">Supprimer la sortie</a></button>
+		{% endif %}
+		{% if event.organizer.userName == app.user.username and (event.state.shortLabel == "EC" or event.state.shortLabel == "OU") %}
+			<button type="button" class="app-btn"><a class="app-btn-link"
+													 href="{{ path('event_update', {id: event.id}) }}">Modifier la sortie</a></button>
+		{% endif %}
+		{% if event.state.shortLabel == "EC" or event.state.shortLabel == "OU" or event.state.shortLabel == "CL" %}
 			<button type="button" class="app-btn"><a class="app-btn-link"
 													 href="{{ path('event_cancel',{'id': event.id}) }}">Annuler la sortie</a></button>
-			{% endif %}
+		{% endif %}
 
-
-		</div>
 
 	</div>
 

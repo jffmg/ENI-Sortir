@@ -17,6 +17,7 @@
 .app-btn {
     width: 7em;
     align-self: flex-end;
+    margin: 1em;
 }
 
 .app-search-btn {
