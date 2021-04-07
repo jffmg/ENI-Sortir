@@ -78,12 +78,12 @@
 
 
     {# hidden form. Gets revealed chen clicking on + btn #}
-    <div id="collapsible-content" class="app-add-location-popUp">
+    <div id="collapsible-content" class="app-add-location-popUp app-add-location-form-container">
 
             {{ form_start(addLocationForm, {'attr': {'id': 'location'}}) }}
         <h2 class="app-main-title">Ajouter un lieu : </h2>
             <input type="hidden" id="hidden-city" name="hidden-city">
-        <div class="app-add-form-container">
+        <div class="app-add-location-form-container">
             <p class="app-add-form-row"><span
                         class="app-profile-label"> {{ form_label(addLocationForm.name) }}</span> {{ form_widget(addLocationForm.name) }}
             </p><br>
