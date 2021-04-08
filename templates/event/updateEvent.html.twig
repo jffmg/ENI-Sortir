@@ -3,7 +3,7 @@
 {% block title %}Modification de la sortie {{ event.name }} | {{ parent() }}{% endblock %}
 
 {% block main %}
-<h1 class="app-main-title">Détails de la sortie</h1>
+<h1 class="app-main-title">Modifier la sortie</h1>
 
 <div class="app-form-container app-framed">
 	{{ form_start(eventForm) }}
@@ -74,7 +74,7 @@
 
 </div>
 <div class="app-form-btn-container">
-	<button class="app-btn"><a class="app-btn-link app-back-link" href="{{ path('main_home') }}">Retour</a></button>
+	<button class="app-btn"><a class="app-btn-link" href="{{ path('main_home') }}">Retour</a></button>
 	<button class="app-btn" type="submit">Modifier la sortie</button>
 </div>
 {{ form_end(eventForm) }}
