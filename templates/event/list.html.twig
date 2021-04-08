@@ -123,7 +123,7 @@
                             <a class="app-link" href="{{ path('event_update', {id: event.id}) }}">Modifier</a>
                             <a class="app-link" href="{{ path('event_publish', {id:event.id}) }}">Publier</a>
                             <a class="app-link" href="{{ path('event_delete',{'id': event.id}) }}">Supprimer</a>
-                        {% elseif event.state == stateOU or event.state == stateCL %}
+                        {% elseif (event.state == stateOU or event.state == stateCL) and app.user.admin == 0 %}
                             <a class="app-link" href="{{ path('event_cancel',{'id': event.id}) }}">Annuler</a>
                         {% endif %}
                     {% endif %}
