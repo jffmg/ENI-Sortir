@@ -4,7 +4,7 @@
 
 {% block main %}
 
-    <h1 class="app-main-title"> Profil de {{ participant.userName }} du campus de {{ participant.campus.name }}</h1>
+    <h1 class="app-main-title"> {{ participant.userName }}</h1>
 
     {% if participant.pictureName != null %}
     <div>
@@ -13,21 +13,20 @@
     {% endif %}
 
     <div class="app-form-container app-profile-container app-framed">
-        <p><span class="app-profile-label"> Nom :</span> {{ participant.name }}</p><br>
         <p><span class="app-profile-label"> Prénom :</span> {{ participant.firstName }}</p><br>
-        <p><span class="app-profile-label"> Mail :</span> {{ participant.mail }}</p><br>
+        <p><span class="app-profile-label"> Nom :</span> {{ participant.name }}</p><br>
         <p><span class="app-profile-label"> Téléphone :</span> {{ participant.phone }}</p><br>
+        <p><span class="app-profile-label"> Email :</span> {{ participant.mail }}</p><br>
+        <p><span class="app-profile-label"> Campus :</span> {{ participant.campus.name }}</p><br>
 
     <div class="app-form-btn-container app-separate-btns">
+        <button class="app-btn"><a class="app-btn-link  app-back-link" href="{{ path('main_home') }}">Retour</a></button>
         {% if participant.userName == app.user.username %}
             <button type="button" class="app-btn"><a class="app-btn-link"
                                      href="{{ path('participant_update',{id: participant.id}) }}">Modifier</a></button>
         {% endif %}
-        <button class="app-btn"><a class="app-btn-link" href="{{ path('main_home') }}">Retour</a></button>
 
     </div>
     </div>
-
 
 {% endblock %}
-
