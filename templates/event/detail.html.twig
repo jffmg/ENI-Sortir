@@ -83,8 +83,8 @@
 			<button type="button" class="app-btn"><a class="app-btn-link"
 													 href="{{ path('event_cancel',{'id': event.id}) }}">Annuler la sortie</a></button>
 		{% endif %}
-		{% if app.user.admin == 1 %}
-			<button class="app-admin-btn-cancel" href="{{ path('event_cancel',{'id': event.id}) }}">Annuler</button>
+		{% if app.user.admin == 1 and (event.state.shortLabel == "OU" or event.state.shortLabel == "CL")%}
+			<a class="app-admin-btn-cancel" href="{{ path('event_cancel',{'id': event.id}) }}">Annuler la sortie</a>
 		{% endif %}
 	</div>
 
