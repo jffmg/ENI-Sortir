@@ -86,3 +86,11 @@ width: 30px;
     padding: 0 1em;
     font-size: 1em;
 }
+
+.app-admin-btn-cancel{
+    background-color: red;
+    color: white;
+    padding-right:1em;
+    padding-left: 1em;
+    margin: 1em;
+}

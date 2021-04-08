@@ -83,6 +83,9 @@
 			<button type="button" class="app-btn"><a class="app-btn-link"
 													 href="{{ path('event_cancel',{'id': event.id}) }}">Annuler la sortie</a></button>
 		{% endif %}
+		{% if app.user.admin == 1 %}
+			<button class="app-admin-btn-cancel" href="{{ path('event_cancel',{'id': event.id}) }}">Annuler</button>
+		{% endif %}
 	</div>
 
 	<h2> Liste des inscrits : </h2>
