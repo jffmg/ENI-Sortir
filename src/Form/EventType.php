@@ -57,7 +57,7 @@ class EventType extends AbstractType
                 'label' => 'Description : ',
                 'label_attr' => ['class' => 'app-form-label'],
                 'attr' => [
-                    'class' => 'app-form-field app-add-field',
+                    'class' => 'app-form-field app-add-field app-add-textarea-field',
                 ],
                 'constraints' => [],
             ])

@@ -160,7 +160,7 @@ body {
 .app-table-cell > a {
     display: block;
     text-decoration: none;
-    color: #203860;
+    color: #368A9C;
 }
 
 a.app-link.app-admin-cancel {
@@ -235,6 +235,10 @@ a.app-link.app-admin-cancel {
 .app-update-field, .app-add-field {
     width: 22em;
     /*width: 15vw;*/
+}
+
+.app-add-textarea-field {
+    height: 10em;
 }
 
 .app-form-label {
