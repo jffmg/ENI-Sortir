@@ -20,7 +20,7 @@
         <p><span class="app-profile-label"> Campus :</span> {{ participant.campus.name }}</p><br>
 
     <div class="app-form-btn-container app-separate-btns">
-        <button class="app-btn"><a class="app-btn-link  app-back-link" href="{{ path('main_home') }}">Retour</a></button>
+        <button class="app-btn"><a class="app-btn-link" href="{{ path('main_home') }}">Retour</a></button>
         {% if participant.userName == app.user.username %}
             <button type="button" class="app-btn"><a class="app-btn-link"
                                      href="{{ path('participant_update',{id: participant.id}) }}">Modifier</a></button>
