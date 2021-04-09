@@ -82,6 +82,8 @@ class ParticipantController extends AbstractController
             return $this->redirectToRoute('participant_profile', ['id' => $participant->getId()]);
         }
 
+        $em->refresh($participant);
+
         return $this->render('participant/update.html.twig', [
             "participantForm" => $participantForm->createView(),
             "participant" => $participant
