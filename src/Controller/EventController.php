@@ -55,9 +55,9 @@ class EventController extends AbstractController
 
         $searchEvents->setEndDate($endDate);
 
-        $user = $this->getUser();
-        $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
-        $participant = $participantRepo->find($user);
+        $participant = $this->getUser();
+        //$participantRepo = $this->getDoctrine()->getRepository(Participant::class);
+        //$participant = $participantRepo->find($user);
         $searchEvents->setCampus($participant->getCampus());
 
         $searchEventsForm = $this->createForm(SearchEventsType::class, $searchEvents);
@@ -73,7 +73,7 @@ class EventController extends AbstractController
         $stateOU = $service->getStateByShortLabel($states, 'OU');
         $stateCL = $service->getStateByShortLabel($states, 'CL');
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
-        $events = $eventRepo->filterEvents($searchEvents, $user);
+        $events = $eventRepo->filterEvents($searchEvents, $participant);
 
 
         return $this->render("event/list.html.twig", [
