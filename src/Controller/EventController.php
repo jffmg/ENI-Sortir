@@ -102,8 +102,8 @@ class EventController extends AbstractController
         }
 
         /*dump($request);*/
-        // block access to non-connected users
-        $this->denyAccessUnlessGranted("ROLE_USER");
+//        // block access to non-connected users
+//        $this->denyAccessUnlessGranted("ROLE_USER");
         // creating a new instance of Event
         $event = new Event();
         $newLocation = new Location();

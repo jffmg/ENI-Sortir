@@ -62,7 +62,7 @@ function insertLocations() {
             selectLocation.innerHTML = "<p>Pas de lieu associé à cette ville.</p>"
             zipCodeElement.innerHTML = "<p>Pas de code postal pour ce lieu.</p>"
         }
-        // if a location is selected and infos found in base, display infos
+        // if a city is selected and location infos found in base, display infos
         else {
             const option = document.createElement("option");
             option.value = "";
