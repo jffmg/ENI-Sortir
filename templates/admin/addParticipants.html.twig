@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sortir.com | Administration des utilisateurs{% endblock %}
+
+{% block main %}
+
+    <h1 class="app-main-title">Ajouter des participants</h1>
+
+    <div class="app-form-container app-framed">
+        <h2 class="app-main-title">Importer plusieurs profils</h2>
+        <h5>(au format .csv)</h5>
+        {{ form_start(adminCSVForm) }}
+        {{ form_widget(adminCSVForm) }}
+        <button class="app-btn" type="submit">Envoyer</button>
+        {{ form_end(adminCSVForm) }}
+    </div>
+
+    <div class="app-form-container app-framed">
+        <h2 class="app-main-title">Créer un seul profil</h2>
+
+        {{ form_start(adminParticipantForm) }}
+
+        <p class="app-update-form-container"><span
+                    class="app-profile-label"> Campus :</span>
+            <label>
+                <select id="campus" name="campus">
+                    {% for campus in campuses %}
+                    <option>{{ campus.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+        </p><br>
+
+        <p class="app-update-form-container"><span
+                    class="app-profile-label"> {{ form_label(adminParticipantForm.userName) }}</span> {{ form_widget(adminParticipantForm.userName) }}
+        </p><br>
+        <p class="app-update-form-container"><span
+                    class="app-profile-label"> {{ form_label(adminParticipantForm.name) }}</span> {{ form_widget(adminParticipantForm.name) }}
+        </p><br>
+        <p class="app-update-form-container"><span
+                    class="app-profile-label"> {{ form_label(adminParticipantForm.firstName) }}</span> {{ form_widget(adminParticipantForm.firstName) }}
+        </p><br>
+        <p class="app-update-form-container"><span
+                    class="app-profile-label"> {{ form_label(adminParticipantForm.phone) }}</span> {{ form_widget(adminParticipantForm.phone) }}
+        </p><br>
+        <p class="app-update-form-container"><span
+                    class="app-profile-label"> {{ form_label(adminParticipantForm.mail) }}</span> {{ form_widget(adminParticipantForm.mail) }}
+        </p><br>
+
+        <p class="app-update-form-container"><span
+                    class="app-profile-label"> {{ form_label(adminParticipantForm.pictureFile) }}</span> {{ form_widget(adminParticipantForm.pictureFile) }}
+        </p><br>
+
+        <p class="app-update-form-container"><span
+                    class="app-profile-label"> {{ form_label(adminParticipantForm.admin) }}</span> {{ form_widget(adminParticipantForm.admin) }}
+        </p><br>
+
+        {#<p class="app-update-form-container"><span
+                    class="app-profile-label"> Cochez si le profil est administrateur :  </span>
+           <input name="isAdmin" type="checkbox">
+        </p><br>#}
+
+        <fieldset class="app-fieldset app-update-fieldset">
+            <legend><span
+                        class="app-profile-label app-update-password">Password</span>
+            </legend>
+            <p>Par défaut, le mot de passe sera <strong>Pa$$w0rd</strong>.<br> une modification sera nécessaire à la
+                première connexion de l'utilisateur.</p>
+            {{ form_widget(adminParticipantForm.password, {'value' : 'Pa$$w0rd', 'attr': {'class' : 'hidden-row'}},) }}
+        </fieldset>
+        <br>
+
+
+
+        <div class="app-form-btn-container">
+            <button class="app-btn" type="submit">Créer profil</button>
+        </div>
+
+        {{ form_end(adminParticipantForm) }}
+    </div>
+
+    <div class="app-form-btn-container app-separate-btns">
+        <button class="app-btn app-return-btn" type="button"><a class="app-btn-link" href="{{ path('admin_portal') }}">Retour</a></button>
+    </div>
+{% endblock %}

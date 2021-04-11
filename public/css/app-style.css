@@ -1,0 +1,871 @@
+@import 'app-header-style.css';
+@import 'app-buttons-style.css';
+
+@font-face {
+    font-family: "Exo 2 Medium";
+    src: url("fonts/Exo2-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Exo 2 Black";
+    src: url("fonts/Exo2-Black.ttf");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: white;
+    font-family: "Exo 2 Medium", sans-serif;
+}
+
+/*::-webkit-scrollbar {
+    display: none;
+}*/
+
+.app-fieldset {
+    padding: 1em;
+}
+
+.app-textArea {
+    resize: none;
+}
+
+.app-textArea-label {
+    margin-right: 0.5em;
+}
+
+.app-textArea-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 2em;
+}
+
+.app-red-text {
+    color: red;
+}
+
+.app-green-text {
+    color: green;
+}
+
+.app-pink-label {
+    font-family: "Exo 2 Black", sans-serif;
+    color: plum;
+    text-decoration: none;
+}
+
+.hidden-row {
+    display: none;
+}
+
+#participant_password > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0.5em;
+}
+
+#admin_participant_admin {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#admin_participant_admin_0, #admin_participant_admin_1 {
+    margin-right: 1em;
+    margin-left: 1em;
+
+}
+
+
+#participant_password > div > input {
+    width: 15em;
+
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /*height: 99vh;*/
+}
+
+
+/*MAIN*/
+.app-main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: inherit;
+    justify-content: flex-start;
+    align-content: flex-end;
+    z-index: 50;
+    /*overflow: scroll;*/
+}
+
+.app-main-title {
+    place-self: center;
+    margin-top: 1em;
+    margin-bottom: 3vh;
+    text-align: center;
+    /*background-color: #5eb5e0;*/
+}
+
+.app-main-content {
+    margin-top: 5vh;
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+
+/*LIST PAGE*/
+.app-framed {
+    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
+    padding: 0.5em;
+    margin-bottom: 3vh;
+    background-color: mintcream;
+}
+
+.app-table {
+    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
+}
+
+.app-table thead {
+    /*display: none;*/
+}
+
+/*.app-table-row {
+    display: block;
+}*/
+
+.app-table-cell {
+    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
+    height: 2em;
+    text-align: center;
+    width: 30vw;
+    overflow-wrap: break-word;
+}
+
+/*.app-table-cell:before {
+    content: attr(data-label);
+    font-weight: bold;
+}*/
+
+.app-table-cell > a {
+    display: block;
+    text-decoration: none;
+    color: #368A9C;
+}
+
+a.app-link.app-admin-cancel {
+    /*font-family: "Exo 2 Black", sans-serif;*/
+    color: red;
+    text-decoration: none;
+}
+
+.app-table-cell > a:hover {
+    text-decoration: underline;
+}
+
+.app-form-search-events {
+    width: 90vw;
+    align-items: center;
+}
+
+.app-form-search-events-checkboxes > p {
+    display: flex;
+    flex-direction: row;
+    width: inherit;
+    justify-content: space-between;
+}
+
+/*PROFILE PAGE*/
+.app-profile-label {
+    font-family: "Exo 2 Black", sans-serif;
+    color: plum;
+}
+
+.app-profile-picture {
+    /*width: 50vw;*/
+    width: 15em;
+}
+
+.vich-image {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.app-profile-container {
+    width: 20em;
+}
+
+/*FORMS*/
+
+.app-login-form-container {
+    height: 60vh;
+    padding-top: 20vh;
+}
+
+.app-form {
+    max-width: 50%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.app-form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: content-box;
+}
+
+
+.app-form-field {
+    align-self: center;
+    margin: 0em 0.5em 0.5em 0.5em;
+}
+
+.app-update-field, .app-add-field {
+    width: 22em;
+    /*width: 15vw;*/
+}
+
+.app-add-textarea-field {
+    height: 10em;
+}
+
+.app-form-label {
+    align-self: start;
+    max-width: 50%;
+}
+
+
+.app-remember-me > input {
+    margin-right: 1em;
+}
+
+/*CANCEL FORM*/
+.app-cancel-form-container, .app-separate-btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.app-cancel-location-container {
+    display: flex;
+    flex-direction: column;
+}
+
+/*UPDATE PROFILE FORM,
+ ADD EVENT FORM*/
+.app-update-form-container, .app-add-form-container, .app-search-form-container {
+    /* display: flex;
+     flex-direction: column;*/
+    /*justify-content: space-between;*/
+    width: 60vw;
+    /*align-items: center;
+    margin: 0;*/
+}
+
+.app-search-form-container {
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+/*DETAILS PAGE*/
+.app-detail-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 90vw;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.app-detail-fields {
+    width: 90vw;
+    flex-wrap: wrap;
+}
+
+.app-detail-item-container {
+    flex-direction: row;
+    width: 90vw;
+}
+
+.app-detail-info-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.app-detail-info {
+    width: 100%;
+}
+
+.app-table-participants {
+    width: 90vw;
+}
+
+/*FOOTER*/
+.app-footer-container {
+    text-align: center;
+    padding: 0.5em;
+    background: mintcream;
+    width: 100%;
+    height: 3em;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.app-footer-margin {
+    height: 5em;
+}
+
+/*ALERT MESSAGES*/
+.app-alert {
+    font-family: "Exo 2 Black", sans-serif;
+    color: #ff0000;
+    padding: 1em;
+    background-color: mistyrose;
+}
+
+/*.app-alert-success {*/
+/*    font-family: "Exo 2 Black", sans-serif;*/
+/*    color: darkslategray;*/
+/*    padding: 1em;*/
+/*    background-color: mintcream;*/
+/*    display: none;*/
+/*}*/
+
+.app-flash {
+    padding: 1vh;
+    display: block;
+    font-size: 1em;
+    font-weight: bold;
+    color: #FFF;
+    margin: auto;
+}
+
+.app-flash-success {
+    background-color: #6B937B;
+}
+
+.app-flash-error {
+    background-color: #AA3333;
+}
+
+/* RESET PASSWORDS PAGES */
+
+.app-container-reset-password {
+    padding: 2em;
+    position: fixed;
+    top: 30vh;
+    height: 10em;
+    width: 20em;
+    border-radius: 15px;
+    background-color: mintcream;
+    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
+}
+
+.app-container-passwords {
+    height: 12em;
+}
+
+.app-container-btn-reset-password {
+    margin-top: 0.5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.app-btn-pop-reset-password {
+    padding-right: 1em;
+    padding-left: 1em;
+}
+
+.app-message-password-reset {
+    margin: 4em;
+}
+
+.app-form-password-reset-label {
+    align-self: start;
+    font-family: "Exo 2 Black", sans-serif;
+    color: plum;
+}
+
+.app-add-location-form-container {
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+}
+
+/*SUPPRESS POP UP*/
+.app-suppress-participants-popUp, .app-add-location-popUp {
+    padding: 2em;
+    position: fixed;
+    top: 30vh;
+    left: 35vw;
+    width: 30vw;
+    border-radius: 15px;
+    border: solid 1px darkslategrey;
+    background-color: mintcream;
+    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
+    display: none;
+    z-index: 100;
+}
+
+/*.app-add-location-popUp {
+    padding: 2em;
+    position: fixed;
+    top: 30vh;
+    left: 35vw;
+    width: 30vw;
+    border-radius: 15px;
+    border: solid 1px darkslategrey;
+    background-color: mintcream;
+    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
+    display: none;
+    z-index: 100;
+}*/
+
+.app-container-btn-pop-up {
+    margin-top: 1em;
+    display: flex;
+    justify-content: space-around;
+}
+
+.app-btn-pop-up {
+    padding: 0.5em 1em;
+}
+
+
+/* M devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+
+    .app-header-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background-color: mintcream;
+        box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
+        width: 100%;
+        z-index: 3;
+    }
+
+    .app-header-nav ul {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        overflow: hidden;
+    }
+
+
+    .app-header-nav {
+        margin-right: 5em;
+    }
+
+    .app-header-nav ul {
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        overflow: hidden;
+    }
+
+
+    .app-header-nav .app-nav-menu {
+        clear: none;
+        max-height: none;
+        align-self: flex-end;
+    }
+
+    .app-header-nav .app-menu-icon {
+        display: none;
+    }
+
+    /*CANCEL FORM*/
+    .app-cancel-container {
+        width: 70vw;
+    }
+
+    .app-cancel-location-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    /*PROFILE PAGE*/
+    .app-profile-label {
+        font-family: "Exo 2 Black", sans-serif;
+        color: plum;
+    }
+
+    /*.app-profile-picture {
+        width: 40vw;
+    }*/
+    /*UPDATE PROFILE FORM,
+	 ADD EVENT FORM*/
+    .app-update-form-container, .app-add-form-container, .app-search-form-container {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        width: 55vw;
+    }
+
+    .app-add-form-row {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        width: 30vw;
+    }
+
+    .app-table {
+        box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
+        width: 80vw;
+    }
+
+    .app-table thead {
+        visibility: visible;
+    }
+
+    .app-table-row {
+        display: table-row;
+        margin-bottom: 3em;
+        width: 100%;
+    }
+
+    .app-table-cell {
+        box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
+        height: 2em;
+        padding: 0.5em;
+        display: table-cell;
+        text-align: center;
+        width: inherit;
+    }
+
+    .app-table-cell:before {
+        display: none;
+        content: none;
+    }
+
+    .app-form-search-events-checkboxes > p {
+        width: 55vw;
+    }
+
+    .app-form-field {
+        margin-right: 0;
+    }
+
+    .app-form-search-events {
+        width: 60vw;
+    }
+
+
+    /*DETAILS PAGE*/
+    .app-detail-item-container {
+        flex-direction: row;
+        width: 45vw;
+    }
+
+    .app-detail-fields {
+        width: 41vw;
+    }
+
+    .app-detail-info-label {
+        width: 25%;
+    }
+
+    .app-detail-infO {
+        width: 65%;
+    }
+
+    .app-table-participants {
+        width: 40vw;
+    }
+
+    /*Table Scroll bar */
+    .app-fixed-header {
+        table-layout: fixed;
+        border-collapse: collapse;
+    }
+
+    .app-fixed-header thead tr {
+        display: inherit;
+    }
+
+    .app-fixed-header tbody {
+        display: block;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: 8vw;
+        width: 100%;
+        scrollbar-width: 0.5em;
+    }
+
+    .app-fixed-header tbody::-webkit-scrollbar {
+        width: 0.5em;
+        background-color: mintcream;
+    }
+
+    .app-fixed-header tbody::-webkit-scrollbar-thumb {
+        background: darkgrey;
+    }
+
+    .app-fixed-header th, .app-fixed-header td {
+        width: 20vw;
+    }
+
+    th.app-table-cell-scrollbar {
+        width: 0.5em;
+    }
+
+    /*List Page - scroll bar*/
+    .app-fixed-header-list th, .app-fixed-header-list td {
+        min-width: 10vw;
+        max-width: 10vw;
+    }
+
+    .app-fixed-header-list tbody {
+        height: 20vw;
+    }
+
+    /*Admin*/
+    .app-manager-form {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .app-add-location-field {
+        width: 15em;
+    }
+
+    .app-add-location-container > div {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin: 0.5em;
+    }
+
+
+
+    #app-collapsible-content {
+        overflow: hidden;
+        display: none;
+        padding: 0.5em;
+    }
+
+
+
+    .app-add-form-row {
+        width: 40vw;
+    }
+}
+
+/* L devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+    .app-update-form-container, .app-add-form-container, .app-search-form-container {
+        width: 45vw;
+    }
+
+    .app-update-form-container {
+        padding-left: 1em;
+        padding-right: 1em;
+    }
+
+    .app-form-search-events {
+        display: flex;
+        flex-direction: row;
+        width: 85vw;
+        align-items: center;
+    }
+
+    .app-connected-participant {
+        display: flex;
+        flex-direction: row;
+        width: 60vw;
+        align-self: center;
+        justify-self: center;
+        padding-left: 1em;
+    }
+
+    /*LIST PAGE*/
+    .app-search-btn {
+        align-self: center;
+        height: 5em;
+        width: auto;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+    }
+
+    .app-form-search-events-fields {
+        width: 60vw;
+    }
+
+    /*.app-form-search-events-fields>p {
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        width: 20vw;
+    }*/
+    .app-form-search-events-checkboxes > p {
+        display: flex;
+        flex-direction: row;
+        width: 30vw;
+    }
+
+    .app-form-search-events {
+        width: 95vw;
+    }
+
+    .app-form-btn-container {
+        width: auto;
+    }
+
+    .app-btn-link-container {
+        align-self: flex-end;
+    }
+
+    /*CANCEL FORM*/
+    .app-cancel-container {
+        width: 55vw;
+    }
+
+    /* .app-profile-picture {
+         width: 30vw;
+     }*/
+    .app-add-form-row {
+        width: 30vw;
+    }
+
+    .app-add-location-form-container {
+        width: 40vw;
+    }
+
+}
+
+/* XL devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+    .app-update-form-container, .app-add-form-container {
+        width: 45vw;
+    }
+
+    .app-table-row {
+        height: 2em;
+    }
+
+    .app-table-cell {
+        box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
+        padding: 0.5em;
+        text-align: center;
+    }
+
+    .app-table-cell > a {
+        display: block;
+
+    }
+
+    .app-form-search-events-checkboxes > p {
+        width: 35vw;
+    }
+
+    .app-form-search-events-fields {
+        width: 40vw;
+    }
+
+    .app-form-search-events-fields .app-search-form-container {
+        width: 40vw;
+    }
+
+    /*CANCEL FORM*/
+    .app-cancel-container {
+        width: 45vw;
+    }
+
+    /*.app-profile-picture {
+        width: 25vw;
+    }*/
+    .app-add-form-row {
+        width: 25vw;
+    }
+
+    .app-add-location-form-container {
+        width: 30vw;
+    }
+
+}
+
+/* XXL devices (large desktops, 1900px and up)*/
+@media (min-width: 1900px) {
+    .app-update-form-container, .app-add-form-container {
+        width: 25vw;
+    }
+
+    .app-add-form-container {
+        width: 30vw;
+    }
+
+    .app-form-search-events {
+        width: 50vw;
+    }
+
+    .app-form-search-events-checkboxes > p {
+        width: 20vw;
+    }
+
+    .app-form-search-events-fields {
+        width: 20vw;
+    }
+
+    .app-form-search-events-fields .app-search-form-container {
+        width: 20vw;
+    }
+
+    /*CANCEL FORM*/
+    .app-cancel-container {
+        width: 30vw;
+    }
+
+    /*.app-profile-picture {
+        width: 15vw;
+    }*/
+    .app-new-event-form-container {
+        width: 40vw;
+        align-items: center;
+    }
+
+    .app-add-form-row {
+
+        width: 20vw;
+    }
+}
+
+/* S devices (mobiles, Less than 768px)*/
+@media (max-width: 768px) {
+    .app-small-screen-display-none {
+        display: none;
+    }
+}
+
+/* display none if not on mobile */
+@media (min-width: 768px) {
+
+    .app-medium-screen-display-none {
+        display: none;
+    }
+}
+
+
+

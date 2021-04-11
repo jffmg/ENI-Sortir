@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une sortie | {{ parent() }}{% endblock %}
+
+{% block main %}
+    <h1 class="app-main-title">Créer une nouvelle sortie</h1>
+
+    <div class="app-form-container app-new-event-form-container app-framed">
+        {{ form_start(eventForm, {'attr': {'id': 'event'}}) }}
+        <p class="app-add-form-container"><span
+                    class="app-profile-label"> {{ form_label(eventForm.name) }}</span><span
+                    class="app-form-error">{{ form_errors(eventForm.name) }}</span> {{ form_widget(eventForm.name) }}
+        </p>
+        <br>
+        <p class="app-add-form-container"><span
+                    class="app-profile-label"> {{ form_label(eventForm.dateTimeStart) }}</span><span
+                    class="app-form-error">{{ form_errors(eventForm.dateTimeStart) }}</span> {{ form_widget(eventForm.dateTimeStart) }}
+        </p><br>
+        <p class="app-add-form-container"><span
+                    class="app-profile-label"> {{ form_label(eventForm.duration) }}</span><span
+                    class="app-form-error">{{ form_errors(eventForm.duration) }}</span> {{ form_widget(eventForm.duration) }}
+        </p><br>
+        <p class="app-add-form-container"><span
+                    class="app-profile-label"> {{ form_label(eventForm.nbInscriptionsMax) }}</span><span
+                    class="app-form-error">{{ form_errors(eventForm.nbInscriptionsMax) }}</span> {{ form_widget(eventForm.nbInscriptionsMax) }}
+        </p><br>
+        <p class="app-add-form-container"><span
+                    class="app-profile-label"> {{ form_label(eventForm.infosEvent) }}</span><span
+                    class="app-form-error">{{ form_errors(eventForm.infosEvent) }}</span> {{ form_widget(eventForm.infosEvent) }}
+        </p><br>
+
+        <p class="app-add-form-container"><span class="app-profile-label">Campus</span><span class="app-form-field">{{ app.user.campus.name }}</span>
+        </p><br>
+        <p class="app-add-form-container"><label for="event-city" class="app-profile-label">Ville</label>
+            <select id="event-city" name="event-city" onchange="getLocations()" required>
+                <option value="">Sélectionnez une ville</option>
+                {% for c in cities %}
+                    <option value="{{ c.id }}">{{ c.name }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <br>
+
+        <div class="app-add-form-container"><label for="event-location" class="app-profile-label">Lieu</label>
+
+        <div id="plusBtn" style="display: none" class="app-plusBtn">
+            <button type="button" id="btn-collapsible" class="app-collapsible app-btn-add" onclick="showAddLocation(event)">
+                <span class="app-plusSymbol">+</span></button>
+            <span class="app-plusBtn-label">Ajouter un lieu</span>
+        </div>
+
+        <select id="event-location" name="event-location" onchange="getInfos()" class="app-form-field app-add-field" required>
+            <option value="">Sélectionnez un lieu</option>
+        </select>
+        </div><br>
+
+
+        <p class="app-add-form-container"><label for="event-street" class="app-profile-label">Rue</label><span
+                id="event-street" class="app-form-field"></span></p><br>
+        <p class="app-add-form-container"><label for="event-zipcode" class="app-profile-label">Code postal</label><span
+                    id="event-zipcode" class="app-form-field"></span></p><br>
+        <p class="app-add-form-container"><label for="event-latitude" class="app-profile-label">Latitude</label><span
+                    id="event-latitude" class="app-form-field"></span></p><br>
+        <p class="app-add-form-container"><label for="event-longitude" class="app-profile-label">Longitude</label><span
+                    id="event-longitude" class="app-form-field"></span></p><br>
+        <p class="app-add-form-container"><span
+                    class="app-profile-label"> {{ form_label(eventForm.dateEndInscription) }}</span><span
+                    class="app-form-error">{{ form_errors(eventForm.dateEndInscription) }}</span> {{ form_widget(eventForm.dateEndInscription) }}
+        </p><br>
+
+    </div>
+    <div class="app-form-btn-container">
+        <button class="app-btn"><a class="app-btn-link app-back-link" href="{{ path('main_home') }}">Retour</a></button>
+        <button class="app-btn" type="submit" form="event">Créer la sortie</button>
+    </div>
+    {{ form_end(eventForm) }}
+
+
+
+
+    {# hidden form. Gets revealed chen clicking on + btn #}
+    <div id="collapsible-content" class="app-add-location-popUp app-add-location-form-container">
+
+            {{ form_start(addLocationForm, {'attr': {'id': 'location'}}) }}
+        <h2 class="app-main-title">Ajouter un lieu : </h2>
+            <input type="hidden" id="hidden-city" name="hidden-city">
+        <div class="app-add-location-form-container">
+            <p class="app-add-form-row"><span
+                        class="app-profile-label"> {{ form_label(addLocationForm.name) }}</span> {{ form_widget(addLocationForm.name) }}
+            </p><br>
+            <p class="app-add-form-row"><span
+                        class="app-profile-label"> {{ form_label(addLocationForm.street) }}</span> {{ form_widget(addLocationForm.street) }}
+            </p><br>
+            <p class="app-add-form-row"><span
+                        class="app-profile-label"> {{ form_label(addLocationForm.latitude) }}</span> {{ form_widget(addLocationForm.latitude) }}
+            </p><br>
+            <p class="app-add-form-row"><span
+                        class="app-profile-label"> {{ form_label(addLocationForm.longitude) }}</span> {{ form_widget(addLocationForm.longitude) }}
+            </p><br>
+        </div>
+            <div class="app-form-btn-container app-separate-btns">
+                <button class="app-btn" type="button" form="location" onclick="hideAddLocation()">Annuler</button>
+                <button class="app-btn" type="submit" form="location">Créer le lieu</button>
+            </div>
+            {{ form_end(addLocationForm) }}
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ asset('js/locationByCity.js') }}"></script>
+{% endblock %}

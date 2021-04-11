@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annulation de la sortie {{ event.name }} | {{ parent() }}{% endblock %}
+
+{% block main %}
+	<h1 class="app-main-title">Annulation de la sortie</h1>
+
+	<div class="app-framed app-form-container app-cancel-container">
+		<p class="app-cancel-form-container"><span
+					class="app-profile-label"> Nom de la sortie : </span> <span>{{ event.name }}</span>
+		</p><br>
+
+		<p class="app-cancel-form-container"><span
+					class="app-profile-label"> Date de la sortie : </span>
+			<span>{{ event.dateTimeStart | date("d/m/Y") }}</span>
+		</p><br>
+		<p class="app-cancel-form-container"><span
+					class="app-profile-label"> Campus :</span> <span>{{ event.campusOrganizer.name }}</span>
+		</p><br>
+
+		<p class="app-cancel-location-container"><span
+					class="app-profile-label"> Lieu :</span>
+			<span>{{ event.location.name }}{{ ", " }}{{ event.location.street }}{{ " " }}{{ event.location.city.zipCode }}{{ " " }}{{ event.location.city.name }}</span>
+		</p><br>
+		{{ form_start(cancelForm) }}
+		<p class="app-cancel-form-container app-textArea-container"><span
+					class="app-profile-label app-textArea-label"><label
+						for="app-cancel-reason"> Motif d'annulation : </label></span><span><textarea
+						id="app-cancel-reason" name="app-cancel-reason" class="app-textArea" rows="5"
+						cols="33"></textarea></span>
+
+		<p class="app-cancel-form-container app-separate-btns">
+			<button class="app-btn"><a class="app-btn-link" href="{{ path('main_home') }}">Retour</a></button>
+			<button type="submit" class="app-btn">Enregistrer l'annulation</button>
+		</p>
+		{{ form_end(cancelForm) }}
+	</div>
+
+
+{% endblock %}
+

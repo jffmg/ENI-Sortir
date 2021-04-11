@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sortir.com | Gérer les villes{% endblock %}
+
+{% block main %}
+
+    <h1 class="app-main-title app-small-screen-display-none">Gérer les villes</h1>
+
+    <div class="app-form-container app-framed app-small-screen-display-none">
+        <h5>Filtrer les villes</h5>
+        <form action="#" method="POST" id="citySearchForm">
+            <label>Le nom contient : <input type="text" name="keywords"></label>
+            <button type="submit" name="search" form="citySearchForm">Rechercher</button>
+        </form>
+    </div>
+
+
+    <table class="app-table app-table-participants">
+        <thead>
+        <tr class="app-table-head-row app-table-row">
+            <th class="app-table-head-title app-table-cell">Ville</th>
+            <th class="app-table-head-title app-table-cell">Code postal</th>
+            <th class="app-table-head-title app-table-cell">Actions</th>
+
+
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for city in cities %}
+            <tr class="app-table-body-row app-table-row">
+
+                <td class="app-table-cell" data-label="Ville">{{ city.name }}</td>
+                <td class="app-table-cell" data-label="Code Postal">{{ city.zipCode }}</td>
+                <td class="app-table-cell"
+                    data-label="Actions">
+
+                    <form action="#" method="POST" id="action{{ city.id }}">
+                        <input type="hidden" name="cityId" value="{{ city.id }}">
+                        <button class="app-table-btn"><a class="app-btn-link" href="{{ path('admin_city_update', {'id': city.id}) }}">Modifier</a></button>
+                        <button class="app-table-btn" type="submit" name="delete" form="action{{ city.id }}" value="delete">Supprimer</button>
+                    </form>
+                </td>
+
+            </tr>
+
+        {% endfor %}
+
+        {{ form_start(cityForm) }}
+        <tr class="app-table-body-row app-table-row">
+            <td class="app-table-cell" data-label="Ville">
+                {{ form_widget(cityForm.name) }}
+            </td>
+            <td class="app-table-cell" data-label="Code Postal">
+                {{ form_widget(cityForm.zipCode) }}
+            </td>
+            <td class="app-table-cell"
+                data-label="Actions">
+                <button class="app-table-btn" type="subit" name="add" form="newCityForm">Ajouter</button>
+            </td>
+        </tr>
+        {{ form_end(cityForm) }}
+        </tbody>
+    </table>
+    </form>
+    <div class="app-form-btn-container app-separate-btns">
+        <button class="app-btn app-return-btn" type="button"><a class="app-btn-link" href="{{ path('admin_portal') }}">Retour</a></button>
+    </div>
+{% endblock %}

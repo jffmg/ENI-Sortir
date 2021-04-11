@@ -1,0 +1,22 @@
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    <input class="app-menu-btn" type="checkbox" id="app-menu-btn"/>
+    <label class="app-menu-icon" for="app-menu-btn">
+        <span class="app-navicon"></span>
+    </label>
+    <ul class="app-nav-menu">
+        {% if is_granted("ROLE_ADMIN") %}
+            <li><a class="app-nav-btn" href="{{ path('admin_portal') }}">ADMIN</a></li>
+        {% endif %}
+        <li><a class="app-nav-btn" href="{{ path('main_home') }}">ACCUEIL</a></li>
+        <li><a class="app-nav-btn" href="{{ path('participant_profile', { 'id': app.user.id }) }}">PROFIL</a></li>
+        <li><a class="app-nav-btn" href="{{ path('user_logout') }}">DÉCONNEXION</a></li>
+    </ul>
+{% else %}
+    <input class="app-menu-btn" type="checkbox" id="app-menu-btn"/>
+    <label class="app-menu-icon" for="app-menu-btn">
+        <span class="app-navicon"></span>
+    </label>
+    <ul class="app-nav-menu">
+        <li><a class="app-nav-btn" href="{{ path('user_login') }}">CONNEXION</a></li>
+    </ul>
+{% endif %}

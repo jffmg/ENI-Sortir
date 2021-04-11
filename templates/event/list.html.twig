@@ -1,0 +1,169 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sortir.com | Liste des sorties{% endblock %}
+
+{% block main %}
+
+    {# {% if app.user %}
+        <div class="app-connected-participant">
+            Vous êtes connectés en tant que {{ app.user.username }}, <a href="{{ path('user_logout') }}">Déconnexion</a>
+        </div>
+    {% endif %} #}
+
+
+    <h1 class="app-main-title app-small-screen-display-none">Toutes les sorties</h1>
+    <h1 class="app-main-title app-medium-screen-display-none">Mes sorties</h1>
+    <div class="app-framed app-small-screen-display-none">
+        <p>Date du jour : {{ "now"| date("d/m/Y") }}</p>
+        <p>Participant : <span class="app-profile-label">{{ app.user.username }}</span></p>
+    </div>
+
+    <div class="app-form-search-events app-form-container app-framed app-small-screen-display-none">
+        <div class="app-form-search-events-fields">
+            {{ form_start(searchEventsForm) }}
+
+            {# {{ form_widget(searchEventsForm) }} #}
+            <p class="app-search-form-container"><span
+                        class="app-profile-label"> {{ form_label(searchEventsForm.campus) }}</span> {{ form_widget(searchEventsForm.campus) }}
+            </p><br>
+            <p class="app-search-form-container"><span
+                        class="app-profile-label"> {{ form_label(searchEventsForm.keywords) }}</span> {{ form_widget(searchEventsForm.keywords) }}
+            </p><br>
+            <p class="app-search-form-container"><span
+                        class="app-profile-label"> {{ form_label(searchEventsForm.startDate) }}</span> {{ form_widget(searchEventsForm.startDate) }}
+            </p><br>
+            <p class="app-search-form-container"><span
+                        class="app-profile-label"> {{ form_label(searchEventsForm.endDate) }}</span> {{ form_widget(searchEventsForm.endDate) }}
+            </p><br>
+        </div>
+        <div class="app-form-search-events-checkboxes">
+            <p class="app-search-form-container"><span
+                        class="app-profile-label"> {{ form_label(searchEventsForm.userIsOrganizer) }}</span>
+                <span>{{ form_widget(searchEventsForm.userIsOrganizer) }}</span>
+            </p><br>
+            <p class="app-search-form-container"><span
+                        class="app-profile-label"> {{ form_label(searchEventsForm.userIsRegistered) }}</span>
+                <span>{{ form_widget(searchEventsForm.userIsRegistered) }}</span>
+            </p><br>
+            <p class="app-search-form-container"><span
+                        class="app-profile-label"> {{ form_label(searchEventsForm.userIsNotRegistered) }}</span>
+                <span>{{ form_widget(searchEventsForm.userIsNotRegistered) }}</span>
+            </p><br>
+            <p class="app-search-form-container"><span
+                        class="app-profile-label"> {{ form_label(searchEventsForm.endedEvents) }}</span>
+                <span>{{ form_widget(searchEventsForm.endedEvents) }}</span>
+            </p><br>
+
+        </div>
+        <div class="app-form-btn-container">
+            <button class="app-btn app-search-btn" type="submit">Rechercher</button>
+
+            {{ form_end(searchEventsForm) }}
+        </div>
+    </div>
+
+    {# Second button for when the list is long - so user don't have to scroll down #}
+    <div class="app-form-btn-container app-btn-link-container app-small-screen-display-none">
+        <button class="app-btn-list"><a class="app-btn-link" href="{{ path('event_add') }}">Créer une sortie</a>
+        </button>
+    </div>
+
+    <table class="app-table app-fixed-header app-fixed-header-list ">
+        <thead>
+        <tr class="app-table-head-row app-table-row">
+            <th class="app-table-head-title app-table-cell">Nom de la sortie</th>
+            <th class="app-table-head-title app-table-cell">Date de la sortie</th>
+            <th class="app-table-head-title app-table-cell app-small-screen-display-none">Clôture</th>
+            <th class="app-table-head-title app-table-cell app-small-screen-display-none">Inscrits/places</th>
+            <th class="app-table-head-title app-table-cell app-small-screen-display-none">État</th>
+            <th class="app-table-head-title app-table-cell app-small-screen-display-none">Inscrit(e)</th>
+            <th class="app-table-head-title app-table-cell app-small-screen-display-none">Organisation</th>
+            <th class="app-table-head-title app-table-cell app-small-screen-display-none">Actions</th>
+            <th class="app-table-head-title app-table-cell app-medium-screen-display-none">Lieu</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for event in events %}
+            <tr class="app-table-body-row app-table-row">
+                <td class="app-table-cell app-small-screen-display-none">{{ event.name }}</td>
+                <td  href="{{ path('event_detail', {id: event.id}) }}" class="app-table-cell app-medium-screen-display-none">
+                    <a class="app-link" href="{{ path('event_detail', {id: event.id}) }}">{{ event.name }}</a>
+                </td>
+
+                <td class="app-table-cell">{{ event.dateTimeStart | date("d/m/Y h:i") }}</td>
+                <td class="app-table-cell app-small-screen-display-none">{{ event.dateEndInscription  | date("d/m/Y") }}</td>
+                <td class="app-table-cell app-small-screen-display-none">{{ event.participants.count }}
+                    / {{ event.nbInscriptionsMax }}</td>
+                <td class="app-table-cell app-small-screen-display-none">{{ event.state.label }}</td>
+
+                {# Show an X if user is regsiterd to the event #}
+                <td class="app-table-cell app-small-screen-display-none">
+                    {% for p in event.participants %}
+                        {% if app.user == p %}
+                            X
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td class="app-table-cell app-small-screen-display-none">
+                    <a href="{{ path('participant_profile', { 'id': event.organizer.id }) }}">{{ event.organizer.userName }}</a>
+                </td>
+
+                <td class="app-table-cell app-small-screen-display-none">
+                    {% if event.state != stateEC %}
+                        <a class="app-link" href="{{ path('event_detail', {id: event.id}) }}">Afficher</a>
+                    {% endif %}
+
+                    {% if app.user.admin == 1 %}
+                        <a class="app-link app-admin-cancel" href="{{ path('event_cancel',{'id': event.id}) }}">Annuler</a>
+                    {% endif %}
+
+                    {% if app.user == event.organizer %}
+                        {% if event.state == stateEC %}
+                            <a class="app-link" href="{{ path('event_update', {id: event.id}) }}">Modifier</a>
+                            <a class="app-link" href="{{ path('event_publish', {id:event.id}) }}">Publier</a>
+                            <a class="app-link" href="{{ path('event_delete',{'id': event.id}) }}">Supprimer</a>
+                        {% elseif (event.state == stateOU or event.state == stateCL) and app.user.admin == 0 %}
+                            <a class="app-link" href="{{ path('event_cancel',{'id': event.id}) }}">Annuler</a>
+                        {% endif %}
+                    {% endif %}
+
+                    {# Display the links to register or unregister to an event #}
+                    {% set isNotRegistered = true %}
+                    {% if event.participants.count > 0 %}
+                        {% for p in event.participants %}
+                            {% if app.user == p and now < event.dateTimeStart and event.state == stateOU %}
+                                <a class="app-link" id="unsubscribe"
+                                   href="{{ path('event_unsubscribe',{'eventId': event.id, 'userId': app.user.id}) }}">Se
+                                    désister</a>
+                                {% set isNotRegistered = false %}
+                            {% elseif app.user == p and now < event.dateTimeStart and event.state == stateCL %}
+                                <a class="app-link" id="unsubscribe"
+                                   href="{{ path('event_unsubscribe',{'eventId': event.id, 'userId': app.user.id}) }}">Se
+                                    désister</a>
+                                {% set isNotRegistered = false %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if isNotRegistered and event.state == stateOU and now < event.dateEndInscription %}
+                        <a class="app-link" id="subscribe"
+                           href="{{ path('event_subscribe', {'eventId': event.id, 'userId': app.user.id}) }}">S'inscrire</a>
+                    {% endif %}
+
+                </td>
+
+                <td class="app-table-cell app-medium-screen-display-none">
+                    <p>{{ event.location.name }}</p>
+                </td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="app-form-btn-container app-btn-link-container app-small-screen-display-none">
+        <button class="app-btn-list"><a class="app-btn-link" href="{{ path('event_add') }}">Créer une sortie</a>
+        </button>
+    </div>
+{% endblock %}

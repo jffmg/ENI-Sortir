@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="shortcut icon" type="image/jpg" href="{{asset('img/favicon.ico')}}">
+    <link rel="stylesheet" href="{{asset('css/app-style.css')}}">
+    <title>{% block title %}Sortir.com{% endblock %}</title>
+</head>
+
+<body>
+
+<div class="app-container">
+
+    <div class="app-header-container">
+        {% include('inc/header.html.twig') %}
+    </div>
+
+    {# display of flash messages after submitting forms #}
+    {%  for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="app-flash app-flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="app-main-container">
+        {% block main %}
+        {% endblock %}
+    </div>
+
+    <div class="app-footer-margin">
+    </div>
+
+    <div class="app-footer-container">
+        {% include('inc/footer.html.twig') %}
+    </div>
+    {% block scripts %}{% endblock %}
+</div>
+
+</body>
+</html>
